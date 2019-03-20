@@ -1,4 +1,4 @@
-package yapp14th.co.kr.myplant.ui.template.viewModel;
+package yapp14th.co.kr.myplant.base.example.template.viewModel;
 
 import android.app.Application;
 
@@ -13,5 +13,10 @@ public class TemplateFragemntViewModel extends AndroidViewModel {
 
     public TemplateFragemntViewModel(@NonNull Application application) {
         super(application);
+    }
+
+    @Override
+    protected void onCleared() {
+
     }
 }

@@ -1,4 +1,4 @@
-package yapp14th.co.kr.myplant.ui.template.view;
+package yapp14th.co.kr.myplant.base.example.template.view;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -17,8 +17,7 @@ import yapp14th.co.kr.myplant.MyApplication;
 import yapp14th.co.kr.myplant.R;
 import yapp14th.co.kr.myplant.base.BaseFragment;
 import yapp14th.co.kr.myplant.databinding.FragmentTemplateBinding;
-import yapp14th.co.kr.myplant.ui.template.viewModel.TemplateFragemntViewModel;
-import yapp14th.co.kr.myplant.ui.template.viewModel.TemplateViewModel;
+import yapp14th.co.kr.myplant.base.example.template.viewModel.TemplateFragemntViewModel;
 
 // TODO 필수 선언 1. 기본 레이아웃 설정
 // TODO 필수 선언 2. 데이터 바인딩 사용할지 말지 결정

@@ -1,4 +1,4 @@
-package yapp14th.co.kr.myplant.ui.template.view;
+package yapp14th.co.kr.myplant.base.example.template.view;
 
 import android.os.Bundle;
 import android.view.View;
@@ -10,7 +10,7 @@ import yapp14th.co.kr.myplant.MyApplication;
 import yapp14th.co.kr.myplant.R;
 import yapp14th.co.kr.myplant.base.BaseActivity;
 import yapp14th.co.kr.myplant.databinding.ActivityTemplateBinding;
-import yapp14th.co.kr.myplant.ui.template.viewModel.TemplateViewModel;
+import yapp14th.co.kr.myplant.base.example.template.viewModel.TemplateViewModel;
 import yapp14th.co.kr.myplant.utils.ActivityUtil;
 
 // TODO 필수 선언 1. 기본 레이아웃 설정

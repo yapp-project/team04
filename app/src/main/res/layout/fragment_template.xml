@@ -5,11 +5,12 @@
     <data>
         <variable
             name="templateFragmentView"
-            type="yapp14th.co.kr.myplant.ui.template.view.TemplateFragment" />
+            type="yapp14th.co.kr.myplant.base.example.template.view.TemplateFragment" />
 
+        <!--선택 선언 3_3 (ViewModel 사용 시)-->
         <variable
             name="templateFragmentVM"
-            type="yapp14th.co.kr.myplant.ui.template.viewModel.TemplateFragemntViewModel" />
+            type="yapp14th.co.kr.myplant.base.example.template.viewModel.TemplateFragemntViewModel" />
     </data>
 
     <LinearLayout
