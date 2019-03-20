@@ -31,7 +31,7 @@ public class TemplateActivity extends BaseActivity {
         return R.layout.activity_template;
     }
 
-    // TODO 필수 선언 2 (데이터 바인딩 사용할지 말지 결정)
+    // TODO 필수 선언 2 (데이터 바인딩 사용할지 말지 결정 (사용안할 시 반드시 false 처리할 것))
     @Override
     protected boolean getIsUseDataBinding() {
         return true;
@@ -85,6 +85,8 @@ public class TemplateActivity extends BaseActivity {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_template);
 
         binding.setTemplateView(this);
+
+        // 선택 선언 2_3 (ViewModel 사용 시)
         binding.setTemplateVM(templateVM);
     }
 
