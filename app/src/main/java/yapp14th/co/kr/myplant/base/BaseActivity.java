@@ -37,7 +37,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     }
 
-    // 툴바 세팅
+    // 툴바 세팅 (기본 NoActionBar)
     public void setToolbar(int backgroundColor) {
         // 1. 툴바 있는지 확인하여 있으면 세팅 (toolbar id 이름은 toolbar로 세팅)
         Toolbar toolbar = findViewById(R.id.toolbar);
