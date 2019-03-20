@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--선택 선언 1_3 (데이터 바인딩)-->
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="templateFragmentView"
+            type="yapp14th.co.kr.myplant.ui.template.view.TemplateFragment" />
+
+        <variable
+            name="templateFragmentVM"
+            type="yapp14th.co.kr.myplant.ui.template.viewModel.TemplateFragemntViewModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_fragment_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#444444"
+            android:gravity="center"
+            android:padding="@dimen/double_margin"
+            android:text="@{templateFragmentVM.input}"
+            android:textColor="@color/white"
+            tools:text="fragment_text" />
+
+    </LinearLayout>
+</layout>

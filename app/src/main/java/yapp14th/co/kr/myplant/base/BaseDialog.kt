@@ -10,10 +10,11 @@ import kotlinx.android.synthetic.main.base_dialog.*
 import yapp14th.co.kr.myplant.R
 import yapp14th.co.kr.myplant.base.BaseActivity
 
+
 class BaseDialog(context: Context) : @JvmOverloads Dialog(context) {
-    fun callFunction(applicationContext: Context) {
-        this.setCancelable(false)                   // 배경 클릭해도 다이얼로그가 꺼지지 않음
-        (context as BaseActivity).dialog.show()     // 커스텀 다이얼로그를 노출한다.
+    fun callFunction() {
+        this.setCancelable(false)   // 배경 클릭해도 다이얼로그가 꺼지지 않음
+        this.show()                 // 커스텀 다이얼로그를 노출한다.
     }
 
     // 테마 설정
@@ -24,7 +25,7 @@ class BaseDialog(context: Context) : @JvmOverloads Dialog(context) {
     }
 
     open fun setInit(resId: Int, type: Int) {
-        // 커스텀 다이얼로그를 정의하기위해 Dialog클래스를 생성한다.
+        // 커스텀 다이얼로그를 정의하기위해 Dialog 클래스를 생성한다.
         setContentView(resId)
 
         // '확인' 버튼만 존재

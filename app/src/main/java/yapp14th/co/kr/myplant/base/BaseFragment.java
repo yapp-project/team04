@@ -1,59 +1,52 @@
 package yapp14th.co.kr.myplant.base;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
 import buv.co.kr.base.BaseDialog;
 import yapp14th.co.kr.myplant.R;
 
-public abstract class BaseActivity extends AppCompatActivity {
+public abstract class BaseFragment extends Fragment {
     private int layoutRes = getLayoutRes();
     private boolean isUseDataBinding = getIsUseDataBinding();
     protected BaseDialog dialog;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         if (layoutRes > -1) {
             if (isUseDataBinding)
-                onDataBinding();
+                return onDataBinding(inflater, container);
             else
-                setContentView(layoutRes);
+                return inflater.inflate(layoutRes, container, false);
         }
 
-        subScribeUI();
+        return super.onCreateView(inflater, container, savedInstanceState);
     }
 
-    public void onDataBinding() {
+    public View onDataBinding(LayoutInflater inflater, ViewGroup container) {
+        return null;
+    }
 
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        subScribeUI();
     }
 
     // livedata 있는 경우 observe 설정
     public void subScribeUI() {
 
-    }
-
-    // 툴바 세팅
-    public void setToolbar(int backgroundColor) {
-        // 1. 툴바 있는지 확인하여 있으면 세팅 (toolbar id 이름은 toolbar로 세팅)
-        Toolbar toolbar = findViewById(R.id.toolbar);
-
-        if (toolbar != null) {
-            toolbar.setBackgroundResource(backgroundColor);
-
-            // 2. actionbar 설정
-            setSupportActionBar(toolbar);
-
-            ActionBar actionbar = getSupportActionBar();
-            if (actionbar != null) {
-                actionbar.setDisplayShowTitleEnabled(false);
-                actionbar.setDisplayHomeAsUpEnabled(false);
-            }
-        }
     }
 
     public BaseDialog getDialog() {

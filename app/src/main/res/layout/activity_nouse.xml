@@ -7,19 +7,19 @@
     <data>
 
         <variable
-            name="templateView"
-            type="yapp14th.co.kr.myplant.ui.template.view.TemplateActivity" />
+            name="nouseView"
+            type="yapp14th.co.kr.myplant.ui.nouse.view.NouseActivity" />
 
         <variable
-            name="templateVM"
-            type="yapp14th.co.kr.myplant.ui.template.viewModel.TemplateViewModel" />
+            name="nouseVM"
+            type="yapp14th.co.kr.myplant.ui.nouse.viewModel.NouseViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fitsSystemWindows="true"
-        tools:context="yapp.co.kr.toycalendar.LoginActivity">
+        tools:context=".ui.nouse.view.NouseActivity">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
@@ -35,7 +35,7 @@
             android:layout_height="wrap_content"
             android:background="#FF00FF"
             android:padding="@dimen/double_margin"
-            android:text="@{templateVM.input}"
+            android:text="@{nouseVM.input}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
