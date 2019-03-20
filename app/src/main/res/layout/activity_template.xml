@@ -8,12 +8,12 @@
 
         <variable
             name="templateView"
-            type="yapp14th.co.kr.myplant.ui.template.view.TemplateActivity" />
+            type="yapp14th.co.kr.myplant.base.example.template.view.TemplateActivity" />
 
         <!--선택 선언 2_4 (ViewModel 사용 시)-->
         <variable
             name="templateVM"
-            type="yapp14th.co.kr.myplant.ui.template.viewModel.TemplateViewModel" />
+            type="yapp14th.co.kr.myplant.base.example.template.viewModel.TemplateViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

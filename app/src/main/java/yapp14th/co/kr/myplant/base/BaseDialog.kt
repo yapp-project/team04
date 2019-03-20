@@ -24,7 +24,7 @@ class BaseDialog(context: Context) : @JvmOverloads Dialog(context) {
         window.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
     }
 
-    open fun setInit(resId: Int, type: Int) {
+    fun setInit(resId: Int, type: Int) {
         // 커스텀 다이얼로그를 정의하기위해 Dialog 클래스를 생성한다.
         setContentView(resId)
 
