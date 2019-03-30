@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--선택 선언 1_3 (데이터 바인딩)-->
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="templateFragmentKotlinView"
+            type="yapp14th.co.kr.myplant.base.example.template.view.TemplateKotlinFragment" />
+
+        <!--선택 선언 3_3 (ViewModel 사용 시)-->
+        <variable
+            name="templateFragmentKotlinVM"
+            type="yapp14th.co.kr.myplant.base.example.template.viewModel.TemplateFragemntViewModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_fragment_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#444444"
+            android:gravity="center"
+            android:padding="@dimen/double_margin"
+            android:text="@{templateFragmentKotlinVM.input}"
+            android:textColor="@color/white"
+            tools:text="fragment_text" />
+
+    </LinearLayout>
+</layout>

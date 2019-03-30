@@ -10,7 +10,6 @@ class MainActivity: BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         setToolbar(R.color.transparent)
     }
 }

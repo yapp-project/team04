@@ -75,7 +75,7 @@ public class TemplateActivity extends BaseActivity {
                 });
 
         // 선택 선언 4 (프레그먼트 사용 시)
-        ActivityUtil.addFragmentToActivity(getSupportFragmentManager(), TemplateFragment.getInstance(), R.id.fl_container);
+        ActivityUtil.addFragmentToActivity(getSupportFragmentManager(), TemplateKotlinFragment.Companion.getInstance(), R.id.fl_container);
     }
 
     // 선택 선언 1_2 (데이터바인딩 사용 시)
