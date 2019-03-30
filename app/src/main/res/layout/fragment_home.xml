@@ -19,11 +19,11 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <yapp14th.co.kr.myplant.components.CustomCalendarView
-            android:id="@+id/cv_calendar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/single_margin" />
+        <!--<yapp14th.co.kr.myplant.components.CustomCalendarView-->
+            <!--android:id="@+id/cv_calendar"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_margin="@dimen/single_margin" />-->
 
     </LinearLayout>
 </layout>

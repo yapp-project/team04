@@ -18,9 +18,8 @@ class MainActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setToolbar(R.color.transparent)
 
-        var adapter = MainPagerAdapter(supportFragmentManager)
-
         // 이부분에 fragment 추가하면 됨
+        var adapter = MainPagerAdapter(supportFragmentManager)
         adapter.init(arrayListOf<Fragment>(HomeFragment(), HomeFragment(), HomeFragment()))
         vp_container.adapter = adapter
 
