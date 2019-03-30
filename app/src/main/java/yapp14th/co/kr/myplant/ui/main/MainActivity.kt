@@ -20,10 +20,6 @@ class MainActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setToolbar(R.color.transparent)
 
-        // 이부분에 fragment 추가하면 됨
-        // var adapter = MainPagerAdapter(supportFragmentManager)
-        // adapter.init(arrayListOf<Fragment>(HomeFragment(), StatisticFragment(), StatisticFragment()))
-
         main_tab.setOnNavigationItemSelectedListener(object : BottomNavigationView.OnNavigationItemSelectedListener {
             override fun onNavigationItemSelected(item: MenuItem): Boolean {
                 when (item.itemId) {
