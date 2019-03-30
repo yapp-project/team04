@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProviders
+import kotlinx.android.synthetic.main.fragment_statistic.view.*
 import yapp14th.co.kr.myplant.R
 import yapp14th.co.kr.myplant.base.BaseFragment
 import yapp14th.co.kr.myplant.databinding.FragmentStatisticBinding
@@ -24,7 +25,6 @@ class StatisticFragment : BaseFragment() {
 
     // TODO 필수 선언 3 (onCreateView)
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-
         return super.onCreateView(inflater, container, savedInstanceState)
     }
 
@@ -35,7 +35,10 @@ class StatisticFragment : BaseFragment() {
     // TODO 필수 선언 4 (onViewCreated)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        view.chart_statistic
     }
+
 
     companion object {
         // 선택 선언 1 (Fragment를 싱글턴으로 사용 시)
