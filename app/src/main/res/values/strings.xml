@@ -10,4 +10,29 @@
     <string name="statistic_unrest">불안</string>
     <string name="statistic_anger">분노</string>
     <string name="statistic_petulance">짜증</string>
+
+    <string-array name="custom_weekdays">
+        <item>mon</item>
+        <item>tue</item>
+        <item>wed</item>
+        <item>thu</item>
+        <item>fri</item>
+        <item>sat</item>
+        <item>sun</item>
+    </string-array>
+
+    <string-array name="custom_months">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+        <item>10</item>
+        <item>11</item>
+        <item>12</item>
+    </string-array>
 </resources>

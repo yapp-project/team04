@@ -6,14 +6,27 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProviders
-import buv.co.kr.base.BaseDialog
-import yapp14th.co.kr.myplant.MyApplication
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.PagerSnapHelper
+import androidx.recyclerview.widget.RecyclerView
+import com.prolificinteractive.materialcalendarview.CalendarDay
+import com.prolificinteractive.materialcalendarview.CalendarMode
+import filaroid.co.kr.filaroid.components.OnSnapPositionChangeListener
+import filaroid.co.kr.filaroid.components.SnapOnScrollListener
+import kotlinx.android.synthetic.main.fragment_home.*
+import kotlinx.android.synthetic.main.item_month.view.*
+import org.threeten.bp.DayOfWeek
+import yapp14th.co.kr.myplant.BR
 import yapp14th.co.kr.myplant.R
 import yapp14th.co.kr.myplant.base.BaseFragment
-import yapp14th.co.kr.myplant.base.example.template.view.TemplateKotlinFragment
+import yapp14th.co.kr.myplant.base.BaseRecyclerView
+import yapp14th.co.kr.myplant.components.LinePagerIndicatorDecoration
 import yapp14th.co.kr.myplant.databinding.FragmentHomeBinding
+import yapp14th.co.kr.myplant.databinding.ItemMonthBinding
+import yapp14th.co.kr.myplant.utils.attachSnapHelperWithListener
+import yapp14th.co.kr.myplant.utils.getMonthDay
 
-class HomeFragment : BaseFragment() {
+class HomeFragment : BaseFragment(), OnSnapPositionChangeListener {
     // 선택 선언 2_1 (데이터 바인딩)
     private lateinit var binding: FragmentHomeBinding
 
@@ -21,6 +34,10 @@ class HomeFragment : BaseFragment() {
     val homeVM: HomeViewModel by lazy {
         // 선택 선언 3_2 (ViewModel 사용 시 정의)
         ViewModelProviders.of(this).get(HomeViewModel::class.java)
+    }
+
+    override fun onSnapPositionChange(position: Int) {
+        homeVM.month.set(position + 1)
     }
 
     // TODO 필수 선언 1 (기본 레이아웃 설정)
@@ -46,11 +63,44 @@ class HomeFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-//        // 선택 선언 4_1 (다이얼로그 사용 시)
-//        dialog = BaseDialog(activity!!)
-//        openDialog(MyApplication.DIALOG_OK, "제목", "부제목", R.layout.base_dialog,
-//                { dialog.dismiss() },
-//                { dialog.dismiss() })
+        val ll = LinearLayoutManager(activity, RecyclerView.HORIZONTAL, false)
+        rl_calendar.layoutManager = ll
+
+        val snapHelper = PagerSnapHelper()
+        snapHelper.attachToRecyclerView(rl_calendar)
+        rl_calendar.attachSnapHelperWithListener(snapHelper, SnapOnScrollListener.Behavior.NOTIFY_ON_SCROLL, this)
+        rl_calendar.addItemDecoration(LinePagerIndicatorDecoration(activity!!, false))
+
+        var adapter = object : BaseRecyclerView.Adapter<Pair<Int, Int>, ItemMonthBinding>(
+                layoutResId = R.layout.item_month,
+                bindingVariableId = BR.icMonth) {
+
+            override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder<ItemMonthBinding> {
+                return super.onCreateViewHolder(parent, viewType).apply {
+
+                }
+            }
+
+            override fun onBindViewHolder(holder: ViewHolder<ItemMonthBinding>, position: Int) {
+                var adapterPosition = holder.adapterPosition
+
+                super.onBindViewHolder(holder, adapterPosition)
+                var year = homeVM.list[adapterPosition].first
+                var month = homeVM.list[adapterPosition].second
+
+                holder.itemView.cv_calendar.state().edit()
+                        .setFirstDayOfWeek(DayOfWeek.SUNDAY)
+                        .setMinimumDate(CalendarDay.from(year, month, 1))
+                        .setMaximumDate(CalendarDay.from(year, month, getMonthDay(year, month)))
+                        .setCalendarDisplayMode(CalendarMode.MONTHS)
+                        .commit()
+
+                holder.setIsRecyclable(false)
+            }
+        }
+
+        adapter.replaceAll(homeVM.list)
+        rl_calendar.adapter = adapter
     }
 
     // 선택 선언 5 (LiveData 사용 시)

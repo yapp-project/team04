@@ -4,6 +4,8 @@ import android.app.Application;
 import android.content.Context;
 import android.util.DisplayMetrics;
 
+import androidx.core.content.ContextCompat;
+
 public class MyApplication extends Application {
     public static int DIALOG_OK = 1;
     public static int DIALOG_OK_CANCEL = 2;
@@ -34,4 +36,9 @@ public class MyApplication extends Application {
     public static float convertPixelsToDp(float px, Context context){
         return px / ((float) context.getResources().getDisplayMetrics().densityDpi / DisplayMetrics.DENSITY_DEFAULT);
     }
+
+    public static int convertColor(Context context, int resourceColor){
+        return ContextCompat.getColor(context, resourceColor);
+    }
+
 }

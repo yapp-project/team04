@@ -8,6 +8,8 @@ import kotlinx.android.synthetic.main.activity_main.*
 import yapp14th.co.kr.myplant.R
 import yapp14th.co.kr.myplant.base.BaseActivity
 import yapp14th.co.kr.myplant.ui.main.tab1_home.HomeFragment
+import yapp14th.co.kr.myplant.ui.main.tab2_statistic.StatisticFragment
+import yapp14th.co.kr.myplant.utils.ActivityUtil
 
 
 class MainActivity : BaseActivity() {
@@ -19,23 +21,22 @@ class MainActivity : BaseActivity() {
         setToolbar(R.color.transparent)
 
         // 이부분에 fragment 추가하면 됨
-        var adapter = MainPagerAdapter(supportFragmentManager)
-        adapter.init(arrayListOf<Fragment>(HomeFragment(), HomeFragment(), HomeFragment()))
-        vp_container.adapter = adapter
+        // var adapter = MainPagerAdapter(supportFragmentManager)
+        // adapter.init(arrayListOf<Fragment>(HomeFragment(), StatisticFragment(), StatisticFragment()))
 
         main_tab.setOnNavigationItemSelectedListener(object : BottomNavigationView.OnNavigationItemSelectedListener {
             override fun onNavigationItemSelected(item: MenuItem): Boolean {
                 when (item.itemId) {
                     R.id.action_home -> {
-                        vp_container.currentItem = 0
+                        ActivityUtil.addFragmentToActivity(supportFragmentManager, HomeFragment.getInstance(), R.id.vp_container)
                         return true
                     }
                     R.id.action_static -> {
-                        vp_container.currentItem = 1
+                        ActivityUtil.addFragmentToActivity(supportFragmentManager, StatisticFragment(), R.id.vp_container)
                         return true
                     }
                     R.id.action_mypage -> {
-                        vp_container.currentItem = 2
+                        ActivityUtil.addFragmentToActivity(supportFragmentManager, StatisticFragment(), R.id.vp_container)
                         return true
                     }
                 }
@@ -43,6 +44,6 @@ class MainActivity : BaseActivity() {
             }
         })
 
-        vp_container.currentItem = 0
+        ActivityUtil.addFragmentToActivity(supportFragmentManager, HomeFragment.getInstance(), R.id.vp_container)
     }
 }
