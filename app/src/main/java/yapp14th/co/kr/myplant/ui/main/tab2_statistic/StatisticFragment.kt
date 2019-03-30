@@ -1,11 +1,18 @@
 package yapp14th.co.kr.myplant.ui.main.tab2_statistic
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProviders
+import com.github.mikephil.charting.animation.Easing
+import com.github.mikephil.charting.charts.PieChart
+import com.github.mikephil.charting.data.BarEntry
+import com.github.mikephil.charting.data.PieData
+import com.github.mikephil.charting.data.PieDataSet
+import com.github.mikephil.charting.data.PieEntry
 import kotlinx.android.synthetic.main.fragment_statistic.view.*
 import yapp14th.co.kr.myplant.R
 import yapp14th.co.kr.myplant.base.BaseFragment
@@ -15,7 +22,6 @@ import yapp14th.co.kr.myplant.databinding.FragmentTemplateBinding
 class StatisticFragment : BaseFragment() {
 
     private lateinit var binding: FragmentStatisticBinding
-
 
     // TODO 필수 선언 1 (기본 레이아웃 설정)
     override fun getLayoutRes() = R.layout.fragment_statistic
@@ -36,7 +42,33 @@ class StatisticFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        view.chart_statistic
+        setChart(view.chart_statistic)
+    }
+
+    fun setChart(chartView: PieChart){
+
+        chartView.setUsePercentValues(true)
+        chartView.description.isEnabled = true
+
+        chartView.isDrawHoleEnabled = true
+        chartView.setHoleColor(Color.WHITE)
+        chartView.description = null
+        chartView.animateY(1000, Easing.EaseInOutCubic)
+        var testList = ArrayList<PieEntry>()
+        testList.add(PieEntry(10f))
+        testList.add(PieEntry(10f))
+        testList.add(PieEntry(10f))
+        testList.add(PieEntry(10f))
+        testList.add(PieEntry(10f))
+        testList.add(PieEntry(10f))
+        testList.add(PieEntry(10f))
+        testList.add(PieEntry(10f))
+
+        var dataSet = PieDataSet(testList, "Emotion")
+        var data = PieData(dataSet)
+
+        chartView.data = data
+
     }
 
 

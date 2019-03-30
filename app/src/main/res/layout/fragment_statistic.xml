@@ -23,9 +23,9 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="56dp"
         android:layout_marginLeft="@dimen/one_half_margin"
         android:layout_marginRight="@dimen/one_half_margin"
+        android:paddingTop="156dp"
         android:orientation="vertical">
 
         <TextView
@@ -47,39 +47,206 @@
             android:fontFamily="@font/spoqa_han_sans_bold"
             android:layout_marginTop="23dp"/>
         
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="280dp"
             android:layout_marginTop="@dimen/single_margin"
-            android:background="@drawable/bg_statistic_round">
+            android:elevation="12dp"
+            android:orientation="vertical"
+            android:background="@drawable/bg_statistic_corner">
 
             <com.github.mikephil.charting.charts.PieChart
                 android:id="@+id/chart_statistic"
-                android:layout_width="140dp"
-                android:layout_height="140dp"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
-                android:layout_marginTop="20dp"/>
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="24dp"
+                android:layout_marginRight="86dp"
+                android:layout_marginLeft="86dp"/>
 
             <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/view_colors"
                 android:layout_width="match_parent"
                 android:layout_height="77dp"
-                app:layout_constraintTop_toBottomOf="@id/chart_statistic"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
                 android:layout_marginLeft="37dp"
-                android:layout_marginRight="37dp">
+                android:layout_marginRight="37dp"
+                android:layout_marginBottom="19dp">
+
+                <LinearLayout
+                    android:id="@+id/ll_pleasure"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent">
+                    <View
+                        android:id="@+id/view_color_pleasure"
+                        android:layout_width="13dp"
+                        android:layout_height="3dp"
+                        android:background="@drawable/bg_colors_corner"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="10sp"
+                        android:text="@string/statistic_pleasure"
+                        android:textColor="@color/color373768"
+                        />
+
+                    <TextView
+                        android:id="@+id/tv_percent_pleasure"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/roboto-bold"
+                        android:textSize="11sp"
+                        android:textColor="@color/color373768"
+                        android:text="13%"
+                        android:layout_marginLeft="13dp"
+                        />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_happy"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintLeft_toRightOf="@id/ll_pleasure"
+                    app:layout_constraintRight_toLeftOf="@id/ll_excited">
+                    <View
+                        android:id="@+id/view_color_happy"
+                        android:layout_width="13dp"
+                        android:layout_height="3dp"
+                        android:background="@drawable/bg_colors_corner"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="10sp"
+                        android:text="@string/statistic_happy"
+                        android:textColor="@color/color373768"
+                        />
+
+                    <TextView
+                        android:id="@+id/tv_percent_happy"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/roboto-bold"
+                        android:textSize="11sp"
+                        android:textColor="@color/color373768"
+                        android:text="13%"
+                        android:layout_marginLeft="13dp"
+                        />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_excited"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintRight_toRightOf="parent">
+                    <View
+                        android:id="@+id/view_color_excited"
+                        android:layout_width="13dp"
+                        android:layout_height="3dp"
+                        android:background="@drawable/bg_colors_corner"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="10sp"
+                        android:text="@string/statistic_exciting"
+                        android:textColor="@color/color373768"
+                        />
+
+                    <TextView
+                        android:id="@+id/tv_percent_excited"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/roboto-bold"
+                        android:textSize="11sp"
+                        android:textColor="@color/color373768"
+                        android:text="13%"
+                        android:layout_marginLeft="13dp"
+                        />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_peace"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    app:layout_constraintTop_toBottomOf="@id/ll_pleasure"
+                    app:layout_constraintLeft_toLeftOf="parent">
+                    <View
+                        android:id="@+id/view_color_peace"
+                        android:layout_width="13dp"
+                        android:layout_height="3dp"
+                        android:background="@drawable/bg_colors_corner"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="10sp"
+                        android:text="@string/statistic_peace"
+                        android:textColor="@color/color373768"
+                        />
+
+                    <TextView
+                        android:id="@+id/tv_percent_peace"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/roboto-bold"
+                        android:textSize="11sp"
+                        android:textColor="@color/color373768"
+                        android:text="13%"
+                        android:layout_marginLeft="13dp"
+                        />
+
+                </LinearLayout>
+
+
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <!--30dp-->
+        </LinearLayout>
 
 
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/statistic_years_color"
+            android:textColor="@color/color373768"
+            android:textSize="12sp"
+            android:fontFamily="@font/spoqa_han_sans_bold"
+            android:layout_marginTop="23dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/color373768"
+            android:textSize="20sp"
+            android:text="-"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="11sp"
+            android:fontFamily="@font/spoqa_han_sans_light"
+            android:text="@string/statistic_years_color_contents"
+            />
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"/>
     </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>
