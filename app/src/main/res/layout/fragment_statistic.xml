@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable
+            name="statisticFragmentView"
+            type="yapp14th.co.kr.myplant.ui.main.tab2_statistic.StatisticFragment" />
+
+        <!--선택 선언 3_3 (ViewModel 사용 시)-->
+        <variable
+            name="statisticFragmentVM"
+            type="yapp14th.co.kr.myplant.ui.main.tab2_statistic.StatisticViewModel" />
+    </data>
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/img_statistic_bg">
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="56dp"
+        android:layout_marginLeft="@dimen/one_half_margin"
+        android:layout_marginRight="@dimen/one_half_margin"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/statistic_title"
+            android:textColor="@color/color373768"
+            android:textSize="20sp"
+            android:fontFamily="@font/Spoqa Han Sans Bold"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/statistic_monthly_statis"
+            android:textColor="@color/color373768"
+            android:textSize="12sp"
+            android:fontFamily="@font/Spoqa Han Sans Bold"
+            android:layout_marginTop="23dp"/>
+
+
+    </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

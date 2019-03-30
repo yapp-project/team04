@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">MyPlant</string>
+    <string name="statistic_title">감정 통계</string>
+    <string name="statistic_monthly_statis">이번달 통계</string>
 </resources>
