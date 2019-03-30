@@ -8,8 +8,10 @@ import android.graphics.Paint
 import android.graphics.RectF
 import android.graphics.SweepGradient
 import android.util.AttributeSet
+import android.util.Log
 import android.view.MotionEvent
 import android.view.View
+
 
 // https://m.blog.naver.com/PostView.nhn?blogId=specialnks&logNo=10140861212&proxyReferer=https%3A%2F%2Fwww.google.com%2F 참고
 class ColorPickerView(
@@ -132,6 +134,60 @@ class ColorPickerView(
         return Color.argb(a, r, g, b)
     }
 
+    private fun interpColorBrightness(colors: IntArray, unit: Float, brightness: Float): Int {
+        Log.d("ColorPicker : ", unit.toString())
+        if (unit <= 0) {
+            return colors[0]
+        }
+        if (unit >= 1) {
+            return colors[colors.size - 1]
+        }
+
+        var p = unit * (colors.size - 1)
+        val i = p.toInt()
+        p -= i.toFloat()
+
+        // now p is just the fractional part [0...1) and i is the index
+        val c0 = colors[i]
+        val c1 = colors[i + 1]
+        val a = ave(Color.alpha(c0), Color.alpha(c1), p)
+        val r = ave(Color.red(c0), Color.red(c1), p)
+        val g = ave(Color.green(c0), Color.green(c1), p)
+        val b = ave(Color.blue(c0), Color.blue(c1), p)
+
+        var hsv = FloatArray(3)
+        Color.RGBToHSV(r, g, b, hsv)
+
+        hsv[1] = 50F
+        hsv[2] = brightness
+
+        return Color.HSVToColor(Color.alpha(a), hsv)
+    }
+
+    private fun interpColorSaturation(colors: IntArray, unit: Float): Int {
+        Log.d("ColorPicker : ", unit.toString())
+        if (unit <= 0) {
+            return colors[0]
+        }
+        if (unit >= 1) {
+            return colors[colors.size - 1]
+        }
+
+        var p = unit * (colors.size - 1)
+        val i = p.toInt()
+        p -= i.toFloat()
+
+        // now p is just the fractional part [0...1) and i is the index
+        val c0 = colors[i]
+        val c1 = colors[i + 1]
+        val a = ave(Color.alpha(c0), Color.alpha(c1), p)
+        val r = ave(Color.red(c0), Color.red(c1), p)
+        val g = ave(Color.green(c0), Color.green(c1), p)
+        val b = ave(Color.blue(c0), Color.blue(c1), p)
+
+        return Color.argb(a, r, g, b)
+    }
+
     private fun rotateColor(color: Int, rad: Float): Int {
         val deg = rad * 180 / 3.1415927f
         val r = Color.red(color)
@@ -202,9 +258,6 @@ class ColorPickerView(
     }
 
     companion object {
-
-
-
 
 
     }

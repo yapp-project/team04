@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?><!--선택 선언 1_3 (데이터 바인딩)-->
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="homeView"
+            type="yapp14th.co.kr.myplant.ui.main.tab1_home.HomeFragment" />
+
+        <!--선택 선언 3_3 (ViewModel 사용 시)-->
+        <variable
+            name="homeVM"
+            type="yapp14th.co.kr.myplant.ui.main.tab1_home.HomeViewModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <yapp14th.co.kr.myplant.components.CustomCalendarView
+            android:id="@+id/cv_calendar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/single_margin" />
+
+    </LinearLayout>
+</layout>

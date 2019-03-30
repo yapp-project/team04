@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/action_home"
+        app:showAsAction="ifRoom"
+        android:enabled="true"
+        android:icon="@android:drawable/ic_dialog_info"
+        android:title="홈" />
+    <item
+        android:id="@+id/action_static"
+        app:showAsAction="ifRoom"
+        android:icon="@android:drawable/ic_dialog_info"
+        android:title="감정 통계" />
+    <item
+        android:id="@+id/action_mypage"
+        app:showAsAction="ifRoom"
+        android:enabled="true"
+        android:icon="@android:drawable/ic_dialog_info"
+        android:title="마이 페이지" />
+</menu>
