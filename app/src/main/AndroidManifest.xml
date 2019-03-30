@@ -41,6 +41,10 @@
             android:name=".ui.intro.IntroActivity"
             android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
+        android:name=".ui.intro.IntroColorPickActivity"
+        android:theme="@style/AppTheme.NoActionBar"></activity>
+
+        <activity
             android:name=".ui.main.MainActivity"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>

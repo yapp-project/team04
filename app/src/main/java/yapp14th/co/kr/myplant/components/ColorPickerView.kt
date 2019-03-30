@@ -10,6 +10,7 @@ import android.graphics.SweepGradient
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
+import java.nio.channels.FileLock
 
 // https://m.blog.naver.com/PostView.nhn?blogId=specialnks&logNo=10140861212&proxyReferer=https%3A%2F%2Fwww.google.com%2F 참고
 class ColorPickerView(
@@ -20,6 +21,15 @@ class ColorPickerView(
     private var CENTER_X = 200      // 너비
     private var CENTER_Y = 200      // 높이
     private var CENTER_RADIUS = 64  // radius
+    private var CENTER_HUE = 0.00f //채도
+    private var CENTER_SATURATION = 0.00f //채도
+    private var CENTER_VALUE = 0.00f //채도
+    private var hsv : FloatArray = FloatArray(3)
+
+    private var unit = 0f
+    private var red = 0
+    private var green = 0
+    private var blue = 0
 
     private var PI = 3.1415926f
 
@@ -29,6 +39,8 @@ class ColorPickerView(
 
     private var mTrackingCenter: Boolean = false
     private var mHighlightCenter: Boolean = false
+    private var mSaturCenter : Boolean = false
+    private var mValueCenter : Boolean = false
 
     private var mListener: ColorPickerView.OnColorChangedListener? = null
     private var color: Int = 0
@@ -39,11 +51,12 @@ class ColorPickerView(
 
     init {
         val s = SweepGradient(0f, 0f, mColors, null)
+        for(i in 0 until hsv.size){ hsv[i] = 0f }
 
         mPaint = Paint(Paint.ANTI_ALIAS_FLAG)
         mPaint.shader = s
         mPaint.style = Paint.Style.STROKE
-        mPaint.strokeWidth = 32f    // 원 두께
+        mPaint.strokeWidth = 20f    // 원 두께
 
         mCenterPaint = Paint(Paint.ANTI_ALIAS_FLAG)
         mCenterPaint.color = color
@@ -56,20 +69,43 @@ class ColorPickerView(
         this.CENTER_Y = height
         this.CENTER_RADIUS = radius
     }
+    fun changeChroma(mListener: ColorPickerView.OnColorChangedListener, hsv : FloatArray){
+        this.mListener = mListener
+        this.CENTER_HUE = hsv[0]
+        this.CENTER_SATURATION = hsv[1]
+        this.CENTER_VALUE = hsv[2]
+        mSaturCenter = true
+        invalidate()
+
+    }
+    fun changeValue(mListener: ColorPickerView.OnColorChangedListener, hsv : FloatArray){
+        this.mListener = mListener
+        this.CENTER_HUE = hsv[0]
+        this.CENTER_SATURATION = hsv[1]
+        this.CENTER_VALUE = hsv[2]
+        mValueCenter = true
+        invalidate()
+
+    }
+
 
     interface OnColorChangedListener {
-        fun colorChanged(color: Int)
+        fun colorChanged(color: Int,red : Int, green : Int, blue : Int)
     }
 
     override fun onDraw(canvas: Canvas) {
         val r = CENTER_X - mPaint.strokeWidth * 0.5f
 
+
         canvas.translate(CENTER_X.toFloat(), CENTER_X.toFloat())
 
         canvas.drawOval(RectF(-r, -r, r, r), mPaint)
         canvas.drawCircle(0f, 0f, CENTER_RADIUS.toFloat(), mCenterPaint)
+        Color.RGBToHSV(red,green,blue,hsv)
+        //hsv[0] =  mCenterPaint.color.toFloat()
 
         if (mTrackingCenter) {
+
             val c = mCenterPaint.color
             mCenterPaint.style = Paint.Style.STROKE
 
@@ -84,6 +120,27 @@ class ColorPickerView(
 
             mCenterPaint.style = Paint.Style.FILL
             mCenterPaint.color = c
+            mListener?.colorChanged(mCenterPaint.color,Color.red(mCenterPaint.color),Color.green(mCenterPaint.color),Color.blue(mCenterPaint.color))
+        }
+        //채도에 따른 색 변경
+        if(mSaturCenter){
+            hsv[0] = CENTER_HUE
+            hsv[1] = CENTER_SATURATION
+            hsv[2] = CENTER_VALUE
+            mCenterPaint.color =  Color.HSVToColor(hsv)
+            canvas.drawCircle(0f, 0f, CENTER_RADIUS.toFloat(), mCenterPaint)
+            mSaturCenter = false
+            mListener?.colorChanged(mCenterPaint.color,Color.red(mCenterPaint.color),Color.green(mCenterPaint.color),Color.blue(mCenterPaint.color))
+        }
+        //명도에 따른 색 변경
+        if(mValueCenter){
+            hsv[0] = CENTER_HUE
+            hsv[1] = CENTER_SATURATION
+            hsv[2] = CENTER_VALUE
+            mCenterPaint.color =  Color.HSVToColor(hsv)
+            canvas.drawCircle(0f, 0f, CENTER_RADIUS.toFloat(), mCenterPaint)
+            mValueCenter = false
+            mListener?.colorChanged(mCenterPaint.color,Color.red(mCenterPaint.color),Color.green(mCenterPaint.color),Color.blue(mCenterPaint.color))
         }
     }
 
@@ -125,11 +182,11 @@ class ColorPickerView(
         val c0 = colors[i]
         val c1 = colors[i + 1]
         val a = ave(Color.alpha(c0), Color.alpha(c1), p)
-        val r = ave(Color.red(c0), Color.red(c1), p)
-        val g = ave(Color.green(c0), Color.green(c1), p)
-        val b = ave(Color.blue(c0), Color.blue(c1), p)
+        red = ave(Color.red(c0), Color.red(c1), p)
+        green = ave(Color.green(c0), Color.green(c1), p)
+        blue = ave(Color.blue(c0), Color.blue(c1), p)
 
-        return Color.argb(a, r, g, b)
+        return Color.argb(a, red, green, blue)
     }
 
     private fun rotateColor(color: Int, rad: Float): Int {
@@ -179,19 +236,19 @@ class ColorPickerView(
                 } else {
                     val angle = java.lang.Math.atan2(y.toDouble(), x.toDouble()).toFloat()
                     // need to turn angle [-PI ... PI] into unit [0....1]
-                    var unit = angle / (2 * PI)
+                    unit = angle / (2 * PI)
                     if (unit < 0) {
                         unit += 1f
                     }
                     mCenterPaint.color = interpColor(mColors, unit)
-                    mListener?.colorChanged(mCenterPaint.color)
+                    mListener?.colorChanged(mCenterPaint.color,Color.red(mCenterPaint.color),Color.green(mCenterPaint.color),Color.blue(mCenterPaint.color))
 
                     invalidate()
                 }
             MotionEvent.ACTION_UP ->
                 if (mTrackingCenter) {
                     if (inCenter) {
-                        mListener?.colorChanged(mCenterPaint.color)
+                        mListener?.colorChanged(mCenterPaint.color,Color.red(mCenterPaint.color),Color.green(mCenterPaint.color),Color.blue(mCenterPaint.color))
                     }
                     mTrackingCenter = false    // so we draw w/o halo
 

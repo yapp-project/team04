@@ -1,13 +1,15 @@
-package yapp14th.co.kr.myplant.ui.intro
+package yapp14th.co.kr.myplant.ui.intro;
 
-import android.os.Bundle
+import android.os.Bundle;
 import kotlinx.android.synthetic.main.activity_intro.*
-import yapp14th.co.kr.myplant.MyApplication
-import yapp14th.co.kr.myplant.R
-import yapp14th.co.kr.myplant.base.BaseActivity
-import yapp14th.co.kr.myplant.components.ColorPickerView
+import yapp14th.co.kr.myplant.MyApplication;
+import yapp14th.co.kr.myplant.R;
+import yapp14th.co.kr.myplant.base.BaseActivity;
+import yapp14th.co.kr.myplant.components.ColorPickerView;
+
 
 class IntroActivity : BaseActivity(), ColorPickerView.OnColorChangedListener {
+
     // TODO 필수 선언 1 (기본 레이아웃 설정)
     override fun getLayoutRes(): Int {
         return R.layout.activity_intro
@@ -34,7 +36,9 @@ class IntroActivity : BaseActivity(), ColorPickerView.OnColorChangedListener {
         // ...
     }
 
-    override fun colorChanged(color: Int) {
-        println("color : $color")
+
+
+    override fun colorChanged(color: Int, red: Int, green: Int, blue: Int) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 }
