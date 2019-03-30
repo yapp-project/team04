@@ -8,6 +8,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 import yapp14th.co.kr.myplant.R
 import yapp14th.co.kr.myplant.base.BaseActivity
 import yapp14th.co.kr.myplant.ui.main.tab1_home.HomeFragment
+import yapp14th.co.kr.myplant.ui.main.tab2_statistic.StatisticFragment
 
 
 class MainActivity : BaseActivity() {
@@ -20,7 +21,7 @@ class MainActivity : BaseActivity() {
 
         // 이부분에 fragment 추가하면 됨
         var adapter = MainPagerAdapter(supportFragmentManager)
-        adapter.init(arrayListOf<Fragment>(HomeFragment(), HomeFragment(), HomeFragment()))
+        adapter.init(arrayListOf<Fragment>(HomeFragment(), StatisticFragment(), HomeFragment()))
         vp_container.adapter = adapter
 
         main_tab.setOnNavigationItemSelectedListener(object : BottomNavigationView.OnNavigationItemSelectedListener {
