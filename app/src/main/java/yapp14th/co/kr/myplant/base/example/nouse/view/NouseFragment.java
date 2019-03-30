@@ -26,7 +26,7 @@ public class NouseFragment extends BaseFragment {
     // TODO 필수 선언 2 (데이터 바인딩 사용할지 말지 결정)
     @Override
     protected boolean getIsUseDataBinding() {
-        return true;
+        return false;
     }
 
     // 선택 선언 1 (Fragment를 싱글턴으로 사용 시)
