@@ -57,11 +57,11 @@ class ColorPickerView(
         mPaint = Paint(Paint.ANTI_ALIAS_FLAG)
         mPaint.shader = s
         mPaint.style = Paint.Style.STROKE
-        mPaint.strokeWidth = 20f    // 원 두께
+        mPaint.strokeWidth = 10f    // 원 두께
 
         mCenterPaint = Paint(Paint.ANTI_ALIAS_FLAG)
         mCenterPaint.color = color
-        mCenterPaint.strokeWidth = 10f   // 가운데원 반지름
+        mCenterPaint.strokeWidth = 5f   // 가운데원 반지름
     }
 
     fun init(mListener: ColorPickerView.OnColorChangedListener, width: Int, height: Int, radius: Int) {
