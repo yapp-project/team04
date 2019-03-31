@@ -38,4 +38,6 @@
     </string-array>
 
     <string name="statistic_years_color_contents">한달 중 가장 많이 선택한 색상을\n월별로 보여드려요!</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

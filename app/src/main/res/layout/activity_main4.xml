@@ -40,7 +40,7 @@
         app:layout_constraintBottom_toTopOf="@+id/textView5"
         app:layout_constraintTop_toBottomOf="@+id/textView4"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:srcCompat="@drawable/rectangle" />
+        app:srcCompat="@drawable/bar" />
 
     <TextView
         android:id="@+id/textView5"
