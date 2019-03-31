@@ -1,5 +1,6 @@
 package yapp14th.co.kr.myplant.ui.main
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -10,7 +11,7 @@ import yapp14th.co.kr.myplant.ui.main.tab1_home.HomeFragment
 import yapp14th.co.kr.myplant.ui.main.tab2_statistic.StatisticFragment
 import yapp14th.co.kr.myplant.ui.main.tab3_mypage.MypageFragment
 import yapp14th.co.kr.myplant.utils.ActivityUtil
-
+import yapp14th.co.kr.myplant.ui.intro.IntroColorPickActivity
 
 class MainActivity : BaseActivity() {
     override fun getLayoutRes() = R.layout.activity_main
@@ -41,5 +42,9 @@ class MainActivity : BaseActivity() {
         })
 
         ActivityUtil.addFragmentToActivity(supportFragmentManager, HomeFragment.getInstance(), R.id.vp_container)
+
+        var intent = Intent(this,IntroColorPickActivity::class.java)
+        startActivity(intent)
+
     }
 }

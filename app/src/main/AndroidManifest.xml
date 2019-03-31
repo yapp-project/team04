@@ -39,11 +39,14 @@
         <activity
             android:name=".ui.splash.SplashActivity"
             android:theme="@style/AppTheme.NoActionBar">
+
         </activity>
         <activity
             android:name=".ui.intro.IntroActivity"
             android:theme="@style/AppTheme.NoActionBar">
+
         </activity>
+
         <activity
             android:name=".ui.main.MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
@@ -54,6 +57,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+        android:name=".ui.intro.IntroColorPickActivity"
+        android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>
