@@ -42,9 +42,5 @@ class MainActivity : BaseActivity() {
         })
 
         ActivityUtil.addFragmentToActivity(supportFragmentManager, HomeFragment.getInstance(), R.id.vp_container)
-
-        var intent = Intent(this,IntroColorPickActivity::class.java)
-        startActivity(intent)
-
     }
 }

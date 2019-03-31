@@ -15,6 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 import yapp14th.co.kr.myplant.R;
+import yapp14th.co.kr.myplant.ui.intro.IntroColorPickActivity;
 
 class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implements View.OnClickListener {
     private String[] dataset;
@@ -49,6 +50,14 @@ class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implements Vi
             holder.button.setOnClickListener(this);
         }
         holder.textView.setText(dataset[position]);
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(holder.itemView.getContext(), IntroColorPickActivity.class);
+                holder.itemView.getContext().startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -61,6 +70,7 @@ class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implements Vi
         Intent intent = new Intent(view.getContext() , Main4Activity.class);
         intent.putExtra("name", extra);
         view.getContext().startActivity(intent);
+        ((Main3Activity)view.getContext()).finish();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

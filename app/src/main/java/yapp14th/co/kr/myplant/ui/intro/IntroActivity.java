@@ -1,6 +1,7 @@
 package yapp14th.co.kr.myplant.ui.intro;
 
 import android.os.Bundle;
+import android.util.Log;
 
 import yapp14th.co.kr.myplant.MyApplication;
 import yapp14th.co.kr.myplant.R;
@@ -41,8 +42,13 @@ public class IntroActivity extends BaseActivity implements ColorPickerView.OnCol
 
     }
 
+//    @Override
+//    public void colorChanged(int color) {
+//        System.out.println("color : $color");
+//    }
+
     @Override
-    public void colorChanged(int color) {
-        System.out.println("color : $color");
+    public void colorChanged(int color, int red, int green, int blue) {
+        Log.d("IntroActivity : ", "not implemented"); //To change body of created functions use File | Settings | File Templates.
     }
 }

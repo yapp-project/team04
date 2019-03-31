@@ -51,5 +51,6 @@ public class PushAgreeActivity extends AppCompatActivity {
 
         Intent intent = new Intent(getApplicationContext(), Main5Activity.class);
         startActivity(intent);
+        finish();
     }
 }

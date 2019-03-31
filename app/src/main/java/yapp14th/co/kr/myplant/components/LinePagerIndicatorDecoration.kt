@@ -143,12 +143,12 @@ class LinePagerIndicatorDecoration(context: Context, indicatorEnabled: Boolean) 
         val lp = view.layoutParams as ViewGroup.MarginLayoutParams
         if (parent.getChildAdapterPosition(view) == 0) {
             // lp.leftMargin = -120
-            offset += view.layoutParams.width
-            setupOutRect(outRect, offset, true)
+            // offset += view.layoutParams.width
+            setupOutRect(outRect, offset / 4, true)
         } else if (parent.getChildAdapterPosition(view) == state.itemCount - 1) {
             // lp.rightMargin = 120
-            offset += view.layoutParams.width
-            setupOutRect(outRect, offset, false)
+            // offset += view.layoutParams.width
+            setupOutRect(outRect, offset / 4, false)
         }
     }
 

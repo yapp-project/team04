@@ -31,7 +31,7 @@ public class Main3Activity extends AppCompatActivity {
     private void init() {
         snapHelper = new LinearSnapHelper();
 
-        recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
+        recyclerView = findViewById(R.id.recyclerView);
 
         snapHelper.attachToRecyclerView(recyclerView);
 

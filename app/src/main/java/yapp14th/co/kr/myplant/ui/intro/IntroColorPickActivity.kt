@@ -11,10 +11,6 @@ import yapp14th.co.kr.myplant.base.BaseActivity
 import yapp14th.co.kr.myplant.components.ColorPickerView
 import android.widget.SeekBar
 
-
-
-
-
 class IntroColorPickActivity : BaseActivity(), ColorPickerView.OnColorChangedListener {
     var redcolor : Int = 0
     var greencolor : Int = 0
