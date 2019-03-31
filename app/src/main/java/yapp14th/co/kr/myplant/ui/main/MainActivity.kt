@@ -2,13 +2,13 @@ package yapp14th.co.kr.myplant.ui.main
 
 import android.os.Bundle
 import android.view.MenuItem
-import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.activity_main.*
 import yapp14th.co.kr.myplant.R
 import yapp14th.co.kr.myplant.base.BaseActivity
 import yapp14th.co.kr.myplant.ui.main.tab1_home.HomeFragment
 import yapp14th.co.kr.myplant.ui.main.tab2_statistic.StatisticFragment
+import yapp14th.co.kr.myplant.ui.main.tab3_mypage.MypageFragment
 import yapp14th.co.kr.myplant.utils.ActivityUtil
 
 
@@ -32,7 +32,7 @@ class MainActivity : BaseActivity() {
                         return true
                     }
                     R.id.action_mypage -> {
-                        ActivityUtil.addFragmentToActivity(supportFragmentManager, StatisticFragment(), R.id.vp_container)
+                        ActivityUtil.addFragmentToActivity(supportFragmentManager, MypageFragment.getInstance(), R.id.vp_container)
                         return true
                     }
                 }
