@@ -8,6 +8,7 @@ import android.graphics.Paint
 import android.graphics.RectF
 import android.graphics.SweepGradient
 import android.util.AttributeSet
+import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import java.nio.channels.FileLock
@@ -51,7 +52,7 @@ class ColorPickerView(
 
     init {
         val s = SweepGradient(0f, 0f, mColors, null)
-        for(i in 0 until hsv.size){ hsv[i] = 0f }
+        //for(i in 0 until hsv.size){ hsv[i] = 0f }
 
         mPaint = Paint(Paint.ANTI_ALIAS_FLAG)
         mPaint.shader = s
@@ -74,6 +75,9 @@ class ColorPickerView(
         this.CENTER_HUE = hsv[0]
         this.CENTER_SATURATION = hsv[1]
         this.CENTER_VALUE = hsv[2]
+//        hsv[0] = c_hsv[0]
+//        hsv[1] = c_hsv[1]
+//        hsv[2] = c_hsv[2]
         mSaturCenter = true
         invalidate()
 
@@ -83,6 +87,9 @@ class ColorPickerView(
         this.CENTER_HUE = hsv[0]
         this.CENTER_SATURATION = hsv[1]
         this.CENTER_VALUE = hsv[2]
+//        hsv[0] = v_hsv[0]
+//        hsv[1] = v_hsv[1]
+//        hsv[2] = v_hsv[2]
         mValueCenter = true
         invalidate()
 
@@ -101,6 +108,7 @@ class ColorPickerView(
 
         canvas.drawOval(RectF(-r, -r, r, r), mPaint)
         canvas.drawCircle(0f, 0f, CENTER_RADIUS.toFloat(), mCenterPaint)
+        Log.d("saturation1",mCenterPaint.color.toString())
         Color.RGBToHSV(red,green,blue,hsv)
         //hsv[0] =  mCenterPaint.color.toFloat()
 
@@ -124,24 +132,29 @@ class ColorPickerView(
         }
         //채도에 따른 색 변경
         if(mSaturCenter){
-            hsv[0] = CENTER_HUE
+            //var hsv : FloatArray = FloatArray(3)
+            //hsv[0] = CENTER_HUE
             hsv[1] = CENTER_SATURATION
-            hsv[2] = CENTER_VALUE
+            //hsv[2] = CENTER_VALUE
             mCenterPaint.color =  Color.HSVToColor(hsv)
+            Log.d("saturation2",mCenterPaint.color.toString())
             canvas.drawCircle(0f, 0f, CENTER_RADIUS.toFloat(), mCenterPaint)
             mSaturCenter = false
             mListener?.colorChanged(mCenterPaint.color,Color.red(mCenterPaint.color),Color.green(mCenterPaint.color),Color.blue(mCenterPaint.color))
         }
         //명도에 따른 색 변경
-        if(mValueCenter){
-            hsv[0] = CENTER_HUE
-            hsv[1] = CENTER_SATURATION
+        else if(mValueCenter){
+            //var hsv : FloatArray = FloatArray(3)
+            //hsv[0] = CENTER_HUE
+            //hsv[1] = CENTER_SATURATION
             hsv[2] = CENTER_VALUE
             mCenterPaint.color =  Color.HSVToColor(hsv)
+            Log.d("saturation3",mCenterPaint.color.toString())
             canvas.drawCircle(0f, 0f, CENTER_RADIUS.toFloat(), mCenterPaint)
             mValueCenter = false
             mListener?.colorChanged(mCenterPaint.color,Color.red(mCenterPaint.color),Color.green(mCenterPaint.color),Color.blue(mCenterPaint.color))
         }
+        //mListener?.colorChanged(mCenterPaint.color,Color.red(mCenterPaint.color),Color.green(mCenterPaint.color),Color.blue(mCenterPaint.color))
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
