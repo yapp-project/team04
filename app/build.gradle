@@ -1,6 +1,8 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
+apply plugin: 'realm-android'
 
 android {
     compileSdkVersion 28
@@ -49,10 +51,22 @@ dependencies {
     // material design components
     implementation 'com.github.rey5137:material:1.2.5'
 
+    // chart
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
+
+    implementation 'com.github.prolificinteractive:material-calendarview:2.0.1'
+
     annotationProcessor 'androidx.databinding:databinding-compiler:3.3.1'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation 'androidx.recyclerview:recyclerview:1.0.0'
+    implementation 'androidx.viewpager:viewpager:1.0.0'
+    implementation 'androidx.cardview:cardview:1.0.0'
+
+    implementation 'de.hdodenhof:circleimageview:3.0.0'
+    implementation "com.github.skydoves:colorpickerpreference:2.0.0"
 
 }
 repositories {
     mavenCentral()
+    maven { url 'https://jitpack.io' }
 }

@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import kotlinx.android.synthetic.main.fragment_nouse.*
 import yapp14th.co.kr.myplant.R
 import yapp14th.co.kr.myplant.base.BaseFragment
 
@@ -23,6 +24,8 @@ class NouseKotlinFragment : BaseFragment() {
     // TODO 필수 선언 4 (onViewCreated)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        tv_fragment_text
     }
 
     companion object {
