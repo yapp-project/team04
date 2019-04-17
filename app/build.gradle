@@ -62,7 +62,7 @@ dependencies {
     implementation 'androidx.viewpager:viewpager:1.0.0'
     implementation 'androidx.cardview:cardview:1.0.0'
 
-    implementation 'de.hdodenhof:circleimageview:3.0.0'
+    implementation 'de.hdodenhof:circleimageview:2.2.0'
     implementation "com.github.skydoves:colorpickerpreference:2.0.0"
 
 }

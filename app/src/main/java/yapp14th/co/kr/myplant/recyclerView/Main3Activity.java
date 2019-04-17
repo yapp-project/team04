@@ -7,19 +7,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.SnapHelper;
 import yapp14th.co.kr.myplant.MyApplication;
 import yapp14th.co.kr.myplant.R;
-import yapp14th.co.kr.myplant.components.ColorPickerView;
-import yapp14th.co.kr.myplant.ui.intro.IntroColorPickActivity;
 
-import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.widget.AbsListView;
 
-import java.util.ArrayList;
-
-import static java.sql.DriverManager.println;
 
 public class Main3Activity extends AppCompatActivity {
     private RecyclerView recyclerView;
@@ -72,6 +62,7 @@ public class Main3Activity extends AppCompatActivity {
 
         adapter = new MyAdapter(myDataset,colorset);
         recyclerView.setAdapter(adapter);
+
 
     }
 }

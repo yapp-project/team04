@@ -2,6 +2,7 @@ package yapp14th.co.kr.myplant.recyclerView;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.text.Editable;
@@ -26,20 +27,22 @@ import androidx.recyclerview.widget.RecyclerView;
 import yapp14th.co.kr.myplant.MyApplication;
 import yapp14th.co.kr.myplant.R;
 import yapp14th.co.kr.myplant.components.ColorPickerView;
+import static android.content.Context.MODE_PRIVATE;
 
 
 class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implements View.OnClickListener {
     private String[] dataset;
-    private String extra;
+    private String last_emotion;
 
 
    private int[] colorset;
+
+
    int red;
    int blue;
    int green;
-   int color;
-
-
+    public SharedPreferences sharedPreferences;
+    Boolean et_show;
 
     public MyAdapter(String[] dataset,int[] colorset) {
         this.dataset = dataset;
@@ -65,13 +68,19 @@ class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implements Vi
             holder.name.setVisibility(View.VISIBLE);
             holder.name.setText(dataset[position]);
             holder.button.setVisibility(View.INVISIBLE);
+            et_show = false;
+
         } else {
             holder.name.setVisibility(View.GONE);
             holder.last.setVisibility(View.VISIBLE);
             holder.input.setVisibility(View.VISIBLE);
             holder.button.setVisibility(View.VISIBLE);
             holder.button.setOnClickListener(this);
-
+            et_show = true;
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putString(holder.input.getText().toString(),holder.hexcode_tv.getText().toString());
+            editor.commit();
+            //Log.d(holder.input.getText().toString(),holder.hexcode_tv.getText().toString());
         }
 
     }
@@ -83,33 +92,37 @@ class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implements Vi
 
     @Override
     public void onClick(View view) {
+
+        dataset[7] = last_emotion;
         Intent intent = new Intent(view.getContext() , Main4Activity.class);
-        intent.putExtra("name", extra);
+        intent.putExtra("emotion", dataset);
         view.getContext().startActivity(intent);
         ((Main3Activity)view.getContext()).finish();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements ColorPickerView.OnColorChangedListener {
-        public TextView num;
-        public TextView name;
-        public CardView last;
-        public EditText input;
-        public Button button;
+        private TextView num;
+        private TextView name;
+        private CardView last;
+        private EditText input;
+        private Button button;
 
-        public LinearLayout color_pick;
-        public View colorView;
-        public ColorPickerView colortest;
-        public TextView R_tv;
-        public TextView G_tv;
-        public TextView B_tv;
-        public TextView hexcode_tv;
-        public SeekBar intro_sb_brightness;
-        public SeekBar intro_sb_chroma;
+        private LinearLayout color_pick;
+        private View colorView;
+        private ColorPickerView colortest;
+        private TextView R_tv;
+        private TextView G_tv;
+        private TextView B_tv;
+        private TextView hexcode_tv;
+        private SeekBar intro_sb_brightness;
+        private SeekBar intro_sb_chroma;
+
 
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
+            sharedPreferences = itemView.getContext().getSharedPreferences("sFile",MODE_PRIVATE);
             num = itemView.findViewById(R.id.num);
             name = itemView.findViewById(R.id.name);
             last = itemView.findViewById(R.id.last);
@@ -128,6 +141,7 @@ class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implements Vi
             intro_sb_chroma = color_pick.findViewById(R.id.intro_sb_chroma);
             hexcode_tv = color_pick.findViewById(R.id.hex_code_et);
             colortest.init(this,colorset[0],colorset[1],colorset[2]);
+
 
             //명도 변경
             intro_sb_brightness.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -185,7 +199,8 @@ class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implements Vi
                 @Override
                 public void afterTextChanged(Editable editable) {
 
-                    extra = input.getText().toString();
+                    String extra = input.getText().toString();
+                    last_emotion = extra;
                 }
             });
 
@@ -196,13 +211,21 @@ class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implements Vi
             red = red;
             green = green;
             blue = blue;
-            color = color;
+
             R_tv.setText(String.valueOf(red));
             G_tv.setText(String.valueOf(green));
             B_tv.setText(String.valueOf(blue));
             hexcode_tv.setText(String.format("#%04X", color));
             intro_sb_brightness.getProgressDrawable().setColorFilter(Color.BLACK, PorterDuff.Mode.SRC_IN );
             intro_sb_chroma.getProgressDrawable().setColorFilter(color, PorterDuff.Mode.SRC_IN );
+
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            if(et_show)
+                editor.putString(input.getText().toString(),hexcode_tv.getText().toString());
+            else
+                editor.putString(name.getText().toString(),hexcode_tv.getText().toString());
+            editor.commit();
+
         }
     }
 
