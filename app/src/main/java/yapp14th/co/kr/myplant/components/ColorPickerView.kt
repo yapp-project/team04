@@ -58,7 +58,7 @@ class ColorPickerView(
         mPaint = Paint(Paint.ANTI_ALIAS_FLAG)
         mPaint.shader = s
         mPaint.style = Paint.Style.STROKE
-        mPaint.strokeWidth = 10f    // 원 두께
+        mPaint.strokeWidth = 7f    // 원 두께
 
         mCenterPaint = Paint(Paint.ANTI_ALIAS_FLAG)
         mCenterPaint.color = color
@@ -109,7 +109,7 @@ class ColorPickerView(
 
         canvas.drawOval(RectF(-r, -r, r, r), mPaint)
         canvas.drawCircle(0f, 0f, CENTER_RADIUS.toFloat(), mCenterPaint)
-        Log.d("saturation1",mCenterPaint.color.toString())
+        //Log.d("saturation1",mCenterPaint.color.toString())
         Color.RGBToHSV(red,green,blue,hsv)
         //hsv[0] =  mCenterPaint.color.toFloat()
 
@@ -138,7 +138,7 @@ class ColorPickerView(
             hsv[1] = CENTER_SATURATION
             //hsv[2] = CENTER_VALUE
             mCenterPaint.color =  Color.HSVToColor(hsv)
-            Log.d("saturation2",mCenterPaint.color.toString())
+            Log.d("view/saturation",mCenterPaint.color.toString())
             canvas.drawCircle(0f, 0f, CENTER_RADIUS.toFloat(), mCenterPaint)
             mSaturCenter = false
             mListener?.colorChanged(mCenterPaint.color,Color.red(mCenterPaint.color),Color.green(mCenterPaint.color),Color.blue(mCenterPaint.color))
@@ -150,7 +150,7 @@ class ColorPickerView(
             //hsv[1] = CENTER_SATURATION
             hsv[2] = CENTER_VALUE
             mCenterPaint.color =  Color.HSVToColor(hsv)
-            Log.d("saturation3",mCenterPaint.color.toString())
+            Log.d("view/value",mCenterPaint.color.toString())
             canvas.drawCircle(0f, 0f, CENTER_RADIUS.toFloat(), mCenterPaint)
             mValueCenter = false
             mListener?.colorChanged(mCenterPaint.color,Color.red(mCenterPaint.color),Color.green(mCenterPaint.color),Color.blue(mCenterPaint.color))
@@ -324,10 +324,5 @@ class ColorPickerView(
                 }
         }
         return true
-    }
-
-    companion object {
-
-
     }
 }

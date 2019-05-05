@@ -1,5 +1,6 @@
 package yapp14th.co.kr.myplant.ui.intro
 
+import android.content.Context
 import android.graphics.Color
 import android.graphics.PorterDuff
 import android.os.Bundle
@@ -11,14 +12,19 @@ import yapp14th.co.kr.myplant.base.BaseActivity
 import yapp14th.co.kr.myplant.components.ColorPickerView
 import android.widget.SeekBar
 
+
+
 class IntroColorPickActivity : BaseActivity(), ColorPickerView.OnColorChangedListener {
     var redcolor : Int = 0
     var greencolor : Int = 0
     var bluecolor : Int = 0
+    var width : Int = 0
+    var height : Int = 0
+    var radius : Int = 0
     //var hsv = FloatArray(3)
     // TODO 필수 선언 1 (기본 레이아웃 설정)
     override fun getLayoutRes(): Int {
-        return R.layout.activity_intro_colorpick
+        return yapp14th.co.kr.myplant.R.layout.activity_intro_colorpick
     }
 
     // TODO 필수 선언 2 (데이터 바인딩 사용할지 말지 결정 (사용안할 시 반드시 false 처리할 것))
@@ -29,15 +35,22 @@ class IntroColorPickActivity : BaseActivity(), ColorPickerView.OnColorChangedLis
     // TODO 필수 선언 3 (onCreate)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setToolbar(yapp14th.co.kr.myplant.R.color.transparent)
+        width = MyApplication.convertDpToPixel(90F, this@IntroColorPickActivity).toInt()
+        height = MyApplication.convertDpToPixel(90F, this@IntroColorPickActivity).toInt()
+        radius = MyApplication.convertDpToPixel(25F, this@IntroColorPickActivity).toInt()
+
+        init()
 
         // TODO 필수 선언 4 (툴바 설정)
-        setToolbar(yapp14th.co.kr.myplant.R.color.transparent)
 
-        var width = MyApplication.convertDpToPixel(90F, this@IntroColorPickActivity).toInt()
-        var height = MyApplication.convertDpToPixel(90F, this@IntroColorPickActivity).toInt()
-        var radius = MyApplication.convertDpToPixel(25F, this@IntroColorPickActivity).toInt()
+        // ...
+    }
+    public fun init(){
+
 
         colorPickerView_test.init(this@IntroColorPickActivity, width, height, radius)
+        //colorPickerView_test.init(this, 200,200,64)
         //명도 변경
         intro_sb_brightness.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener{
             override fun onProgressChanged(p0: SeekBar?, p1: Int, p2: Boolean) {
@@ -45,7 +58,7 @@ class IntroColorPickActivity : BaseActivity(), ColorPickerView.OnColorChangedLis
                 var hsv = FloatArray(3)
                 Color.RGBToHSV(redcolor, greencolor, bluecolor, hsv)
                 hsv[2] = (intro_sb_brightness.getProgress())/100.toFloat()
-                Log.d("saturation",hsv[1].toString())
+                Log.d("intro/value",hsv[1].toString())
                 colorPickerView_test.changeValue(this@IntroColorPickActivity,hsv)
             }
 
@@ -63,7 +76,7 @@ class IntroColorPickActivity : BaseActivity(), ColorPickerView.OnColorChangedLis
                 var hsv = FloatArray(3)
                 Color.RGBToHSV(redcolor, greencolor, bluecolor, hsv)
                 hsv[1] = (intro_sb_chroma.getProgress())/100.toFloat()
-                Log.d("saturation",hsv[1].toString())
+                Log.d("intro/saturation",hsv[1].toString())
                 colorPickerView_test.changeChroma(this@IntroColorPickActivity,hsv)
             }
 
@@ -75,7 +88,6 @@ class IntroColorPickActivity : BaseActivity(), ColorPickerView.OnColorChangedLis
 
         })
 
-        // ...
     }
 
     override fun colorChanged(color: Int,red : Int, green : Int, blue : Int) {
