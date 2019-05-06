@@ -21,10 +21,13 @@ public class Main5Activity extends AppCompatActivity {
 
     private void init() {
         imageButton = (ImageButton) findViewById(R.id.imageButton);
-        imageButton.setOnClickListener(view -> {
-            Intent intent = new Intent(getApplicationContext(), Main3Activity.class);
-            startActivity(intent);
-            finish();
+        imageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), Main3Activity.class);
+                startActivity(intent);
+                finish();
+            }
         });
     }
 }

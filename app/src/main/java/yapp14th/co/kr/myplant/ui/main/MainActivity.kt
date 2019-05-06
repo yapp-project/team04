@@ -1,20 +1,27 @@
 package yapp14th.co.kr.myplant.ui.main
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
-import android.view.View
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import kotlinx.android.synthetic.main.activity_main.*
 import yapp14th.co.kr.myplant.R
 import yapp14th.co.kr.myplant.base.BaseActivity
 import yapp14th.co.kr.myplant.ui.main.tab1_home.HomeFragment
+import yapp14th.co.kr.myplant.ui.main.tab2_statistic.StatisticFragment
+import yapp14th.co.kr.myplant.ui.main.tab3_mypage.MypageFragment
+import yapp14th.co.kr.myplant.utils.ActivityUtil
+import yapp14th.co.kr.myplant.ui.intro.IntroColorPickActivity
+import android.view.View
 
-class MainActivity: BaseActivity() {
+class MainActivity : BaseActivity() {
     override fun getLayoutRes() = R.layout.activity_main
     override fun getIsUseDataBinding() = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setToolbar(R.color.transparent)
+
         toolbar.visibility = View.GONE
 
         main_tab.setOnNavigationItemSelectedListener(object : BottomNavigationView.OnNavigationItemSelectedListener {

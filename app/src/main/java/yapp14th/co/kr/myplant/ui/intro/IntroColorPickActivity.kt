@@ -35,6 +35,7 @@ class IntroColorPickActivity : BaseActivity(), ColorPickerView.OnColorChangedLis
     // TODO 필수 선언 3 (onCreate)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+      
         width = MyApplication.convertDpToPixel(90F, this@IntroColorPickActivity).toInt()
         height = MyApplication.convertDpToPixel(90F, this@IntroColorPickActivity).toInt()
         radius = MyApplication.convertDpToPixel(25F, this@IntroColorPickActivity).toInt()

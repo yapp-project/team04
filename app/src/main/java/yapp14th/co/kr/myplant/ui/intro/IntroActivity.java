@@ -25,7 +25,7 @@ public class IntroActivity extends BaseActivity implements ColorPickerView.OnCol
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+      
         int width = (int) (MyApplication.convertDpToPixel(90F, getApplicationContext()));
         int height = (int) (MyApplication.convertDpToPixel(90F, getApplicationContext()));
         int radius = (int) (MyApplication.convertDpToPixel(32F, getApplicationContext()));
