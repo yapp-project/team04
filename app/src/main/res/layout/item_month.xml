@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="kotlin.Pair" />
+
+        <variable
+            name="icMonth"
+            type="Pair&lt;Integer, Integer&gt;" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="304dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/img_calendar_background"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginVertical="@dimen/one_half_margin"
+            android:fontFamily="sans-serif"
+            android:gravity="center_horizontal"
+            android:letterSpacing="-0.06"
+            android:text="@{@string/default_number(icMonth.second)}"
+            android:textColor="#373768"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            tools:text="3" />
+
+        <com.prolificinteractive.materialcalendarview.MaterialCalendarView
+            android:id="@+id/cv_calendar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/one_half_margin"
+            android:gravity="center"
+            app:mcv_leftArrow="@color/transparent"
+            app:mcv_monthLabels="@array/custom_months"
+            app:mcv_rightArrow="@color/transparent"
+            app:mcv_selectionColor="#00F"
+            app:mcv_showOtherDates="none"
+            app:mcv_weekDayLabels="@array/custom_weekdays" />
+    </LinearLayout>
+</layout>
