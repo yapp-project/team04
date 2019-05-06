@@ -2,34 +2,54 @@ package yapp14th.co.kr.myplant.ui.main.tab1_home
 
 import android.app.Application
 import androidx.databinding.ObservableField
+import androidx.lifecycle.MutableLiveData
+import io.reactivex.schedulers.Schedulers
 import yapp14th.co.kr.myplant.base.BaseViewModel
+import yapp14th.co.kr.myplant.ui.main.tab1_home.domain.repository.HomeRepositoryImpl
+import yapp14th.co.kr.myplant.ui.main.tab1_home.domain.usecase.GetCalendarList
+import yapp14th.co.kr.myplant.ui.main.tab1_home.domain.usecase.GetYearList
+import yapp14th.co.kr.myplant.utils.getCurrentMonth
+import yapp14th.co.kr.myplant.utils.getCurrentYear
 import java.util.*
 
 class HomeViewModel(app: Application) : BaseViewModel(app) {
     var year = ObservableField<Int>()
     var month = ObservableField<Int>()
-    var list = ArrayList<Pair<Int, Int>>()
+
+    var calendars = MutableLiveData<List<Pair<Int, Int>>>()
+    val years = MutableLiveData<List<Int>>()
+
+    private val repositoryImpl = HomeRepositoryImpl()
 
     init {
-        var tempYear = Calendar.getInstance().get(Calendar.YEAR)
-        var tempMonth = Calendar.getInstance().get(Calendar.MONTH)
+        var tempYear = getCurrentYear()
+        var tempMonth = getCurrentMonth()
 
         year.set(tempYear)
         month.set(tempMonth)
 
-        list = arrayListOf(
-                Pair(tempYear, 1),
-                Pair(tempYear, 2),
-                Pair(tempYear, 3),
-                Pair(tempYear, 4),
-                Pair(tempYear, 5),
-                Pair(tempYear, 6),
-                Pair(tempYear, 7),
-                Pair(tempYear, 8),
-                Pair(tempYear, 9),
-                Pair(tempYear, 10),
-                Pair(tempYear, 11),
-                Pair(tempYear, 12))
+        // 년도 spinner update
+        GetYearList(repositoryImpl, Schedulers.io()).invoke(
+                currentYear = getCurrentYear(),
+                success = { list ->
+                    years.value = list
+                },
+                error = { t ->
+                    System.out.println(t)
+                })
+
+        getCalendarList()
+    }
+
+    fun getCalendarList(year: Int = getCurrentYear()) {
+        GetCalendarList(repositoryImpl, Schedulers.io()).invoke(
+                year = year,
+                success = { list ->
+                    calendars.value = list
+                },
+                error = { t ->
+                    System.out.println(t)
+                })
     }
 
     override fun onCleared() {

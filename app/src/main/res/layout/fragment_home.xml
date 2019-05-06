@@ -21,6 +21,16 @@
         android:fitsSystemWindows="true"
         android:orientation="vertical">
 
+        android:paddingTop="56dp"
+        android:fitsSystemWindows="true"
+        android:orientation="vertical">
+
+        <Spinner
+            android:id="@+id/sp_year"
+            android:layout_width="wrap_content"
+            replaceAll="@{homeVM.years}"
+            android:layout_height="wrap_content"/>
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rl_calendar"
             android:layout_width="match_parent"

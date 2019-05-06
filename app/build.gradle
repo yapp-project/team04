@@ -65,6 +65,9 @@ dependencies {
     implementation 'de.hdodenhof:circleimageview:3.0.0'
     implementation "com.github.skydoves:colorpickerpreference:2.0.0"
 
+    // ReactiveIO
+    implementation 'io.reactivex.rxjava2:rxkotlin:2.3.0'
+    implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
 }
 repositories {
     mavenCentral()

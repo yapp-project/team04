@@ -5,6 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import android.widget.ArrayAdapter
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
@@ -24,6 +26,7 @@ import yapp14th.co.kr.myplant.components.LinePagerIndicatorDecoration
 import yapp14th.co.kr.myplant.databinding.FragmentHomeBinding
 import yapp14th.co.kr.myplant.databinding.ItemMonthBinding
 import yapp14th.co.kr.myplant.utils.attachSnapHelperWithListener
+import yapp14th.co.kr.myplant.utils.getCurrentYear
 import yapp14th.co.kr.myplant.utils.getMonthDay
 
 class HomeFragment : BaseFragment(), OnSnapPositionChangeListener {
@@ -69,43 +72,56 @@ class HomeFragment : BaseFragment(), OnSnapPositionChangeListener {
         val snapHelper = PagerSnapHelper()
         snapHelper.attachToRecyclerView(rl_calendar)
         rl_calendar.attachSnapHelperWithListener(snapHelper, SnapOnScrollListener.Behavior.NOTIFY_ON_SCROLL, this)
-        rl_calendar.addItemDecoration(LinePagerIndicatorDecoration(activity!!, false))
-
-        var adapter = object : BaseRecyclerView.Adapter<Pair<Int, Int>, ItemMonthBinding>(
-                layoutResId = R.layout.item_month,
-                bindingVariableId = BR.icMonth) {
-
-            override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder<ItemMonthBinding> {
-                return super.onCreateViewHolder(parent, viewType).apply {
-
-                }
-            }
-
-            override fun onBindViewHolder(holder: ViewHolder<ItemMonthBinding>, position: Int) {
-                var adapterPosition = holder.adapterPosition
-
-                super.onBindViewHolder(holder, adapterPosition)
-                var year = homeVM.list[adapterPosition].first
-                var month = homeVM.list[adapterPosition].second
-
-                holder.itemView.cv_calendar.state().edit()
-                        .setFirstDayOfWeek(DayOfWeek.SUNDAY)
-                        .setMinimumDate(CalendarDay.from(year, month, 1))
-                        .setMaximumDate(CalendarDay.from(year, month, getMonthDay(year, month)))
-                        .setCalendarDisplayMode(CalendarMode.MONTHS)
-                        .commit()
-
-                holder.setIsRecyclable(false)
-            }
-        }
-
-        adapter.replaceAll(homeVM.list)
-        rl_calendar.adapter = adapter
     }
 
     // 선택 선언 5 (LiveData 사용 시)
     override fun subScribeUI() {
         super.subScribeUI()
+
+        homeVM.years.observe(this, Observer {
+            val adapter = ArrayAdapter(
+                    this@HomeFragment.context,
+                    R.layout.support_simple_spinner_dropdown_item,
+                    homeVM.years.value
+                            ?: listOf(getCurrentYear()))
+
+            sp_year.adapter = adapter
+        })
+
+        homeVM.calendars.observe(this, Observer { calendars ->
+            rl_calendar.addItemDecoration(LinePagerIndicatorDecoration(activity!!, false))
+
+            var adapter = object : BaseRecyclerView.Adapter<Pair<Int, Int>, ItemMonthBinding>(
+                    layoutResId = R.layout.item_month,
+                    bindingVariableId = BR.icMonth) {
+
+                override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder<ItemMonthBinding> {
+                    return super.onCreateViewHolder(parent, viewType).apply {
+
+                    }
+                }
+
+                override fun onBindViewHolder(holder: ViewHolder<ItemMonthBinding>, position: Int) {
+                    super.onBindViewHolder(holder, position)
+
+                    var year = calendars[position].first
+                    var month = calendars[position].second
+
+                    holder.itemView.cv_calendar.topbarVisible = false
+                    holder.itemView.cv_calendar.state().edit()
+                            .setFirstDayOfWeek(DayOfWeek.SUNDAY)
+                            .setMinimumDate(CalendarDay.from(year, month, 1))
+                            .setMaximumDate(CalendarDay.from(year, month, getMonthDay(year, month)))
+                            .setCalendarDisplayMode(CalendarMode.MONTHS)
+                            .commit()
+
+                    holder.setIsRecyclable(false)
+                }
+            }
+
+            adapter.replaceAll(calendars)
+            rl_calendar.adapter = adapter
+        })
     }
 
     companion object {

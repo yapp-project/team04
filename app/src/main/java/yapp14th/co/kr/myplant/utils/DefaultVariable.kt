@@ -4,6 +4,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SnapHelper
 import filaroid.co.kr.filaroid.components.OnSnapPositionChangeListener
 import filaroid.co.kr.filaroid.components.SnapOnScrollListener
+import java.util.*
 
 fun getMonthDay(year: Int, month: Int): Int {
     return when (month) {
@@ -17,6 +18,9 @@ fun getMonthDay(year: Int, month: Int): Int {
         else -> -1
     }
 }
+
+fun getCurrentYear() = Calendar.getInstance().get(Calendar.YEAR)
+fun getCurrentMonth() = Calendar.getInstance().get(Calendar.MONTH)
 
 fun SnapHelper.getSnapPosition(recyclerView: RecyclerView): Int {
     val layoutManager = recyclerView.layoutManager ?: return RecyclerView.NO_POSITION
