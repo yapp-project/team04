@@ -4,8 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
 import android.widget.ArrayAdapter
+import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -32,6 +32,7 @@ import yapp14th.co.kr.myplant.utils.getMonthDay
 class HomeFragment : BaseFragment(), OnSnapPositionChangeListener {
     // 선택 선언 2_1 (데이터 바인딩)
     private lateinit var binding: FragmentHomeBinding
+    private lateinit var adapter: BaseRecyclerView.Adapter<Pair<Int, Int>, ItemMonthBinding>
 
     // 선택 선언 3_1 (ViewModel)
     val homeVM: HomeViewModel by lazy {
@@ -40,7 +41,7 @@ class HomeFragment : BaseFragment(), OnSnapPositionChangeListener {
     }
 
     override fun onSnapPositionChange(position: Int) {
-        homeVM.month.set(position + 1)
+        homeVM.currentMonth.set(position + 1)
     }
 
     // TODO 필수 선언 1 (기본 레이아웃 설정)
@@ -71,7 +72,9 @@ class HomeFragment : BaseFragment(), OnSnapPositionChangeListener {
 
         val snapHelper = PagerSnapHelper()
         snapHelper.attachToRecyclerView(rl_calendar)
+
         rl_calendar.attachSnapHelperWithListener(snapHelper, SnapOnScrollListener.Behavior.NOTIFY_ON_SCROLL, this)
+        rl_calendar.setItemViewCacheSize(12)
     }
 
     // 선택 선언 5 (LiveData 사용 시)
@@ -91,7 +94,7 @@ class HomeFragment : BaseFragment(), OnSnapPositionChangeListener {
         homeVM.calendars.observe(this, Observer { calendars ->
             rl_calendar.addItemDecoration(LinePagerIndicatorDecoration(activity!!, false))
 
-            var adapter = object : BaseRecyclerView.Adapter<Pair<Int, Int>, ItemMonthBinding>(
+            adapter = object : BaseRecyclerView.Adapter<Pair<Int, Int>, ItemMonthBinding>(
                     layoutResId = R.layout.item_month,
                     bindingVariableId = BR.icMonth) {
 
@@ -121,6 +124,16 @@ class HomeFragment : BaseFragment(), OnSnapPositionChangeListener {
 
             adapter.replaceAll(calendars)
             rl_calendar.adapter = adapter
+        })
+
+        homeVM.emotions.observe(this, Observer { emotions ->
+            // view에서 할 내용이 없다면, 추후 ViewModel 단으로 옮김
+            homeVM.getCalendarList()
+        })
+
+        homeVM.isFlipLive.observe(this, Observer { isFlip ->
+
+
         })
     }
 

@@ -6,18 +6,22 @@ import androidx.lifecycle.MutableLiveData
 import io.reactivex.schedulers.Schedulers
 import yapp14th.co.kr.myplant.base.BaseViewModel
 import yapp14th.co.kr.myplant.ui.main.tab1_home.domain.repository.HomeRepositoryImpl
-import yapp14th.co.kr.myplant.ui.main.tab1_home.domain.usecase.GetCalendarList
-import yapp14th.co.kr.myplant.ui.main.tab1_home.domain.usecase.GetYearList
+import yapp14th.co.kr.myplant.ui.main.tab1_home.domain.usecase.GetCalendars
+import yapp14th.co.kr.myplant.ui.main.tab1_home.domain.usecase.GetYearEmotions
+import yapp14th.co.kr.myplant.ui.main.tab1_home.domain.usecase.GetYears
 import yapp14th.co.kr.myplant.utils.getCurrentMonth
 import yapp14th.co.kr.myplant.utils.getCurrentYear
-import java.util.*
 
 class HomeViewModel(app: Application) : BaseViewModel(app) {
-    var year = ObservableField<Int>()
-    var month = ObservableField<Int>()
+    var currentYear = ObservableField<Int>()
+    var currentMonth = ObservableField<Int>()
+
+    val isFlip = ObservableField<Boolean>()
+    val isFlipLive = MutableLiveData<Boolean>()
 
     var calendars = MutableLiveData<List<Pair<Int, Int>>>()
     val years = MutableLiveData<List<Int>>()
+    val emotions = MutableLiveData<List<CalendarMonth>>()
 
     private val repositoryImpl = HomeRepositoryImpl()
 
@@ -25,11 +29,11 @@ class HomeViewModel(app: Application) : BaseViewModel(app) {
         var tempYear = getCurrentYear()
         var tempMonth = getCurrentMonth()
 
-        year.set(tempYear)
-        month.set(tempMonth)
+        currentYear.set(tempYear)
+        currentMonth.set(tempMonth)
 
         // 년도 spinner update
-        GetYearList(repositoryImpl, Schedulers.io()).invoke(
+        GetYears(repositoryImpl, Schedulers.io()).invoke(
                 currentYear = getCurrentYear(),
                 success = { list ->
                     years.value = list
@@ -38,11 +42,11 @@ class HomeViewModel(app: Application) : BaseViewModel(app) {
                     System.out.println(t)
                 })
 
-        getCalendarList()
+        getEmotionsList()
     }
 
     fun getCalendarList(year: Int = getCurrentYear()) {
-        GetCalendarList(repositoryImpl, Schedulers.io()).invoke(
+        GetCalendars(repositoryImpl, Schedulers.io()).invoke(
                 year = year,
                 success = { list ->
                     calendars.value = list
@@ -52,7 +56,24 @@ class HomeViewModel(app: Application) : BaseViewModel(app) {
                 })
     }
 
+    fun flipAndFlop(isStartFlip : Boolean){
+        isFlip.set(isStartFlip)
+        isFlipLive.value = isStartFlip
+    }
+
     override fun onCleared() {
         super.onCleared()
+    }
+
+    fun getEmotionsList(year : Int = getCurrentYear()) {
+        GetYearEmotions(repositoryImpl, Schedulers.io()).invoke(
+                year = year,
+                success = {list ->
+                    emotions.value = list
+                },
+                error = {t ->
+                    System.out.println(t)
+                }
+        )
     }
 }

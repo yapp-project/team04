@@ -19,23 +19,53 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fitsSystemWindows="true"
-        android:orientation="vertical">
-
-        android:paddingTop="56dp"
-        android:fitsSystemWindows="true"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:paddingTop="56dp">
 
         <Spinner
             android:id="@+id/sp_year"
-            android:layout_width="wrap_content"
             replaceAll="@{homeVM.years}"
-            android:layout_height="wrap_content"/>
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rl_calendar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_marginTop="@dimen/one_half_margin"
+            android:layout_marginRight="44dp">
+
+            <ImageView
+                android:id="@+id/btn_flip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/btn_flip_background"
+                android:padding="@dimen/single_margin"
+                android:scaleType="centerInside"
+                android:src="@drawable/btn_flip"
+                android:visibility="visible"
+                android:onClick="@{() -> homeVM.flipAndFlop(true)}"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+            <ImageView
+                android:id="@+id/btn_flop"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/btn_flop_background"
+                android:padding="@dimen/single_margin"
+                android:scaleType="centerInside"
+                android:src="@drawable/btn_flop"
+                android:visibility="invisible"
+                android:onClick="@{() -> homeVM.flipAndFlop(false)}"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
         <!--<de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"-->
         <!--android:id="@+id/profile_image"-->
         <!--android:layout_width="96dp"-->
