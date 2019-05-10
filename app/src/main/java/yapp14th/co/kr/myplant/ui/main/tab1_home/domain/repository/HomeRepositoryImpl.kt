@@ -23,17 +23,17 @@ class HomeRepositoryImpl : HomeRepository {
                 }
     }
 
-    override fun getCalendars(year: Int, scheduler: Scheduler, success: (calendars: List<Pair<Int, Int>>) -> Unit, error: (throwable: Throwable) -> Unit): Disposable {
-        return mockHomeSource.getCalendars(year)
-                .subscribeOn(scheduler)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ calendars ->
-                    success(calendars)
-                })
-                { t ->
-                    error(t)
-                }
-    }
+//    override fun getCalendars(year: Int, scheduler: Scheduler, success: (calendars: List<Pair<Int, Int>>) -> Unit, error: (throwable: Throwable) -> Unit): Disposable {
+//        return mockHomeSource.getCalendars(year)
+//                .subscribeOn(scheduler)
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe({ calendars ->
+//                    success(calendars)
+//                })
+//                { t ->
+//                    error(t)
+//                }
+//    }
 
     override fun getYearEmotions(year: Int, scheduler: Scheduler, success: (emotions: List<CalendarMonth>) -> Unit, error: (throwable: Throwable) -> Unit): Disposable {
         return remoteHomeSource.getYearEmotions(year)

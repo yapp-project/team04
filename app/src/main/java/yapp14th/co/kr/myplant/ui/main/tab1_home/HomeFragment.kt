@@ -1,6 +1,7 @@
 package yapp14th.co.kr.myplant.ui.main.tab1_home
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -32,7 +33,7 @@ import yapp14th.co.kr.myplant.utils.getMonthDay
 class HomeFragment : BaseFragment(), OnSnapPositionChangeListener {
     // 선택 선언 2_1 (데이터 바인딩)
     private lateinit var binding: FragmentHomeBinding
-    private lateinit var adapter: BaseRecyclerView.Adapter<Pair<Int, Int>, ItemMonthBinding>
+    private lateinit var adapter: BaseRecyclerView.Adapter<CalendarMonth, ItemMonthBinding>
 
     // 선택 선언 3_1 (ViewModel)
     val homeVM: HomeViewModel by lazy {
@@ -41,6 +42,9 @@ class HomeFragment : BaseFragment(), OnSnapPositionChangeListener {
     }
 
     override fun onSnapPositionChange(position: Int) {
+        homeVM.releasePrevPosition()
+        // adapter.replaceItem(homeVM.getCurrentMonthEmotions(), homeVM.getCurrentMonthData())
+
         homeVM.currentMonth.set(position + 1)
     }
 
@@ -68,10 +72,18 @@ class HomeFragment : BaseFragment(), OnSnapPositionChangeListener {
         super.onViewCreated(view, savedInstanceState)
 
         val ll = LinearLayoutManager(activity, RecyclerView.HORIZONTAL, false)
+        ll.scrollToPosition(homeVM.currentMonth.get() ?: 1 - 1)
         rl_calendar.layoutManager = ll
 
         val snapHelper = PagerSnapHelper()
+        val scrollListener = SnapOnScrollListener(snapHelper, SnapOnScrollListener.Behavior.NOTIFY_ON_SCROLL, object : OnSnapPositionChangeListener {
+            override fun onSnapPositionChange(position: Int) {
+                homeVM.currentMonth.set(position + 1)
+                // Log.d("HomeFragment : ", "currentMonth : ${position + 1}")
+            }
+        })
         snapHelper.attachToRecyclerView(rl_calendar)
+        rl_calendar.addOnScrollListener(scrollListener)
 
         rl_calendar.attachSnapHelperWithListener(snapHelper, SnapOnScrollListener.Behavior.NOTIFY_ON_SCROLL, this)
         rl_calendar.setItemViewCacheSize(12)
@@ -92,9 +104,14 @@ class HomeFragment : BaseFragment(), OnSnapPositionChangeListener {
         })
 
         homeVM.calendars.observe(this, Observer { calendars ->
+
+        })
+
+        homeVM.emotions.observe(this, Observer { emotions ->
+            // view에서 할 내용이 없다면, 추후 ViewModel 단으로 옮김
             rl_calendar.addItemDecoration(LinePagerIndicatorDecoration(activity!!, false))
 
-            adapter = object : BaseRecyclerView.Adapter<Pair<Int, Int>, ItemMonthBinding>(
+            adapter = object : BaseRecyclerView.Adapter<CalendarMonth, ItemMonthBinding>(
                     layoutResId = R.layout.item_month,
                     bindingVariableId = BR.icMonth) {
 
@@ -107,8 +124,8 @@ class HomeFragment : BaseFragment(), OnSnapPositionChangeListener {
                 override fun onBindViewHolder(holder: ViewHolder<ItemMonthBinding>, position: Int) {
                     super.onBindViewHolder(holder, position)
 
-                    var year = calendars[position].first
-                    var month = calendars[position].second
+                    var year = emotions[position].year.toInt()
+                    var month = emotions[position].month.toInt()
 
                     holder.itemView.cv_calendar.topbarVisible = false
                     holder.itemView.cv_calendar.state().edit()
@@ -122,18 +139,15 @@ class HomeFragment : BaseFragment(), OnSnapPositionChangeListener {
                 }
             }
 
-            adapter.replaceAll(calendars)
+            adapter.replaceAll(emotions)
             rl_calendar.adapter = adapter
         })
 
-        homeVM.emotions.observe(this, Observer { emotions ->
-            // view에서 할 내용이 없다면, 추후 ViewModel 단으로 옮김
-            homeVM.getCalendarList()
-        })
-
         homeVM.isFlipLive.observe(this, Observer { isFlip ->
-
-
+            if (isFlip) {
+                // 추후 바꿔야 할 필요성이 있어보임
+                // adapter.replaceItem(homeVM.getCurrentMonthEmotions(), homeVM.getCurrentMonthData())
+            }
         })
     }
 

@@ -12,12 +12,12 @@ interface HomeRepository {
             error: (throwable: Throwable) -> Unit
     ): Disposable
 
-    fun getCalendars(
-            year : Int,
-            scheduler: Scheduler,
-            success: (calendars: List<Pair<Int, Int>>) -> Unit,
-            error: (throwable: Throwable) -> Unit
-    ): Disposable
+//    fun getCalendars(
+//            year : Int,
+//            scheduler: Scheduler,
+//            success: (calendars: List<Pair<Int, Int>>) -> Unit,
+//            error: (throwable: Throwable) -> Unit
+//    ): Disposable
 
     fun getYearEmotions(
             year : Int,

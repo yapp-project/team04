@@ -33,15 +33,14 @@ class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implements Vi
     private String extra;
 
 
-   private int[] colorset;
-   int red;
-   int blue;
-   int green;
-   int color;
+    private int[] colorset;
+    int red;
+    int blue;
+    int green;
+    int color;
 
 
-
-    public MyAdapter(String[] dataset,int[] colorset) {
+    public MyAdapter(String[] dataset, int[] colorset) {
         this.dataset = dataset;
         this.colorset = colorset;
     }
@@ -83,10 +82,10 @@ class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implements Vi
 
     @Override
     public void onClick(View view) {
-        Intent intent = new Intent(view.getContext() , Main4Activity.class);
+        Intent intent = new Intent(view.getContext(), Main4Activity.class);
         intent.putExtra("name", extra);
         view.getContext().startActivity(intent);
-        ((Main3Activity)view.getContext()).finish();
+        ((Main3Activity) view.getContext()).finish();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements ColorPickerView.OnColorChangedListener {
@@ -127,7 +126,7 @@ class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implements Vi
             intro_sb_brightness = color_pick.findViewById(R.id.intro_sb_brightness);
             intro_sb_chroma = color_pick.findViewById(R.id.intro_sb_chroma);
             hexcode_tv = color_pick.findViewById(R.id.hex_code_et);
-            colortest.init(this,colorset[0],colorset[1],colorset[2]);
+            colortest.init(this, colorset[0], colorset[1], colorset[2]);
 
             //명도 변경
             intro_sb_brightness.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -135,8 +134,8 @@ class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implements Vi
                 public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                     float[] hsv = new float[3];
                     Color.RGBToHSV(red, green, blue, hsv);
-                    hsv[2] = (float)(intro_sb_brightness.getProgress())/100;
-                    colortest.changeValue(ViewHolder.this::colorChanged,hsv);
+                    hsv[2] = (float) (intro_sb_brightness.getProgress()) / 100;
+                    colortest.changeValue(ViewHolder.this::colorChanged, hsv);
                 }
 
                 @Override
@@ -155,8 +154,8 @@ class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implements Vi
                 public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                     float[] hsv = new float[3];
                     Color.RGBToHSV(red, green, blue, hsv);
-                    hsv[1] = (float)(intro_sb_chroma.getProgress())/100;
-                    colortest.changeChroma(ViewHolder.this::colorChanged,hsv);
+                    hsv[1] = (float) (intro_sb_chroma.getProgress()) / 100;
+                    colortest.changeChroma(ViewHolder.this::colorChanged, hsv);
                 }
 
                 @Override
@@ -191,7 +190,7 @@ class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implements Vi
 
         }
 
-        public void colorChanged(int color,int red,int green,int blue){
+        public void colorChanged(int color, int red, int green, int blue) {
 
             red = red;
             green = green;
@@ -201,8 +200,8 @@ class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implements Vi
             G_tv.setText(String.valueOf(green));
             B_tv.setText(String.valueOf(blue));
             hexcode_tv.setText(String.format("#%04X", color));
-            intro_sb_brightness.getProgressDrawable().setColorFilter(Color.BLACK, PorterDuff.Mode.SRC_IN );
-            intro_sb_chroma.getProgressDrawable().setColorFilter(color, PorterDuff.Mode.SRC_IN );
+            intro_sb_brightness.getProgressDrawable().setColorFilter(Color.BLACK, PorterDuff.Mode.SRC_IN);
+            intro_sb_chroma.getProgressDrawable().setColorFilter(color, PorterDuff.Mode.SRC_IN);
         }
     }
 

@@ -6,7 +6,6 @@ import androidx.lifecycle.MutableLiveData
 import io.reactivex.schedulers.Schedulers
 import yapp14th.co.kr.myplant.base.BaseViewModel
 import yapp14th.co.kr.myplant.ui.main.tab1_home.domain.repository.HomeRepositoryImpl
-import yapp14th.co.kr.myplant.ui.main.tab1_home.domain.usecase.GetCalendars
 import yapp14th.co.kr.myplant.ui.main.tab1_home.domain.usecase.GetYearEmotions
 import yapp14th.co.kr.myplant.ui.main.tab1_home.domain.usecase.GetYears
 import yapp14th.co.kr.myplant.utils.getCurrentMonth
@@ -45,19 +44,21 @@ class HomeViewModel(app: Application) : BaseViewModel(app) {
         getEmotionsList()
     }
 
-    fun getCalendarList(year: Int = getCurrentYear()) {
-        GetCalendars(repositoryImpl, Schedulers.io()).invoke(
-                year = year,
-                success = { list ->
-                    calendars.value = list
-                },
-                error = { t ->
-                    System.out.println(t)
-                })
-    }
+//    fun getCalendarList(year: Int = getCurrentYear()) {
+//        GetCalendars(repositoryImpl, Schedulers.io()).invoke(
+//                year = year,
+//                success = { list ->
+//                    calendars.value = list
+//                },
+//                error = { t ->
+//                    System.out.println(t)
+//                })
+//    }
 
     fun flipAndFlop(isStartFlip : Boolean){
         isFlip.set(isStartFlip)
+        emotions.value?.get(getCurrentMonthData())?.init = false
+        emotions.value?.get(getCurrentMonthData())?.fliped = isStartFlip
         isFlipLive.value = isStartFlip
     }
 
@@ -75,5 +76,12 @@ class HomeViewModel(app: Application) : BaseViewModel(app) {
                     System.out.println(t)
                 }
         )
+    }
+
+    fun getCurrentMonthData() = currentMonth.get()!! - 1
+    fun getCurrentMonthEmotions() = emotions.value?.get(getCurrentMonthData())
+
+    fun releasePrevPosition() {
+        emotions.value?.get(getCurrentMonthData())?.init = true
     }
 }
