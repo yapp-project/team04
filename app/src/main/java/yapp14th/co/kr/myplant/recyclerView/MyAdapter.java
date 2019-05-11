@@ -32,10 +32,7 @@ import static android.content.Context.MODE_PRIVATE;
 
 class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implements View.OnClickListener {
     private String[] dataset;
-    private String last_emotion;
-
-
-   private int[] colorset;
+   private int[] color_circle_set;
 
 
    int red;
@@ -44,9 +41,9 @@ class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implements Vi
     public SharedPreferences sharedPreferences;
     Boolean et_show;
 
-    public MyAdapter(String[] dataset,int[] colorset) {
+    public MyAdapter(String[] dataset,int[] color_circle_set) {
         this.dataset = dataset;
-        this.colorset = colorset;
+        this.color_circle_set = color_circle_set;
     }
 
     @NonNull
@@ -59,10 +56,10 @@ class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implements Vi
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder,int position) {
 
         holder.num.setText("0" + (position + 1));
-        if (position != 7) {
+        if (position!= 7) {
             holder.last.setVisibility(View.GONE);
             holder.input.setVisibility(View.GONE);
             holder.name.setVisibility(View.VISIBLE);
@@ -77,9 +74,6 @@ class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implements Vi
             holder.button.setVisibility(View.VISIBLE);
             holder.button.setOnClickListener(this);
             et_show = true;
-            SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.putString(holder.input.getText().toString(),holder.hexcode_tv.getText().toString());
-            editor.commit();
             //Log.d(holder.input.getText().toString(),holder.hexcode_tv.getText().toString());
         }
 
@@ -93,7 +87,6 @@ class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implements Vi
     @Override
     public void onClick(View view) {
 
-        dataset[7] = last_emotion;
         Intent intent = new Intent(view.getContext() , Main4Activity.class);
         intent.putExtra("emotion", dataset);
         view.getContext().startActivity(intent);
@@ -140,7 +133,7 @@ class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implements Vi
             intro_sb_brightness = color_pick.findViewById(R.id.intro_sb_brightness);
             intro_sb_chroma = color_pick.findViewById(R.id.intro_sb_chroma);
             hexcode_tv = color_pick.findViewById(R.id.hex_code_et);
-            colortest.init(this,colorset[0],colorset[1],colorset[2]);
+            colortest.init(this,color_circle_set[0],color_circle_set[1],color_circle_set[2]);
 
 
             //명도 변경
@@ -199,14 +192,18 @@ class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implements Vi
                 @Override
                 public void afterTextChanged(Editable editable) {
 
-                    String extra = input.getText().toString();
-                    last_emotion = extra;
+                    String last_emotion = input.getText().toString();
+                    Log.d("last",last_emotion);
+                    dataset[7] = last_emotion;
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putString(input.getText().toString(),hexcode_tv.getText().toString());
+                    editor.commit();
                 }
             });
 
         }
 
-        public void colorChanged(int color,int red,int green,int blue){
+        public void colorChanged(int color,int red,int green,int blue) {
 
             red = red;
             green = green;
@@ -216,15 +213,19 @@ class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implements Vi
             G_tv.setText(String.valueOf(green));
             B_tv.setText(String.valueOf(blue));
             hexcode_tv.setText(String.format("#%04X", color));
-            intro_sb_brightness.getProgressDrawable().setColorFilter(Color.BLACK, PorterDuff.Mode.SRC_IN );
-            intro_sb_chroma.getProgressDrawable().setColorFilter(color, PorterDuff.Mode.SRC_IN );
+            intro_sb_brightness.getProgressDrawable().setColorFilter(Color.BLACK, PorterDuff.Mode.SRC_IN);
+            intro_sb_chroma.getProgressDrawable().setColorFilter(color, PorterDuff.Mode.SRC_IN);
 
             SharedPreferences.Editor editor = sharedPreferences.edit();
-            if(et_show)
-                editor.putString(input.getText().toString(),hexcode_tv.getText().toString());
-            else
-                editor.putString(name.getText().toString(),hexcode_tv.getText().toString());
+            if (et_show) //사용자 정의 감정 색 선택
+                editor.putString(input.getText().toString(), hexcode_tv.getText().toString());
+
+            else // 정해진 감정 색 선택
+                editor.putString(name.getText().toString(), hexcode_tv.getText().toString());
             editor.commit();
+
+            Log.d("emottt1", sharedPreferences.getString(input.getText().toString(),"#0000000"));
+            Log.d("emottt", sharedPreferences.getString(name.getText().toString(),"#0000000"));
 
         }
     }
