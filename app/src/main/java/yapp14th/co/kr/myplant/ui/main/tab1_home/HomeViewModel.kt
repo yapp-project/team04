@@ -92,6 +92,6 @@ class HomeViewModel(app: Application) : BaseViewModel(app) {
 
 
 //    fun releasePrevPosition() {
-//        emotions.value?.get(getCurrentMonthData())?.init = true
+//        emotionsColor.value?.get(getCurrentMonthData())?.init = true
 //    }
 }

@@ -27,21 +27,22 @@ import androidx.recyclerview.widget.RecyclerView;
 import yapp14th.co.kr.myplant.MyApplication;
 import yapp14th.co.kr.myplant.R;
 import yapp14th.co.kr.myplant.components.ColorPickerView;
+
 import static android.content.Context.MODE_PRIVATE;
 
 
 class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implements View.OnClickListener {
     private String[] dataset;
-   private int[] color_circle_set;
+    private int[] color_circle_set;
 
 
-   int red;
-   int blue;
-   int green;
+    int red;
+    int blue;
+    int green;
     public SharedPreferences sharedPreferences;
     Boolean et_show;
 
-    public MyAdapter(String[] dataset,int[] color_circle_set) {
+    public MyAdapter(String[] dataset, int[] color_circle_set) {
         this.dataset = dataset;
         this.color_circle_set = color_circle_set;
     }
@@ -56,10 +57,10 @@ class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implements Vi
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder,int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
         holder.num.setText("0" + (position + 1));
-        if (position!= 7) {
+        if (position != 7) {
             holder.last.setVisibility(View.GONE);
             holder.input.setVisibility(View.GONE);
             holder.name.setVisibility(View.VISIBLE);
@@ -86,7 +87,7 @@ class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implements Vi
 
     @Override
     public void onClick(View view) {
-        Intent intent = new Intent(view.getContext() , Main4Activity.class);
+        Intent intent = new Intent(view.getContext(), Main4Activity.class);
         intent.putExtra("emotion", dataset);
         view.getContext().startActivity(intent);
         ((Main3Activity) view.getContext()).finish();
@@ -110,11 +111,10 @@ class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implements Vi
         private SeekBar intro_sb_chroma;
 
 
-
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            sharedPreferences = itemView.getContext().getSharedPreferences("sFile",MODE_PRIVATE);
+            sharedPreferences = itemView.getContext().getSharedPreferences("sFile", MODE_PRIVATE);
             num = itemView.findViewById(R.id.num);
             name = itemView.findViewById(R.id.name);
             last = itemView.findViewById(R.id.last);
@@ -132,7 +132,7 @@ class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implements Vi
             intro_sb_brightness = color_pick.findViewById(R.id.intro_sb_brightness);
             intro_sb_chroma = color_pick.findViewById(R.id.intro_sb_chroma);
             hexcode_tv = color_pick.findViewById(R.id.hex_code_et);
-            colortest.init(this,color_circle_set[0],color_circle_set[1],color_circle_set[2]);
+            colortest.init(this, color_circle_set[0], color_circle_set[1], color_circle_set[2]);
 
             //명도 변경
             intro_sb_brightness.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -191,10 +191,10 @@ class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implements Vi
                 public void afterTextChanged(Editable editable) {
 
                     String last_emotion = input.getText().toString();
-                    Log.d("last",last_emotion);
+                    Log.d("last", last_emotion);
                     dataset[7] = last_emotion;
                     SharedPreferences.Editor editor = sharedPreferences.edit();
-                    editor.putString(input.getText().toString(),hexcode_tv.getText().toString());
+                    editor.putString(input.getText().toString(), hexcode_tv.getText().toString());
                     editor.commit();
                 }
             });
@@ -221,8 +221,8 @@ class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implements Vi
                 editor.putString(name.getText().toString(), hexcode_tv.getText().toString());
             editor.commit();
 
-            Log.d("emottt1", sharedPreferences.getString(input.getText().toString(),"#0000000"));
-            Log.d("emottt", sharedPreferences.getString(name.getText().toString(),"#0000000"));
+            Log.d("emottt1", sharedPreferences.getString(input.getText().toString(), "#0000000"));
+            Log.d("emottt", sharedPreferences.getString(name.getText().toString(), "#0000000"));
         }
     }
 

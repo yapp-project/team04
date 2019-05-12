@@ -22,6 +22,7 @@ fun getMonthDay(year: Int, month: Int): Int {
 
 fun getCurrentYear() = Calendar.getInstance().get(Calendar.YEAR)
 fun getCurrentMonth() = Calendar.getInstance().get(Calendar.MONTH)
+fun getCurrentDate() = Calendar.getInstance().get(Calendar.DATE)
 fun getEmotionsList() = arrayListOf(
         "기쁨",
         "행복",

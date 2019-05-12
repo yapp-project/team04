@@ -9,7 +9,7 @@ import java.util.*
 
 class InsertViewModel(app: Application) : AndroidViewModel(app) {
     var insertDate = SimpleDateFormat("MM월 dd일").format(Date())
-    var emotions = arrayListOf(
+    var emotionsColor = arrayListOf(
             SharedPreferenceUtil.getStringData(SharedPreferenceUtil.EMOTION_1),
             SharedPreferenceUtil.getStringData(SharedPreferenceUtil.EMOTION_2),
             SharedPreferenceUtil.getStringData(SharedPreferenceUtil.EMOTION_3),
@@ -19,6 +19,10 @@ class InsertViewModel(app: Application) : AndroidViewModel(app) {
             SharedPreferenceUtil.getStringData(SharedPreferenceUtil.EMOTION_7),
             SharedPreferenceUtil.getStringData(SharedPreferenceUtil.EMOTION_8)
     )
+
+//    var emotionsTitle = app.resources.getStringArray(R.array.emotions).toMutableList().apply {
+//        add(SharedPreferenceUtil.getStringData(SharedPreferenceUtil.EMOTION_1)
+//    }
 
     override fun onCleared() {
         super.onCleared()

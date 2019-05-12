@@ -34,7 +34,7 @@ public class Main4Activity extends AppCompatActivity {
         Intent intent = getIntent();
         String[] emotion = intent.getStringArrayExtra("emotion");
 
-        SharedPreferences pref= getSharedPreferences("sFile",MODE_PRIVATE);
+        SharedPreferences pref = getSharedPreferences("sFile", MODE_PRIVATE);
 
         binding.emotion1.setText(emotion[0]);
         binding.emotion2.setText(emotion[1]);
@@ -44,7 +44,6 @@ public class Main4Activity extends AppCompatActivity {
         binding.emotion6.setText(emotion[5]);
         binding.emotion7.setText(emotion[6]);
         binding.emotion8.setText(emotion[7]);
-
 
         binding.emotion1Iv.setColorFilter(Color.parseColor(pref.getString(emotion[0], "#000000")));
         binding.emotion2Iv.setColorFilter(Color.parseColor(pref.getString(emotion[1], "#000000")));
@@ -56,7 +55,7 @@ public class Main4Activity extends AppCompatActivity {
         binding.emotion8Iv.setColorFilter(Color.parseColor(pref.getString(emotion[7], "#000000")));
 
         binding.finishBtn.setOnClickListener(view -> {
-            startActivity(new Intent(getApplicationContext(), MainActivity.class));
+            startActivity(new Intent(getApplicationContext(), InsertActivity.class));
             finish();
         });
     }
