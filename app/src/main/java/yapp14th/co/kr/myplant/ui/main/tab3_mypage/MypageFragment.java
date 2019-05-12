@@ -1,9 +1,11 @@
 package yapp14th.co.kr.myplant.ui.main.tab3_mypage;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -16,6 +18,9 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 import yapp14th.co.kr.myplant.R;
 import yapp14th.co.kr.myplant.base.BaseFragment;
+import yapp14th.co.kr.myplant.recyclerView.Main3Activity;
+
+
 
 // TODO 필수 선언 1. 기본 레이아웃 설정
 // TODO 필수 선언 2. 데이터 바인딩 사용할지 말지 결정
@@ -85,7 +90,22 @@ public class MypageFragment extends BaseFragment {
         TextView tv_emotion_num = view.findViewById(R.id.tv_emotion_num);
         TextView tv_illus_num = view.findViewById(R.id.tv_illus_num);
 
-        tv_emotion_num.setText(125 +"개");
+
+
+//        color_joy.setColorFilter(parseColor("#fecd13"));
+
+        ImageView mypage_color_change=view.findViewById(R.id.mypage_colorchange);
+
+//        mypage_color_change.setOnClickListener(new View.OnClickListener() {
+//                                                   @Override
+//                                                   public void onClick(View v) {
+//                                                       Intent startIntent = new Intent(getActivity(), Main3Activity.class); //일단은 이 화면으로 했음
+//                                                       startActivity(startIntent);
+//                                                   }
+//                                               });
+
+
+        tv_emotion_num.setText(125 + "개");
         tv_illus_num.setText(4 + "개");
     }
 }

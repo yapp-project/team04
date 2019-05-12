@@ -86,11 +86,10 @@ class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implements Vi
 
     @Override
     public void onClick(View view) {
-
         Intent intent = new Intent(view.getContext() , Main4Activity.class);
         intent.putExtra("emotion", dataset);
         view.getContext().startActivity(intent);
-        ((Main3Activity)view.getContext()).finish();
+        ((Main3Activity) view.getContext()).finish();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements ColorPickerView.OnColorChangedListener {
@@ -135,15 +134,14 @@ class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implements Vi
             hexcode_tv = color_pick.findViewById(R.id.hex_code_et);
             colortest.init(this,color_circle_set[0],color_circle_set[1],color_circle_set[2]);
 
-
             //명도 변경
             intro_sb_brightness.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
                 @Override
                 public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                     float[] hsv = new float[3];
                     Color.RGBToHSV(red, green, blue, hsv);
-                    hsv[2] = (float)(intro_sb_brightness.getProgress())/100;
-                    colortest.changeValue(ViewHolder.this::colorChanged,hsv);
+                    hsv[2] = (float) (intro_sb_brightness.getProgress()) / 100;
+                    colortest.changeValue(ViewHolder.this::colorChanged, hsv);
                 }
 
                 @Override
@@ -162,8 +160,8 @@ class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implements Vi
                 public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                     float[] hsv = new float[3];
                     Color.RGBToHSV(red, green, blue, hsv);
-                    hsv[1] = (float)(intro_sb_chroma.getProgress())/100;
-                    colortest.changeChroma(ViewHolder.this::colorChanged,hsv);
+                    hsv[1] = (float) (intro_sb_chroma.getProgress()) / 100;
+                    colortest.changeChroma(ViewHolder.this::colorChanged, hsv);
                 }
 
                 @Override
@@ -203,8 +201,7 @@ class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implements Vi
 
         }
 
-        public void colorChanged(int color,int red,int green,int blue) {
-
+        public void colorChanged(int color, int red, int green, int blue) {
             red = red;
             green = green;
             blue = blue;
@@ -226,7 +223,6 @@ class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implements Vi
 
             Log.d("emottt1", sharedPreferences.getString(input.getText().toString(),"#0000000"));
             Log.d("emottt", sharedPreferences.getString(name.getText().toString(),"#0000000"));
-
         }
     }
 

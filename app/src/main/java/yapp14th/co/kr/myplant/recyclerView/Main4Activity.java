@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import yapp14th.co.kr.myplant.R;
 import yapp14th.co.kr.myplant.databinding.ActivityMain4Binding;
+import yapp14th.co.kr.myplant.ui.insert.InsertActivity;
 import yapp14th.co.kr.myplant.ui.main.MainActivity;
 
 import android.content.Context;
