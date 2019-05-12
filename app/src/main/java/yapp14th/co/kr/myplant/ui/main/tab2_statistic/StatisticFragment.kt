@@ -43,18 +43,21 @@ class StatisticFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         setChart(view.chart_statistic)
+        view.view_color_excited.setColor(Color.BLACK)
     }
 
     fun setChart(chartView: PieChart){
 
         chartView.setUsePercentValues(true)
-        chartView.description.isEnabled = true
+        chartView.description.isEnabled = false
+        chartView.centerText = "가장 많은 감정은"
+        chartView.legend.isEnabled = false
 
         chartView.isDrawHoleEnabled = true
+        chartView.holeRadius = 95.toFloat()
         chartView.setHoleColor(Color.WHITE)
-        chartView.description = null
-        chartView.animateY(1000, Easing.EaseInOutCubic)
-        var testList = ArrayList<PieEntry>()
+        val testList = ArrayList<PieEntry>()
+
         testList.add(PieEntry(10f))
         testList.add(PieEntry(10f))
         testList.add(PieEntry(10f))
@@ -64,8 +67,10 @@ class StatisticFragment : BaseFragment() {
         testList.add(PieEntry(10f))
         testList.add(PieEntry(10f))
 
-        var dataSet = PieDataSet(testList, "Emotion")
-        var data = PieData(dataSet)
+        val dataSet = PieDataSet(testList, null)
+        dataSet.setColors(intArrayOf(R.color.color373768, R.color.colorAccent), activity)
+        dataSet.setDrawValues(false)
+        val data = PieData(dataSet)
 
         chartView.data = data
 

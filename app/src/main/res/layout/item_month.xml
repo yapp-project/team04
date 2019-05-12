@@ -1,32 +1,126 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
         <variable
             name="icMonth"
-            type="Integer" />
+            type="yapp14th.co.kr.myplant.ui.main.tab1_home.CalendarMonth" />
     </data>
 
-    <LinearLayout
-        android:layout_width="wrap_content"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="304dp"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        app:init="@{icMonth.getInit}"
+        app:setFlipAnimation="@{icMonth.fliped}">
 
-        <com.prolificinteractive.materialcalendarview.MaterialCalendarView
-            android:id="@+id/cv_calendar"
-            android:layout_width="272dp"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/ll_front"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/single_margin"
+            android:layout_margin="@dimen/half_margin"
             android:background="@drawable/img_calendar_background"
-            android:padding="@dimen/double_margin"
-            app:mcv_leftArrow="@color/transparent"
-            app:mcv_monthLabels="@array/custom_months"
-            app:mcv_rightArrow="@color/transparent"
-            app:mcv_selectionColor="#00F"
-            app:mcv_showOtherDates="none"
-            app:mcv_weekDayLabels="@array/custom_weekdays" />
-    </LinearLayout>
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="@+id/ll_back"
+            app:layout_constraintLeft_toLeftOf="@+id/ll_back"
+            app:layout_constraintRight_toRightOf="@+id/ll_back"
+            app:layout_constraintTop_toTopOf="@+id/ll_back">
+
+            <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginVertical="@dimen/one_half_margin"
+                android:fontFamily="sans-serif"
+                android:gravity="center_horizontal"
+                android:letterSpacing="-0.06"
+                android:text="@{@string/default_short_number(icMonth.month)}"
+                android:textColor="#373768"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="3" />
+
+            <com.prolificinteractive.materialcalendarview.MaterialCalendarView
+                android:id="@+id/cv_calendar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/one_half_margin"
+                android:gravity="center"
+                app:layout_constraintBottom_toTopOf="@+id/btn_diary"
+                app:layout_constraintTop_toBottomOf="@+id/tv_title"
+                app:mcv_leftArrow="@color/transparent"
+                app:mcv_monthLabels="@array/custom_months"
+                app:mcv_rightArrow="@color/transparent"
+                app:mcv_selectionColor="#00F"
+                app:mcv_showOtherDates="none"
+                app:mcv_weekDayLabels="@array/custom_weekdays" />
+
+            <ImageView
+                android:id="@+id/btn_diary"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:layout_marginHorizontal="@dimen/one_half_margin"
+                android:layout_marginBottom="@dimen/one_half_margin"
+                android:src="@drawable/btn_diary"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cv_calendar" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/ll_back"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintDimensionRatio="9:11"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/img_picture"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/img_calendar_background_mock" />
+
+            <ImageView
+                android:id="@+id/img_filter"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/img_filter_background_mock"
+                app:layout_constraintBottom_toBottomOf="@+id/img_picture"
+                app:layout_constraintLeft_toLeftOf="@+id/img_picture"
+                app:layout_constraintRight_toRightOf="@+id/img_picture"
+                app:layout_constraintTop_toTopOf="@+id/img_picture" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/one_half_margin"
+                android:orientation="horizontal"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:id="@+id/btn_share"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/btn_share" />
+
+                <ImageView
+                    android:id="@+id/btn_download"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/btn_download" />
+            </LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -16,9 +16,6 @@ class NouseKotlinActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // TODO 필수 선언 4 (툴바 설정)
-        setToolbar(R.color.transparent)
-
         // 선택 선언 4 (프레그먼트 사용 시)
         ActivityUtil.addFragmentToActivity(supportFragmentManager, NouseKotlinFragment.getInstance(), R.id.fl_container)
     }

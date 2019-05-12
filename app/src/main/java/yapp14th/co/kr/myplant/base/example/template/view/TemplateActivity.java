@@ -55,9 +55,6 @@ public class TemplateActivity extends BaseActivity {
 
         super.onCreate(savedInstanceState);
 
-        // TODO 필수 선언 4 (툴바 설정)
-        setToolbar(R.color.transparent);
-
         // 선택 선언 3 (다이얼로그 사용 시)
         dialog = new BaseDialog(TemplateActivity.this);
         openDialog(MyApplication.DIALOG_OK, "제목", "부제목", R.layout.base_dialog,
