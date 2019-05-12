@@ -85,6 +85,7 @@
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+
         android:layout_width="match_parent"
         android:layout_height="354dp"
         android:layout_marginTop="55dp"
@@ -95,12 +96,34 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout">
 
-        <TextView
-            android:id="@+id/color_text"
+        <!--<fragment-->
+            <!--android:id="@+id/color_pick"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_gravity="center">-->
+        <!--</fragment>-->
+        <LinearLayout
+            android:id="@+id/color_pick"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="TextView" />
+            android:layout_gravity="center"
+            android:orientation="vertical"></LinearLayout>
+
     </androidx.cardview.widget.CardView>
+
+
+    <!--<View-->
+        <!--android:id="@+id/color_pick"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="354dp"-->
+        <!--android:layout_marginTop="55dp"-->
+        <!--android:layout_marginHorizontal="2dp"-->
+
+        <!--app:layout_constraintEnd_toEndOf="parent"-->
+        <!--app:layout_constraintStart_toStartOf="parent"-->
+        <!--app:layout_constraintTop_toBottomOf="@+id/linearLayout">-->
+
+    <!--</View>-->
 
     <Button
         android:id="@+id/button"

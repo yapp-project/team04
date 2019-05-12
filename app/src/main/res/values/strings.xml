@@ -12,6 +12,9 @@
     <string name="statistic_anger">분노</string>
     <string name="statistic_petulance">짜증</string>
 
+    <string name="default_number">%d</string>
+    <string name="default_short_number">%d</string>
+
     <string-array name="custom_weekdays">
         <item>mon</item>
         <item>tue</item>

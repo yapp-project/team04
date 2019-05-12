@@ -1,5 +1,6 @@
 package filaroid.co.kr.filaroid.components
 
+import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SnapHelper
 import yapp14th.co.kr.myplant.utils.getSnapPosition

@@ -31,9 +31,6 @@ public class NouseActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // TODO 필수 선언 4 (툴바 설정)
-        setToolbar(R.color.transparent);
-
         FrameLayout fl = findViewById(R.id.fl_container);
         // 선택 선언 4 (프레그먼트 사용 시)
         ActivityUtil.addFragmentToActivity(getSupportFragmentManager(), NouseKotlinFragment.Companion.getInstance(), R.id.fl_container);

@@ -6,8 +6,10 @@ import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.Point
 import android.graphics.Rect
+import android.util.Log
 import android.view.View
 import android.view.ViewGroup
+import android.view.ViewTreeObserver
 import android.view.WindowManager
 import android.view.animation.AccelerateDecelerateInterpolator
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -19,8 +21,8 @@ class LinePagerIndicatorDecoration(context: Context, indicatorEnabled: Boolean) 
 
     private var offset: Int = 0
     private var ctx = context
-    private var colorActive = MyApplication.convertColor(ctx, if (indicatorEnabled) R.color.gray else R.color.transparent)
-    private var colorInactive = MyApplication.convertColor(ctx, if (indicatorEnabled) R.color.white else R.color.black)
+    private var colorActive = MyApplication.convertColor(ctx, if (indicatorEnabled) R.color.white else R.color.black)
+    private var colorInactive = MyApplication.convertColor(ctx, if (indicatorEnabled) R.color.gray else R.color.gray)
 
     /**
      * Height of the space the indicator takes up at the bottom of the view.
@@ -141,18 +143,19 @@ class LinePagerIndicatorDecoration(context: Context, indicatorEnabled: Boolean) 
 
         offset = (getScreenWidth() / 2.toFloat()).toInt() - view.layoutParams.width / 2
         val lp = view.layoutParams as ViewGroup.MarginLayoutParams
-        if (parent.getChildAdapterPosition(view) == 0) {
-            // lp.leftMargin = -120
-            // offset += view.layoutParams.width
-            setupOutRect(outRect, offset / 4, true)
-        } else if (parent.getChildAdapterPosition(view) == state.itemCount - 1) {
-            // lp.rightMargin = 120
-            // offset += view.layoutParams.width
-            setupOutRect(outRect, offset / 4, false)
+
+        when {
+            parent.getChildAdapterPosition(view) == 0 -> {
+                setupOutRect(outRect, offset - lp.leftMargin, true)
+            }
+            parent.getChildAdapterPosition(view) == state.itemCount - 1 -> {
+                setupOutRect(outRect, offset - lp.rightMargin, false)
+            }
         }
     }
 
     private fun setupOutRect(rect: Rect, offset: Int, start: Boolean) {
+        Log.d("margin : ", "$offset")
         if (start) {
             rect.left = offset
         } else {

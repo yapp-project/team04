@@ -54,7 +54,10 @@ dependencies {
     // chart
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
 
+    // view components
     implementation 'com.github.prolificinteractive:material-calendarview:2.0.1'
+    implementation 'com.github.lukedeighton:wheelview:0.4.2'
+
 
     annotationProcessor 'androidx.databinding:databinding-compiler:3.3.1'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
@@ -65,6 +68,9 @@ dependencies {
     implementation 'de.hdodenhof:circleimageview:3.0.0'
     implementation "com.github.skydoves:colorpickerpreference:2.0.0"
 
+    // ReactiveIO
+    implementation 'io.reactivex.rxjava2:rxkotlin:2.3.0'
+    implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
 }
 repositories {
     mavenCentral()
