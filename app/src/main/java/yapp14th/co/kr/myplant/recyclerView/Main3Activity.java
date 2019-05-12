@@ -58,6 +58,8 @@ public class Main3Activity extends AppCompatActivity {
 
         //myDataset = new String[]{"기쁨", "행복", "신남", "평화", "슬픔", "불안", "분노", "짜증"};
         myDataset = getResources().getStringArray(R.array.emotions);
+        myDataset[7] = "짜증";
+
         color_circle_set = new int[]{width, height, radius};
 
         // specify an adapter (see also next example)

@@ -20,9 +20,9 @@ class InsertViewModel(app: Application) : AndroidViewModel(app) {
             SharedPreferenceUtil.getStringData(SharedPreferenceUtil.EMOTION_8)
     )
 
-//    var emotionsTitle = app.resources.getStringArray(R.array.emotions).toMutableList().apply {
-//        add(SharedPreferenceUtil.getStringData(SharedPreferenceUtil.EMOTION_1)
-//    }
+    var emotionsTitle = app.resources.getStringArray(R.array.emotions).toMutableList().apply {
+        add(SharedPreferenceUtil.getStringData(SharedPreferenceUtil.EMOTION_1))
+    }
 
     override fun onCleared() {
         super.onCleared()
