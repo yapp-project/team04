@@ -37,8 +37,8 @@ public class BindingAdapter {
                 final ObjectAnimator oa1 = ObjectAnimator.ofFloat(ll_front, "scaleX", 1f, 0f);
                 final ObjectAnimator oa2 = ObjectAnimator.ofFloat(ll_back, "scaleX", 0f, 1f);
 
-                oa1.setDuration(1000);
-                oa2.setDuration(1000);
+                oa1.setDuration(500);
+                oa2.setDuration(500);
 
                 ll_front.setVisibility(View.VISIBLE);
                 ll_back.setVisibility(View.INVISIBLE);
@@ -62,8 +62,8 @@ public class BindingAdapter {
                 final ObjectAnimator oa1 = ObjectAnimator.ofFloat(ll_back, "scaleX", 1f, 0f);
                 final ObjectAnimator oa2 = ObjectAnimator.ofFloat(ll_front, "scaleX", 0f, 1f);
 
-                oa1.setDuration(1000);
-                oa2.setDuration(1000);
+                oa1.setDuration(500);
+                oa2.setDuration(500);
 
                 ll_back.setVisibility(View.VISIBLE);
                 ll_front.setVisibility(View.INVISIBLE);

@@ -3,6 +3,7 @@ package yapp14th.co.kr.myplant.ui.main.tab1_home
 import android.app.Application
 import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
+import com.prolificinteractive.materialcalendarview.CalendarDay
 import io.reactivex.schedulers.Schedulers
 import yapp14th.co.kr.myplant.base.BaseViewModel
 import yapp14th.co.kr.myplant.ui.main.tab1_home.domain.repository.HomeRepositoryImpl
@@ -55,10 +56,12 @@ class HomeViewModel(app: Application) : BaseViewModel(app) {
 //                })
 //    }
 
-    fun flipAndFlop(isStartFlip : Boolean){
+    fun flipAndFlop(isStartFlip: Boolean) {
         isFlip.set(isStartFlip)
-        emotions.value?.get(getCurrentMonthData())?.init = false
-        emotions.value?.get(getCurrentMonthData())?.fliped = isStartFlip
+        emotions.value?.forEach { emotion ->
+            emotion.init = false
+            emotion.fliped = isStartFlip
+        }
         isFlipLive.value = isStartFlip
     }
 
@@ -66,13 +69,13 @@ class HomeViewModel(app: Application) : BaseViewModel(app) {
         super.onCleared()
     }
 
-    fun getEmotionsList(year : Int = getCurrentYear()) {
+    fun getEmotionsList(year: Int = getCurrentYear()) {
         GetYearEmotions(repositoryImpl, Schedulers.io()).invoke(
                 year = year,
-                success = {list ->
+                success = { list ->
                     emotions.value = list
                 },
-                error = {t ->
+                error = { t ->
                     System.out.println(t)
                 }
         )
@@ -80,8 +83,15 @@ class HomeViewModel(app: Application) : BaseViewModel(app) {
 
     fun getCurrentMonthData() = currentMonth.get()!! - 1
     fun getCurrentMonthEmotions() = emotions.value?.get(getCurrentMonthData())
+    fun getCalendarDays(year: Int, month: Int, maximumDay: Int): HashSet<CalendarDay> =
+            HashSet<CalendarDay>().apply {
+                for (i in 1..maximumDay) {
+                    add(CalendarDay.from(year, month, i))
+                }
+            }
 
-    fun releasePrevPosition() {
-        emotions.value?.get(getCurrentMonthData())?.init = true
-    }
+
+//    fun releasePrevPosition() {
+//        emotions.value?.get(getCurrentMonthData())?.init = true
+//    }
 }

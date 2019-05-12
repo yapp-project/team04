@@ -2,6 +2,7 @@ package yapp14th.co.kr.myplant.recyclerView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import yapp14th.co.kr.myplant.R;
+import yapp14th.co.kr.myplant.ui.insert.InsertActivity;
 import yapp14th.co.kr.myplant.ui.main.MainActivity;
 
 import android.content.Intent;
@@ -24,7 +25,7 @@ public class Main4Activity extends AppCompatActivity {
 
         Button button3 = findViewById(R.id.button3);
         button3.setOnClickListener(view -> {
-            startActivity(new Intent(getApplicationContext(), MainActivity.class));
+            startActivity(new Intent(getApplicationContext(), InsertActivity.class));
             finish();
         });
     }

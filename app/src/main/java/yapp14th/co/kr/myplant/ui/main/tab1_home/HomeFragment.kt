@@ -29,6 +29,7 @@ import yapp14th.co.kr.myplant.databinding.ItemMonthBinding
 import yapp14th.co.kr.myplant.utils.attachSnapHelperWithListener
 import yapp14th.co.kr.myplant.utils.getCurrentYear
 import yapp14th.co.kr.myplant.utils.getMonthDay
+import yapp14th.co.kr.myplant.components.EventDecorator
 
 class HomeFragment : BaseFragment(), OnSnapPositionChangeListener {
     // 선택 선언 2_1 (데이터 바인딩)
@@ -42,7 +43,7 @@ class HomeFragment : BaseFragment(), OnSnapPositionChangeListener {
     }
 
     override fun onSnapPositionChange(position: Int) {
-        homeVM.releasePrevPosition()
+        // homeVM.releasePrevPosition()
         // adapter.replaceItem(homeVM.getCurrentMonthEmotions(), homeVM.getCurrentMonthData())
 
         homeVM.currentMonth.set(position + 1)
@@ -126,14 +127,20 @@ class HomeFragment : BaseFragment(), OnSnapPositionChangeListener {
 
                     var year = emotions[position].year.toInt()
                     var month = emotions[position].month.toInt()
+                    var maximumDay = getMonthDay(year, month)
 
                     holder.itemView.cv_calendar.topbarVisible = false
                     holder.itemView.cv_calendar.state().edit()
                             .setFirstDayOfWeek(DayOfWeek.SUNDAY)
                             .setMinimumDate(CalendarDay.from(year, month, 1))
-                            .setMaximumDate(CalendarDay.from(year, month, getMonthDay(year, month)))
+                            .setMaximumDate(CalendarDay.from(year, month, maximumDay))
                             .setCalendarDisplayMode(CalendarMode.MONTHS)
                             .commit()
+
+                    val eventDecorator = EventDecorator(context!!, homeVM.getCalendarDays(year, month, maximumDay))
+                    holder.itemView.cv_calendar.addDecorator(eventDecorator)
+
+                    holder.itemView.setOnClickListener(null)
 
                     holder.setIsRecyclable(false)
                 }

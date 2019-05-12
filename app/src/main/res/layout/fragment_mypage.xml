@@ -13,7 +13,6 @@
         android:layout_marginLeft="24dp"
         android:layout_marginTop="56dp"
         android:layout_marginRight="24dp"
-
         android:gravity="left"
         android:orientation="horizontal">
 
@@ -35,7 +34,7 @@
             android:letterSpacing="-1.25"
             android:textColor="#373768"
             android:textSize="20sp"
-            tools:text="안녕하세요:-)" />
+            android:text="안녕하세요:-)" />
 
         <ImageView
             android:layout_width="24dp"
@@ -64,7 +63,6 @@
         android:orientation="horizontal">
 
         <LinearLayout
-
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical">
@@ -98,13 +96,13 @@
                 android:id="@+id/tv_emotion_num"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                tools:text="2000개" />
+                android:text="2000개" />
 
             <TextView
                 android:id="@+id/tv_illus_num"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                tools:text="3000개" />
+                android:text="3000개" />
         </LinearLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -112,7 +110,6 @@
             android:layout_height="match_parent">
 
             <Switch
-
                 android:id="@+id/switch1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
