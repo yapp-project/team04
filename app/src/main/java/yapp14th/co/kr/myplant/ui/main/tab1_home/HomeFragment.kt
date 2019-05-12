@@ -1,11 +1,12 @@
 package yapp14th.co.kr.myplant.ui.main.tab1_home
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
 import android.widget.ArrayAdapter
+import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -28,10 +29,12 @@ import yapp14th.co.kr.myplant.databinding.ItemMonthBinding
 import yapp14th.co.kr.myplant.utils.attachSnapHelperWithListener
 import yapp14th.co.kr.myplant.utils.getCurrentYear
 import yapp14th.co.kr.myplant.utils.getMonthDay
+import yapp14th.co.kr.myplant.components.EventDecorator
 
 class HomeFragment : BaseFragment(), OnSnapPositionChangeListener {
     // 선택 선언 2_1 (데이터 바인딩)
     private lateinit var binding: FragmentHomeBinding
+    private lateinit var adapter: BaseRecyclerView.Adapter<CalendarMonth, ItemMonthBinding>
 
     // 선택 선언 3_1 (ViewModel)
     val homeVM: HomeViewModel by lazy {
@@ -40,7 +43,10 @@ class HomeFragment : BaseFragment(), OnSnapPositionChangeListener {
     }
 
     override fun onSnapPositionChange(position: Int) {
-        homeVM.month.set(position + 1)
+        // homeVM.releasePrevPosition()
+        // adapter.replaceItem(homeVM.getCurrentMonthEmotions(), homeVM.getCurrentMonthData())
+
+        homeVM.currentMonth.set(position + 1)
     }
 
     // TODO 필수 선언 1 (기본 레이아웃 설정)
@@ -67,11 +73,21 @@ class HomeFragment : BaseFragment(), OnSnapPositionChangeListener {
         super.onViewCreated(view, savedInstanceState)
 
         val ll = LinearLayoutManager(activity, RecyclerView.HORIZONTAL, false)
+        ll.scrollToPosition(homeVM.currentMonth.get() ?: 1 - 1)
         rl_calendar.layoutManager = ll
 
         val snapHelper = PagerSnapHelper()
+        val scrollListener = SnapOnScrollListener(snapHelper, SnapOnScrollListener.Behavior.NOTIFY_ON_SCROLL, object : OnSnapPositionChangeListener {
+            override fun onSnapPositionChange(position: Int) {
+                homeVM.currentMonth.set(position + 1)
+                // Log.d("HomeFragment : ", "currentMonth : ${position + 1}")
+            }
+        })
         snapHelper.attachToRecyclerView(rl_calendar)
+        rl_calendar.addOnScrollListener(scrollListener)
+
         rl_calendar.attachSnapHelperWithListener(snapHelper, SnapOnScrollListener.Behavior.NOTIFY_ON_SCROLL, this)
+        rl_calendar.setItemViewCacheSize(12)
     }
 
     // 선택 선언 5 (LiveData 사용 시)
@@ -89,9 +105,14 @@ class HomeFragment : BaseFragment(), OnSnapPositionChangeListener {
         })
 
         homeVM.calendars.observe(this, Observer { calendars ->
+
+        })
+
+        homeVM.emotions.observe(this, Observer { emotions ->
+            // view에서 할 내용이 없다면, 추후 ViewModel 단으로 옮김
             rl_calendar.addItemDecoration(LinePagerIndicatorDecoration(activity!!, false))
 
-            var adapter = object : BaseRecyclerView.Adapter<Pair<Int, Int>, ItemMonthBinding>(
+            adapter = object : BaseRecyclerView.Adapter<CalendarMonth, ItemMonthBinding>(
                     layoutResId = R.layout.item_month,
                     bindingVariableId = BR.icMonth) {
 
@@ -104,23 +125,36 @@ class HomeFragment : BaseFragment(), OnSnapPositionChangeListener {
                 override fun onBindViewHolder(holder: ViewHolder<ItemMonthBinding>, position: Int) {
                     super.onBindViewHolder(holder, position)
 
-                    var year = calendars[position].first
-                    var month = calendars[position].second
+                    var year = emotions[position].year.toInt()
+                    var month = emotions[position].month.toInt()
+                    var maximumDay = getMonthDay(year, month)
 
                     holder.itemView.cv_calendar.topbarVisible = false
                     holder.itemView.cv_calendar.state().edit()
                             .setFirstDayOfWeek(DayOfWeek.SUNDAY)
                             .setMinimumDate(CalendarDay.from(year, month, 1))
-                            .setMaximumDate(CalendarDay.from(year, month, getMonthDay(year, month)))
+                            .setMaximumDate(CalendarDay.from(year, month, maximumDay))
                             .setCalendarDisplayMode(CalendarMode.MONTHS)
                             .commit()
+
+                    val eventDecorator = EventDecorator(context!!, homeVM.getCalendarDays(year, month, maximumDay))
+                    holder.itemView.cv_calendar.addDecorator(eventDecorator)
+
+                    holder.itemView.setOnClickListener(null)
 
                     holder.setIsRecyclable(false)
                 }
             }
 
-            adapter.replaceAll(calendars)
+            adapter.replaceAll(emotions)
             rl_calendar.adapter = adapter
+        })
+
+        homeVM.isFlipLive.observe(this, Observer { isFlip ->
+            if (isFlip) {
+                // 추후 바꿔야 할 필요성이 있어보임
+                // adapter.replaceItem(homeVM.getCurrentMonthEmotions(), homeVM.getCurrentMonthData())
+            }
         })
     }
 

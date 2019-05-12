@@ -26,7 +26,7 @@ class ColorPickerView(
     private var CENTER_HUE = 0.00f //채도
     private var CENTER_SATURATION = 0.00f //채도
     private var CENTER_VALUE = 0.00f //채도
-    private var hsv : FloatArray = FloatArray(3)
+    private var hsv: FloatArray = FloatArray(3)
 
     private var unit = 0f
     private var red = 0
@@ -39,17 +39,20 @@ class ColorPickerView(
     private val mCenterPaint: Paint
     private val mColors: IntArray = intArrayOf(-0x10000, -0xff01, -0xffff01, -0xff0001, -0xff0100, -0x100, -0x10000)
 
+    private var pinX = 0f
+    private var pinY = 0f
+
     private var mTrackingCenter: Boolean = false
     private var mHighlightCenter: Boolean = false
-    private var mSaturCenter : Boolean = false
-    private var mValueCenter : Boolean = false
+    private var mSaturCenter: Boolean = false
+    private var mValueCenter: Boolean = false
 
     private var mListener: ColorPickerView.OnColorChangedListener? = null
     private var color: Int = 0
 
     constructor(context: Context?) : this(context, null, 0, 0)
-    constructor(context: Context?, attrs : AttributeSet?) : this(context, attrs, 0, 0)
-    constructor(context: Context?, attrs : AttributeSet?, defStyleAttr: Int) : this(context, attrs, defStyleAttr, 0)
+    constructor(context: Context?, attrs: AttributeSet?) : this(context, attrs, 0, 0)
+    constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) : this(context, attrs, defStyleAttr, 0)
 
     init {
         val s = SweepGradient(0f, 0f, mColors, null)
@@ -71,7 +74,8 @@ class ColorPickerView(
         this.CENTER_Y = height
         this.CENTER_RADIUS = radius
     }
-    fun changeChroma(mListener: ColorPickerView.OnColorChangedListener, hsv : FloatArray){
+
+    fun changeChroma(mListener: ColorPickerView.OnColorChangedListener, hsv: FloatArray) {
         this.mListener = mListener
         this.CENTER_HUE = hsv[0]
         this.CENTER_SATURATION = hsv[1]
@@ -83,7 +87,8 @@ class ColorPickerView(
         invalidate()
 
     }
-    fun changeValue(mListener: ColorPickerView.OnColorChangedListener, hsv : FloatArray){
+
+    fun changeValue(mListener: ColorPickerView.OnColorChangedListener, hsv: FloatArray) {
         this.mListener = mListener
         this.CENTER_HUE = hsv[0]
         this.CENTER_SATURATION = hsv[1]
@@ -98,7 +103,7 @@ class ColorPickerView(
 
 
     interface OnColorChangedListener {
-        fun colorChanged(color: Int,red : Int, green : Int, blue : Int)
+        fun colorChanged(color: Int, red: Int, green: Int, blue: Int)
     }
 
     override fun onDraw(canvas: Canvas) {
@@ -110,7 +115,7 @@ class ColorPickerView(
         canvas.drawOval(RectF(-r, -r, r, r), mPaint)
         canvas.drawCircle(0f, 0f, CENTER_RADIUS.toFloat(), mCenterPaint)
         //Log.d("saturation1",mCenterPaint.color.toString())
-        Color.RGBToHSV(red,green,blue,hsv)
+        Color.RGBToHSV(red, green, blue, hsv)
         //hsv[0] =  mCenterPaint.color.toFloat()
 
         if (mTrackingCenter) {
@@ -129,33 +134,40 @@ class ColorPickerView(
 
             mCenterPaint.style = Paint.Style.FILL
             mCenterPaint.color = c
-            mListener?.colorChanged(mCenterPaint.color,Color.red(mCenterPaint.color),Color.green(mCenterPaint.color),Color.blue(mCenterPaint.color))
+            mListener?.colorChanged(mCenterPaint.color, Color.red(mCenterPaint.color), Color.green(mCenterPaint.color), Color.blue(mCenterPaint.color))
         }
         //채도에 따른 색 변경
-        if(mSaturCenter){
+        if (mSaturCenter) {
             //var hsv : FloatArray = FloatArray(3)
             //hsv[0] = CENTER_HUE
             hsv[1] = CENTER_SATURATION
             //hsv[2] = CENTER_VALUE
-            mCenterPaint.color =  Color.HSVToColor(hsv)
-            Log.d("view/saturation",mCenterPaint.color.toString())
+            mCenterPaint.color = Color.HSVToColor(hsv)
+            Log.d("view/saturation", mCenterPaint.color.toString())
             canvas.drawCircle(0f, 0f, CENTER_RADIUS.toFloat(), mCenterPaint)
             mSaturCenter = false
-            mListener?.colorChanged(mCenterPaint.color,Color.red(mCenterPaint.color),Color.green(mCenterPaint.color),Color.blue(mCenterPaint.color))
+            mListener?.colorChanged(mCenterPaint.color, Color.red(mCenterPaint.color), Color.green(mCenterPaint.color), Color.blue(mCenterPaint.color))
         }
         //명도에 따른 색 변경
-        else if(mValueCenter){
+        else if (mValueCenter) {
             //var hsv : FloatArray = FloatArray(3)
             //hsv[0] = CENTER_HUE
             //hsv[1] = CENTER_SATURATION
             hsv[2] = CENTER_VALUE
-            mCenterPaint.color =  Color.HSVToColor(hsv)
-            Log.d("view/value",mCenterPaint.color.toString())
+            mCenterPaint.color = Color.HSVToColor(hsv)
+            Log.d("view/value", mCenterPaint.color.toString())
             canvas.drawCircle(0f, 0f, CENTER_RADIUS.toFloat(), mCenterPaint)
             mValueCenter = false
-            mListener?.colorChanged(mCenterPaint.color,Color.red(mCenterPaint.color),Color.green(mCenterPaint.color),Color.blue(mCenterPaint.color))
+            mListener?.colorChanged(mCenterPaint.color, Color.red(mCenterPaint.color), Color.green(mCenterPaint.color), Color.blue(mCenterPaint.color))
         }
         //mListener?.colorChanged(mCenterPaint.color,Color.red(mCenterPaint.color),Color.green(mCenterPaint.color),Color.blue(mCenterPaint.color))
+        var scalingValue = Math.sqrt((pinX * pinX + pinY * pinY).toDouble())
+        if (scalingValue != 0.toDouble()) {
+            var targetX = (pinX / scalingValue * r).toFloat()
+            var targetY = (pinY / scalingValue * r).toFloat()
+            canvas.drawLine(0f, 0f, targetX, targetY, mCenterPaint)
+            canvas.drawCircle(targetX, targetY, (CENTER_RADIUS / 4).toFloat(), mCenterPaint)
+        }
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
@@ -287,6 +299,9 @@ class ColorPickerView(
         val y = event.y - CENTER_Y
         val inCenter = java.lang.Math.sqrt((x * x + y * y).toDouble()) <= CENTER_RADIUS
 
+        pinX = x
+        pinY = y
+
         when (event.action) {
             MotionEvent.ACTION_DOWN -> {
                 mTrackingCenter = inCenter
@@ -309,14 +324,14 @@ class ColorPickerView(
                         unit += 1f
                     }
                     mCenterPaint.color = interpColor(mColors, unit)
-                    mListener?.colorChanged(mCenterPaint.color,Color.red(mCenterPaint.color),Color.green(mCenterPaint.color),Color.blue(mCenterPaint.color))
+                    mListener?.colorChanged(mCenterPaint.color, Color.red(mCenterPaint.color), Color.green(mCenterPaint.color), Color.blue(mCenterPaint.color))
 
                     invalidate()
                 }
             MotionEvent.ACTION_UP ->
                 if (mTrackingCenter) {
                     if (inCenter) {
-                        mListener?.colorChanged(mCenterPaint.color,Color.red(mCenterPaint.color),Color.green(mCenterPaint.color),Color.blue(mCenterPaint.color))
+                        mListener?.colorChanged(mCenterPaint.color, Color.red(mCenterPaint.color), Color.green(mCenterPaint.color), Color.blue(mCenterPaint.color))
                     }
                     mTrackingCenter = false    // so we draw w/o halo
 
