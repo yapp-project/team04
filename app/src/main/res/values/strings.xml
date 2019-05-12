@@ -25,6 +25,17 @@
         <item>sun</item>
     </string-array>
 
+    <string-array name="emotions">
+        <item>기쁨</item>
+        <item>행복</item>
+        <item>신남</item>
+        <item>평화</item>
+        <item>슬픔</item>
+        <item>불안</item>
+        <item>분노</item>
+        <item>짜증</item>
+    </string-array>
+
     <string-array name="custom_months">
         <item>1</item>
         <item>2</item>

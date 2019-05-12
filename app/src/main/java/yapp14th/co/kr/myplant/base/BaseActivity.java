@@ -7,6 +7,7 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import buv.co.kr.base.BaseDialog;
+import io.realm.Realm;
 import yapp14th.co.kr.myplant.R;
 
 public abstract class BaseActivity extends AppCompatActivity {
@@ -73,4 +74,9 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected abstract int getLayoutRes();
 
     protected abstract boolean getIsUseDataBinding();
+
+    public Realm getRealmInstance() {
+        Realm.init(getApplicationContext());
+        return Realm.getDefaultInstance();
+    }
 }

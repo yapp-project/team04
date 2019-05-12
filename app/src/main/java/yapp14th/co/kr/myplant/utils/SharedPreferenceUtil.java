@@ -25,7 +25,7 @@ public class SharedPreferenceUtil {
 
     public static String getStringData(String key) {
         if (key.startsWith("EMOTION"))
-            return sharedPreferences.getString(key, "#2363" + ((int) (Math.random() * 5000 + 999)));
+            return sharedPreferences.getString(key, "#23" + ((int) (Math.random() * 5000 + 999)) + "23");
         return sharedPreferences.getString(key, "");
     }
 

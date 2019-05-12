@@ -31,9 +31,9 @@ public class Main3Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main3);
 
-        width = (int)MyApplication.convertDpToPixel(90F, this);
-        height = (int)MyApplication.convertDpToPixel(90F, this);
-        radius = (int)MyApplication.convertDpToPixel(25F, this);
+        width = (int) MyApplication.convertDpToPixel(90F, this);
+        height = (int) MyApplication.convertDpToPixel(90F, this);
+        radius = (int) MyApplication.convertDpToPixel(25F, this);
 
         init();
 
@@ -56,12 +56,13 @@ public class Main3Activity extends AppCompatActivity {
         ((LinearLayoutManager) layoutManager).setOrientation(LinearLayoutManager.HORIZONTAL);
         recyclerView.setLayoutManager(layoutManager);
 
-        myDataset = new String[]{"기쁨", "행복", "신남", "평화", "슬픔", "불안", "분노", "짜증"};
-        color_circle_set = new int[]{width,height,radius};
+        //myDataset = new String[]{"기쁨", "행복", "신남", "평화", "슬픔", "불안", "분노", "짜증"};
+        myDataset = getResources().getStringArray(R.array.emotions);
+        color_circle_set = new int[]{width, height, radius};
 
         // specify an adapter (see also next example)
 
-        adapter = new MyAdapter(myDataset,color_circle_set);
+        adapter = new MyAdapter(myDataset, color_circle_set);
         recyclerView.setAdapter(adapter);
 
 
