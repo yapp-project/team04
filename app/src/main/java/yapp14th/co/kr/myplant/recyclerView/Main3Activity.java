@@ -7,19 +7,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.SnapHelper;
 import yapp14th.co.kr.myplant.MyApplication;
 import yapp14th.co.kr.myplant.R;
-import yapp14th.co.kr.myplant.components.ColorPickerView;
-import yapp14th.co.kr.myplant.ui.intro.IntroColorPickActivity;
 
-import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.widget.AbsListView;
 
-import java.util.ArrayList;
-
-import static java.sql.DriverManager.println;
 
 public class Main3Activity extends AppCompatActivity {
     private RecyclerView recyclerView;
@@ -34,7 +24,7 @@ public class Main3Activity extends AppCompatActivity {
     int width;
     int height;
     int radius;
-    private int[] colorset;
+    private int[] color_circle_set;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +49,7 @@ public class Main3Activity extends AppCompatActivity {
         // use this setting to improve performance if you know that changes
         // in content do not change the layout size of the RecyclerView
         recyclerView.setHasFixedSize(true);
+        recyclerView.setItemViewCacheSize(20);
 
         // use a linear layout manager
         layoutManager = new LinearLayoutManager(this);
@@ -66,12 +57,13 @@ public class Main3Activity extends AppCompatActivity {
         recyclerView.setLayoutManager(layoutManager);
 
         myDataset = new String[]{"기쁨", "행복", "신남", "평화", "슬픔", "불안", "분노", "짜증"};
-        colorset = new int[]{width,height,radius};
+        color_circle_set = new int[]{width,height,radius};
 
         // specify an adapter (see also next example)
 
-        adapter = new MyAdapter(myDataset,colorset);
+        adapter = new MyAdapter(myDataset,color_circle_set);
         recyclerView.setAdapter(adapter);
+
 
     }
 }
