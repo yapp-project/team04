@@ -30,8 +30,6 @@ class SplashActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        setToolbar(R.color.transparent)
-
         Handler().postDelayed({
             startActivity(Intent(this@SplashActivity, MainActivity::class.java))
             finish()

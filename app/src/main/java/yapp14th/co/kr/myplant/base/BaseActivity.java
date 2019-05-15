@@ -7,6 +7,7 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import buv.co.kr.base.BaseDialog;
+import io.realm.Realm;
 import yapp14th.co.kr.myplant.R;
 
 public abstract class BaseActivity extends AppCompatActivity {
@@ -37,24 +38,24 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     }
 
-    // 툴바 세팅 (기본 NoActionBar)
-    public void setToolbar(int backgroundColor) {
-        // 1. 툴바 있는지 확인하여 있으면 세팅 (toolbar id 이름은 toolbar로 세팅)
-        Toolbar toolbar = findViewById(R.id.toolbar);
-
-        if (toolbar != null) {
-            toolbar.setBackgroundResource(backgroundColor);
-
-            // 2. actionbar 설정
-            setSupportActionBar(toolbar);
-
-            ActionBar actionbar = getSupportActionBar();
-            if (actionbar != null) {
-                actionbar.setDisplayShowTitleEnabled(false);
-                actionbar.setDisplayHomeAsUpEnabled(false);
-            }
-        }
-    }
+//    // 툴바 세팅 (기본 NoActionBar)
+//    public void setToolbar(int backgroundColor) {
+//        // 1. 툴바 있는지 확인하여 있으면 세팅 (toolbar id 이름은 toolbar로 세팅)
+//        Toolbar toolbar = findViewById(R.id.toolbar);
+//
+//        if (toolbar != null) {
+//            toolbar.setBackgroundResource(backgroundColor);
+//
+//            // 2. actionbar 설정
+//            setSupportActionBar(toolbar);
+//
+//            ActionBar actionbar = getSupportActionBar();
+//            if (actionbar != null) {
+//                actionbar.setDisplayShowTitleEnabled(false);
+//                actionbar.setDisplayHomeAsUpEnabled(false);
+//            }
+//        }
+//    }
 
     public BaseDialog getDialog() {
         return dialog;
@@ -73,4 +74,9 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected abstract int getLayoutRes();
 
     protected abstract boolean getIsUseDataBinding();
+
+    public Realm getRealmInstance() {
+        Realm.init(getApplicationContext());
+        return Realm.getDefaultInstance();
+    }
 }

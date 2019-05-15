@@ -12,6 +12,7 @@ import yapp14th.co.kr.myplant.ui.main.tab2_statistic.StatisticFragment
 import yapp14th.co.kr.myplant.ui.main.tab3_mypage.MypageFragment
 import yapp14th.co.kr.myplant.utils.ActivityUtil
 import yapp14th.co.kr.myplant.ui.intro.IntroColorPickActivity
+import android.view.View
 
 class MainActivity : BaseActivity() {
     override fun getLayoutRes() = R.layout.activity_main
@@ -19,7 +20,8 @@ class MainActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setToolbar(R.color.transparent)
+
+        toolbar.visibility = View.GONE
 
         main_tab.setOnNavigationItemSelectedListener(object : BottomNavigationView.OnNavigationItemSelectedListener {
             override fun onNavigationItemSelected(item: MenuItem): Boolean {

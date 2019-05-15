@@ -6,10 +6,10 @@ import io.realm.annotations.PrimaryKey
 open class CDay(
         @PrimaryKey
         var id: Long,
-        var year: Int,
-        var month: Int,
-        var day: Int,
-        var emotionType: Int,
+        var year: Short,
+        var month: Short,
+        var day: Short,
+        var emotionType: Short,
         var comment: String
 ) : RealmObject() {
     constructor() : this(
