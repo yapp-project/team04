@@ -75,8 +75,5 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     protected abstract boolean getIsUseDataBinding();
 
-    public Realm getRealmInstance() {
-        Realm.init(getApplicationContext());
-        return Realm.getDefaultInstance();
-    }
+    public Realm getRealmInstance = Realm.getDefaultInstance();
 }

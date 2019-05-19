@@ -1,7 +1,9 @@
 package buv.co.kr.ui.login.data
 
 import io.reactivex.Single
+import yapp14th.co.kr.myplant.ui.main.tab1_home.CDayVO
 import yapp14th.co.kr.myplant.ui.main.tab1_home.CalendarMonth
+import yapp14th.co.kr.myplant.utils.getCurrentMonth
 import yapp14th.co.kr.myplant.utils.getCurrentYear
 import yapp14th.co.kr.myplant.utils.getMockDayEmotions
 import java.util.*
@@ -53,6 +55,24 @@ class HomeMockSource : HomeDataSource {
             }
 
             it.onSuccess(emotionsList)
+        }
+    }
+
+    override fun getComments(year: Int, month: Int): Single<List<CDayVO>> {
+        return Single.create<List<CDayVO>> {
+            val comments = mutableListOf<CDayVO>()
+
+            arrayListOf(1, 3, 6, 7, 9).forEach { day ->
+                comments.add(CDayVO(
+                        year = getCurrentYear().toShort(),
+                        month = getCurrentMonth().toShort(),
+                        day = day.toShort(),
+                        emotionType = ((Math.random() * 7) + 1).toShort(),
+                        comment = "abcd"
+                ))
+            }
+
+            it.onSuccess(comments)
         }
     }
 }

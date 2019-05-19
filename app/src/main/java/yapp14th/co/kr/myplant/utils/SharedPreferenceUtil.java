@@ -3,6 +3,7 @@ package yapp14th.co.kr.myplant.utils;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 
 public class SharedPreferenceUtil {
     private static SharedPreferences sharedPreferences;
@@ -24,8 +25,12 @@ public class SharedPreferenceUtil {
     }
 
     public static String getStringData(String key) {
-        if (key.startsWith("EMOTION"))
-            return sharedPreferences.getString(key, "#23" + ((int) (Math.random() * 5000 + 999)) + "23");
+        if (key.startsWith("EMOTION")){
+            String data = "#" + ((int) (Math.random() * 89999999 + 10000000));
+            // Log.d("color" + key, " : " + data);
+            return sharedPreferences.getString(key, data);
+        }
+
         return sharedPreferences.getString(key, "");
     }
 

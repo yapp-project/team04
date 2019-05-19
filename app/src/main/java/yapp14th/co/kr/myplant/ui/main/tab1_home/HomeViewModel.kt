@@ -62,7 +62,14 @@ class HomeViewModel(app: Application) : BaseViewModel(app) {
             emotion.init = false
             emotion.fliped = isStartFlip
         }
+
         isFlipLive.value = isStartFlip
+    }
+
+    fun clearFlipAndFlop() {
+        emotions.value?.forEach { emotion ->
+            emotion.init = true
+        }
     }
 
     override fun onCleared() {
@@ -83,10 +90,10 @@ class HomeViewModel(app: Application) : BaseViewModel(app) {
 
     fun getCurrentMonthData() = currentMonth.get()!! - 1
     fun getCurrentMonthEmotions() = emotions.value?.get(getCurrentMonthData())
-    fun getCalendarDays(year: Int, month: Int, maximumDay: Int): HashSet<CalendarDay> =
-            HashSet<CalendarDay>().apply {
-                for (i in 1..maximumDay) {
-                    add(CalendarDay.from(year, month, i))
+    fun getCalendarDays(targetEmotions: ArrayList<CDayVO>): ArrayList<CalendarDay> =
+            ArrayList<CalendarDay>().apply {
+                targetEmotions.forEach { targetEmotion ->
+                    add(CalendarDay.from(targetEmotion.year.toInt(), targetEmotion.month.toInt(), targetEmotion.day.toInt()))
                 }
             }
 

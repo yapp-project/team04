@@ -1,7 +1,8 @@
 package yapp14th.co.kr.myplant.ui.main.tab1_home
 
+import android.content.Intent
 import android.os.Bundle
-import android.util.Log
+import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -30,11 +31,13 @@ import yapp14th.co.kr.myplant.utils.attachSnapHelperWithListener
 import yapp14th.co.kr.myplant.utils.getCurrentYear
 import yapp14th.co.kr.myplant.utils.getMonthDay
 import yapp14th.co.kr.myplant.components.EventDecorator
+import yapp14th.co.kr.myplant.ui.comment.CommentActivity
 
 class HomeFragment : BaseFragment(), OnSnapPositionChangeListener {
     // 선택 선언 2_1 (데이터 바인딩)
     private lateinit var binding: FragmentHomeBinding
     private lateinit var adapter: BaseRecyclerView.Adapter<CalendarMonth, ItemMonthBinding>
+    private var homeHandler = Handler()
 
     // 선택 선언 3_1 (ViewModel)
     val homeVM: HomeViewModel by lazy {
@@ -125,8 +128,10 @@ class HomeFragment : BaseFragment(), OnSnapPositionChangeListener {
                 override fun onBindViewHolder(holder: ViewHolder<ItemMonthBinding>, position: Int) {
                     super.onBindViewHolder(holder, position)
 
-                    var year = emotions[position].year.toInt()
-                    var month = emotions[position].month.toInt()
+                    var emotion = emotions[position]
+
+                    var year = emotion.year.toInt()
+                    var month = emotion.month.toInt()
                     var maximumDay = getMonthDay(year, month)
 
                     holder.itemView.cv_calendar.topbarVisible = false
@@ -137,10 +142,25 @@ class HomeFragment : BaseFragment(), OnSnapPositionChangeListener {
                             .setCalendarDisplayMode(CalendarMode.MONTHS)
                             .commit()
 
-                    val eventDecorator = EventDecorator(context!!, homeVM.getCalendarDays(year, month, maximumDay))
-                    holder.itemView.cv_calendar.addDecorator(eventDecorator)
+                    // emotionDecorator 을 둬야할듯 1~8
+                    for (emotionType in 1..8) {
+                        var targetEmotions = emotion.dayList.filter { cDayVO ->
+                            cDayVO.emotionType == emotionType.toShort()
+                        } as ArrayList<CDayVO>
+
+                        val eventDecorator = EventDecorator(context!!, homeVM.getCalendarDays(targetEmotions), emotionType)
+                        holder.itemView.cv_calendar.addDecorator(eventDecorator)
+                    }
 
                     holder.itemView.setOnClickListener(null)
+
+                    holder.itemView.btn_diary.setOnClickListener {
+                        var intent = Intent(activity, CommentActivity::class.java)
+                        intent.putExtra("year", year)
+                        intent.putExtra("month", month)
+
+                        activity?.startActivity(intent)
+                    }
 
                     holder.setIsRecyclable(false)
                 }
@@ -151,10 +171,7 @@ class HomeFragment : BaseFragment(), OnSnapPositionChangeListener {
         })
 
         homeVM.isFlipLive.observe(this, Observer { isFlip ->
-            if (isFlip) {
-                // 추후 바꿔야 할 필요성이 있어보임
-                // adapter.replaceItem(homeVM.getCurrentMonthEmotions(), homeVM.getCurrentMonthData())
-            }
+            homeHandler.postDelayed({ homeVM.clearFlipAndFlop() }, 1000)
         })
     }
 

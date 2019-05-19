@@ -3,12 +3,19 @@ package yapp14th.co.kr.myplant.utils;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
+import android.widget.TextView;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 import yapp14th.co.kr.myplant.R;
+import yapp14th.co.kr.myplant.ui.main.tab1_home.CDayVO;
 
 public class BindingAdapter {
 
@@ -83,8 +90,27 @@ public class BindingAdapter {
                 oa1.start();
             }
         } else {
-            ll_front.setVisibility(View.VISIBLE);
-            ll_back.setVisibility(View.INVISIBLE);
+            if (fliped) {
+                ll_back.setVisibility(View.VISIBLE);
+                ll_front.setVisibility(View.INVISIBLE);
+
+            } else {
+                ll_front.setVisibility(View.VISIBLE);
+                ll_back.setVisibility(View.INVISIBLE);
+            }
         }
+    }
+
+    @androidx.databinding.BindingAdapter({"commentDateText"})
+    public static void setCommentDate(TextView textView, CDayVO comment) {
+        Log.d("comment : ", comment.toString());
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd");
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.YEAR, comment.getYear());
+        calendar.set(Calendar.MONTH, comment.getMonth() - 1);
+        calendar.set(Calendar.DATE, comment.getDay());
+
+        textView.setText(sdf.format(calendar.getTime()));
+        textView.requestLayout();
     }
 }
