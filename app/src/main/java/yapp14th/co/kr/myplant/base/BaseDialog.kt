@@ -11,8 +11,8 @@ import yapp14th.co.kr.myplant.R
 import yapp14th.co.kr.myplant.base.BaseActivity
 
 
-class BaseDialog(context: Context) : @JvmOverloads Dialog(context) {
-    fun callFunction() {
+open class BaseDialog(context: Context) : @JvmOverloads Dialog(context) {
+    open fun callFunction() {
         this.setCancelable(false)   // 배경 클릭해도 다이얼로그가 꺼지지 않음
         this.show()                 // 커스텀 다이얼로그를 노출한다.
     }
@@ -24,7 +24,7 @@ class BaseDialog(context: Context) : @JvmOverloads Dialog(context) {
         window.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
     }
 
-    fun setInit(resId: Int, type: Int) {
+    open fun setInit(resId: Int, type: Int) {
         // 커스텀 다이얼로그를 정의하기위해 Dialog 클래스를 생성한다.
         setContentView(resId)
 
@@ -57,4 +57,5 @@ class BaseDialog(context: Context) : @JvmOverloads Dialog(context) {
     fun setCancelButtonListener(cancelListener: View.OnClickListener) {
         btn_cancel.setOnClickListener(cancelListener)
     }
+
 }
