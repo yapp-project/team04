@@ -134,6 +134,8 @@ class HomeFragment : BaseFragment(), OnSnapPositionChangeListener {
                     var month = emotion.month.toInt()
                     var maximumDay = getMonthDay(year, month)
 
+                    Log.e("HomeFrag",month.toString())
+
                     holder.itemView.cv_calendar.topbarVisible = false
                     holder.itemView.cv_calendar.state().edit()
                             .setFirstDayOfWeek(DayOfWeek.SUNDAY)
