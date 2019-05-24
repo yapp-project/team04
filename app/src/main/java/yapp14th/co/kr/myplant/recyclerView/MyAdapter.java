@@ -77,7 +77,7 @@ class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implements Vi
             holder.name.setVisibility(View.GONE);
             holder.last.setVisibility(View.VISIBLE);
             holder.input.setVisibility(View.VISIBLE);
-            holder.input.requestFocus(View.FOCUS_DOWN);
+//            holder.input.requestFocus(View.FOCUS_DOWN);
             holder.button.setVisibility(View.VISIBLE);
             holder.button.setOnClickListener(this);
 
@@ -110,7 +110,6 @@ class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implements Vi
         private CardView last;
         private EditText input;
         private Button button;
-        private ImageView imageView;
 
         private LinearLayout color_pick;
         private View colorView;
@@ -131,7 +130,6 @@ class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implements Vi
             last = itemView.findViewById(R.id.last);
             input = itemView.findViewById(R.id.input);
             button = itemView.findViewById(R.id.button);
-            imageView = itemView.findViewById(R.id.imageView4);
 
             color_pick = itemView.findViewById(R.id.color_pick);
             colorView = LayoutInflater.from(itemView.getContext()).inflate(R.layout.activity_intro_colorpick, null);
@@ -145,13 +143,6 @@ class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implements Vi
             intro_sb_chroma = color_pick.findViewById(R.id.intro_sb_chroma);
             hexcode_tv = color_pick.findViewById(R.id.hex_code_et);
             colortest.init(this,color_circle_set[0],color_circle_set[1],color_circle_set[2]);
-
-            imageView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    input.requestFocus();
-                }
-            });
 
             //명도 변경
             intro_sb_brightness.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -216,7 +207,7 @@ class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implements Vi
                         input_empty = false;
                     Log.d("last",last_emotion);
                     SharedPreferenceUtil.setData(String.valueOf(getAdapterPosition()+1),hexcode_tv.getText().toString());
-                    input.clearFocus();
+//                    input.clearFocus();
                 }
             });
 
