@@ -27,7 +27,7 @@
         <activity android:name=".recyclerView.Main4Activity" />
         <activity
             android:name=".recyclerView.Main3Activity"
-            android:windowSoftInputMode="adjustNothing" />
+            android:windowSoftInputMode="adjustPan" />
         <activity android:name=".viewPager.Main2Activity" />
         <activity
             android:name=".base.example.template.view.TemplateActivity"

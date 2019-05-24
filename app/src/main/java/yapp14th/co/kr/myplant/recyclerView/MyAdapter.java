@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,19 +15,23 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import yapp14th.co.kr.myplant.MyApplication;
 import yapp14th.co.kr.myplant.R;
 import yapp14th.co.kr.myplant.components.ColorPickerView;
+import yapp14th.co.kr.myplant.utils.SharedPreferenceUtil;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -35,14 +40,13 @@ class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implements Vi
     private String[] dataset;
     private int[] color_circle_set;
 
-
     int red;
     int blue;
     int green;
-    public SharedPreferences sharedPreferences;
-    Boolean et_show;
+    String last_emotion;
+    Boolean input_empty = true;
 
-    public MyAdapter(String[] dataset, int[] color_circle_set) {
+    public MyAdapter(String[] dataset,int[] color_circle_set) {
         this.dataset = dataset;
         this.color_circle_set = color_circle_set;
     }
@@ -57,27 +61,27 @@ class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implements Vi
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder,int position) {
 
         holder.num.setText("0" + (position + 1));
-        if (position != 7) {
+        if (position!= 7) {
             holder.last.setVisibility(View.GONE);
             holder.input.setVisibility(View.GONE);
+//            holder.input.clearFocus();
             holder.name.setVisibility(View.VISIBLE);
+//            holder.name.requestFocus();
             holder.name.setText(dataset[position]);
             holder.button.setVisibility(View.INVISIBLE);
-            et_show = false;
 
         } else {
             holder.name.setVisibility(View.GONE);
             holder.last.setVisibility(View.VISIBLE);
             holder.input.setVisibility(View.VISIBLE);
+            holder.input.requestFocus(View.FOCUS_DOWN);
             holder.button.setVisibility(View.VISIBLE);
             holder.button.setOnClickListener(this);
-            et_show = true;
-            //Log.d(holder.input.getText().toString(),holder.hexcode_tv.getText().toString());
-        }
 
+        }
     }
 
     @Override
@@ -87,10 +91,17 @@ class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implements Vi
 
     @Override
     public void onClick(View view) {
-        Intent intent = new Intent(view.getContext(), Main4Activity.class);
-        intent.putExtra("emotion", dataset);
-        view.getContext().startActivity(intent);
-        ((Main3Activity) view.getContext()).finish();
+
+        dataset[7] = last_emotion;
+
+        if(input_empty) //마지막 감정 이름 지정이 되어있지 않은 경우
+            Toast.makeText(view.getContext(),"감정의 이름을 지정해 주세요.",Toast.LENGTH_SHORT).show();
+        else{
+            Intent intent = new Intent(view.getContext() , Main4Activity.class);
+            intent.putExtra("emotion", dataset);
+            view.getContext().startActivity(intent);
+            ((Main3Activity) view.getContext()).finish();
+        }
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements ColorPickerView.OnColorChangedListener {
@@ -99,6 +110,7 @@ class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implements Vi
         private CardView last;
         private EditText input;
         private Button button;
+        private ImageView imageView;
 
         private LinearLayout color_pick;
         private View colorView;
@@ -114,12 +126,12 @@ class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implements Vi
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            sharedPreferences = itemView.getContext().getSharedPreferences("sFile", MODE_PRIVATE);
             num = itemView.findViewById(R.id.num);
             name = itemView.findViewById(R.id.name);
             last = itemView.findViewById(R.id.last);
             input = itemView.findViewById(R.id.input);
             button = itemView.findViewById(R.id.button);
+            imageView = itemView.findViewById(R.id.imageView4);
 
             color_pick = itemView.findViewById(R.id.color_pick);
             colorView = LayoutInflater.from(itemView.getContext()).inflate(R.layout.activity_intro_colorpick, null);
@@ -132,7 +144,14 @@ class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implements Vi
             intro_sb_brightness = color_pick.findViewById(R.id.intro_sb_brightness);
             intro_sb_chroma = color_pick.findViewById(R.id.intro_sb_chroma);
             hexcode_tv = color_pick.findViewById(R.id.hex_code_et);
-            colortest.init(this, color_circle_set[0], color_circle_set[1], color_circle_set[2]);
+            colortest.init(this,color_circle_set[0],color_circle_set[1],color_circle_set[2]);
+
+            imageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    input.requestFocus();
+                }
+            });
 
             //명도 변경
             intro_sb_brightness.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -175,7 +194,6 @@ class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implements Vi
                 }
             });
 
-
             input.addTextChangedListener(new TextWatcher() {
                 @Override
                 public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -190,12 +208,15 @@ class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implements Vi
                 @Override
                 public void afterTextChanged(Editable editable) {
 
-                    String last_emotion = input.getText().toString();
-                    Log.d("last", last_emotion);
-                    dataset[7] = last_emotion;
-                    SharedPreferences.Editor editor = sharedPreferences.edit();
-                    editor.putString(input.getText().toString(), hexcode_tv.getText().toString());
-                    editor.commit();
+                    last_emotion = input.getText().toString();
+                    //마지막 감정 edit text 비어있는지 확인
+                    if(TextUtils.isEmpty(last_emotion))
+                        input_empty = true;
+                    else
+                        input_empty = false;
+                    Log.d("last",last_emotion);
+                    SharedPreferenceUtil.setData(String.valueOf(getAdapterPosition()+1),hexcode_tv.getText().toString());
+                    input.clearFocus();
                 }
             });
 
@@ -213,16 +234,9 @@ class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implements Vi
             intro_sb_brightness.getProgressDrawable().setColorFilter(Color.BLACK, PorterDuff.Mode.SRC_IN);
             intro_sb_chroma.getProgressDrawable().setColorFilter(color, PorterDuff.Mode.SRC_IN);
 
-            SharedPreferences.Editor editor = sharedPreferences.edit();
-            if (et_show) //사용자 정의 감정 색 선택
-                editor.putString(input.getText().toString(), hexcode_tv.getText().toString());
-
-            else // 정해진 감정 색 선택
-                editor.putString(name.getText().toString(), hexcode_tv.getText().toString());
-            editor.commit();
-
-            Log.d("emottt1", sharedPreferences.getString(input.getText().toString(), "#0000000"));
-            Log.d("emottt", sharedPreferences.getString(name.getText().toString(), "#0000000"));
+            SharedPreferenceUtil.setData(String.valueOf(getAdapterPosition()+1),hexcode_tv.getText().toString());
+            Log.d("emottt1", String.valueOf(getAdapterPosition()+1));
+            Log.d("emottt", SharedPreferenceUtil.getStringData(String.valueOf(getAdapterPosition()+1)));
         }
     }
 
