@@ -43,16 +43,16 @@ public class Main4Activity extends AppCompatActivity {
         binding.emotion5.setText(emotion[4]);
         binding.emotion6.setText(emotion[5]);
         binding.emotion7.setText(emotion[6]);
-        binding.emotion8.setText(emotion[7]);
+        binding.emotion8.setText(SharedPreferenceUtil.getStringData("last"));
 
-        binding.emotion1Iv.setColorFilter(Color.parseColor(SharedPreferenceUtil.getStringData("1")));
-        binding.emotion2Iv.setColorFilter(Color.parseColor(SharedPreferenceUtil.getStringData("2")));
-        binding.emotion3Iv.setColorFilter(Color.parseColor(SharedPreferenceUtil.getStringData("3")));
-        binding.emotion4Iv.setColorFilter(Color.parseColor(SharedPreferenceUtil.getStringData("4")));
-        binding.emotion5Iv.setColorFilter(Color.parseColor(SharedPreferenceUtil.getStringData("5")));
-        binding.emotion6Iv.setColorFilter(Color.parseColor(SharedPreferenceUtil.getStringData("6")));
-        binding.emotion7Iv.setColorFilter(Color.parseColor(SharedPreferenceUtil.getStringData("7")));
-        binding.emotion8Iv.setColorFilter(Color.parseColor(SharedPreferenceUtil.getStringData("8")));
+        binding.emotion1Iv.setColorFilter(Color.parseColor(SharedPreferenceUtil.getStringData(SharedPreferenceUtil.EMOTION_1)));
+        binding.emotion2Iv.setColorFilter(Color.parseColor(SharedPreferenceUtil.getStringData(SharedPreferenceUtil.EMOTION_2)));
+        binding.emotion3Iv.setColorFilter(Color.parseColor(SharedPreferenceUtil.getStringData(SharedPreferenceUtil.EMOTION_3)));
+        binding.emotion4Iv.setColorFilter(Color.parseColor(SharedPreferenceUtil.getStringData(SharedPreferenceUtil.EMOTION_4)));
+        binding.emotion5Iv.setColorFilter(Color.parseColor(SharedPreferenceUtil.getStringData(SharedPreferenceUtil.EMOTION_5)));
+        binding.emotion6Iv.setColorFilter(Color.parseColor(SharedPreferenceUtil.getStringData(SharedPreferenceUtil.EMOTION_6)));
+        binding.emotion7Iv.setColorFilter(Color.parseColor(SharedPreferenceUtil.getStringData(SharedPreferenceUtil.EMOTION_7)));
+        binding.emotion8Iv.setColorFilter(Color.parseColor(SharedPreferenceUtil.getStringData(SharedPreferenceUtil.EMOTION_8)));
 
         binding.finishBtn.setOnClickListener(view -> {
             startActivity(new Intent(getApplicationContext(), InsertActivity.class));
