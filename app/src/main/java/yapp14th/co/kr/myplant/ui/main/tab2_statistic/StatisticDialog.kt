@@ -14,11 +14,13 @@ import com.github.mikephil.charting.charts.PieChart
 import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
+import com.github.mikephil.charting.data.ScatterDataSet
 import kotlinx.android.synthetic.main.base_dialog.*
 import yapp14th.co.kr.myplant.R
 import yapp14th.co.kr.myplant.databinding.ActivityTemplateBinding
 import yapp14th.co.kr.myplant.databinding.DialogStatisticBinding
 import yapp14th.co.kr.myplant.ui.main.tab1_home.CDayVO
+import yapp14th.co.kr.myplant.utils.SharedPreferenceUtil
 
 class StatisticDialog(context: Context) : BaseDialog(context) {
     private lateinit var pleasure : TextView
@@ -71,17 +73,19 @@ class StatisticDialog(context: Context) : BaseDialog(context) {
         val emotionList = ArrayList<PieEntry>()
 
         for(i in cdays.indices){
-            if(cdays[i] != 0)
-                emotionList.add(PieEntry((cdays[i]/30*100).toFloat()))
+            if(cdays[i] != 0) {
+                emotionList.add(PieEntry((cdays[i] / cdays.sum() * 100).toFloat()))
+                Log.e("StatisticDialog",(cdays[i] / cdays.sum() * 100).toString() )
+            }
             when(i){
-                1 -> pleasure.text = cdays[i].toString()
-                2 -> happy.text = cdays[i].toString()
-                3 -> excited.text = cdays[i].toString()
-                4 -> peace.text = cdays[i].toString()
-                5 -> sad.text = cdays[i].toString()
-                6 -> unset.text = cdays[i].toString()
-                7 -> anger.text = cdays[i].toString()
-                8 -> user.text = cdays[i].toString()
+                1 -> pleasure.text = (cdays[i] / cdays.sum() * 100).toString()+"%"
+                2 -> happy.text = (cdays[i] / cdays.sum() * 100).toString()+"%"
+                3 -> excited.text = (cdays[i] / cdays.sum() * 100).toString()+"%"
+                4 -> peace.text = (cdays[i] / cdays.sum() * 100).toString()+"%"
+                5 -> sad.text = (cdays[i] / cdays.sum() * 100).toString()+"%"
+                6 -> unset.text = (cdays[i] / cdays.sum() * 100).toString()+"%"
+                7 -> anger.text = (cdays[i] / cdays.sum() * 100).toString()+"%"
+                8 -> user.text = (cdays[i] / cdays.sum() * 100).toString()+"%"
             }
         }
 
@@ -89,7 +93,21 @@ class StatisticDialog(context: Context) : BaseDialog(context) {
             emotionList.add(PieEntry(100f))
 
         val dataSet = PieDataSet(emotionList, null)
-        dataSet.setColors(intArrayOf(R.color.color373768, R.color.colorAccent), this.context)
+
+        val colors = intArrayOf(
+                R.color.color373768// Color.parseColor(SharedPreferenceUtil.getStringData("EMOTION_1")),
+                // Color.parseColor(SharedPreferenceUtil.getStringData("EMOTION_2")),
+                // Color.parseColor(SharedPreferenceUtil.getStringData("EMOTION_3")),
+                // Color.parseColor(SharedPreferenceUtil.getStringData("EMOTION_4")),
+                // Color.parseColor(SharedPreferenceUtil.getStringData("EMOTION_5")),
+               // Color.parseColor(SharedPreferenceUtil.getStringData("EMOTION_6")),
+                // Color.parseColor(SharedPreferenceUtil.getStringData("EMOTION_7")),
+                // Color.parseColor(SharedPreferenceUtil.getStringData("EMOTION_8"))
+        )
+
+
+
+        dataSet.setColors(colors, this.context)
         dataSet.setDrawValues(false)
         val data = PieData(dataSet)
 
