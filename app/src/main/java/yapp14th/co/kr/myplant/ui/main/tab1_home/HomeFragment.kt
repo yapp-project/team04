@@ -181,13 +181,18 @@ class HomeFragment : BaseFragment(), OnSnapPositionChangeListener {
         })
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        homeHandler.removeCallbacksAndMessages(null)
+    }
+
     private fun oneSecondAnimation(targetView : View){
-        Handler().postDelayed({
+        homeHandler.postDelayed({
             targetView.visibility = View.VISIBLE
             val dropDownAnim = AnimationUtils.loadAnimation(activity, R.anim.anim_drop_down)
             targetView.startAnimation(dropDownAnim)
 
-            Handler().postDelayed({
+            homeHandler.postDelayed({
                 val riseUpAnim = AnimationUtils.loadAnimation(activity, R.anim.anim_rise_up)
                 targetView.startAnimation(riseUpAnim)
                 targetView.visibility = View.GONE
