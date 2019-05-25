@@ -57,7 +57,9 @@
                 android:textColor="#373768"
                 android:hint="마지막 감정은 마음대로 정해보세요! :)"
                 android:layout_width="wrap_content"
-                android:layout_height="18dp" />
+                android:layout_height="18dp" >
+                <requestFocus/>
+            </EditText>
 
             <ImageView
                 android:layout_marginVertical="8dp"
