@@ -37,6 +37,7 @@
             android:text="안녕하세요:-)" />
 
         <ImageView
+            android:visibility="invisible"
             android:layout_marginTop="2dp"
             android:layout_width="27dp"
             android:layout_height="29dp"
@@ -424,9 +425,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 
-    <android.support.v7.widget.RecyclerView
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_marginTop="16dp"
+        android:layout_marginLeft="24dp"
         android:id="@+id/illust"
-        app:layoutManager="LinearLayoutManager"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 

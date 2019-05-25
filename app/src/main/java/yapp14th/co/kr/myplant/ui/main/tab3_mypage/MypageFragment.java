@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -94,10 +95,11 @@ public class MypageFragment extends BaseFragment {
 //            imageFragment.setArguments(bundle);
 //            fragmentAdapter.addItem(imageFragment);
 //        }
-        fragmentAdapter.notifyDataSetChanged();
+//        fragmentAdapter.notifyDataSetChanged();
 
         TextView tv_emotion_num = view.findViewById(R.id.tv_emotion_num);
         TextView tv_illus_num = view.findViewById(R.id.tv_illus_num);
+        Switch switch1 = view.findViewById(R.id.switch1);
 
 
 
@@ -105,13 +107,13 @@ public class MypageFragment extends BaseFragment {
 
         ImageView mypage_color_change=view.findViewById(R.id.mypage_colorchange);
 
-//        mypage_color_change.setOnClickListener(new View.OnClickListener() {
-//                                                   @Override
-//                                                   public void onClick(View v) {
-//                                                       Intent startIntent = new Intent(getActivity(), Main3Activity.class); //일단은 이 화면으로 했음
-//                                                       startActivity(startIntent);
-//                                                   }
-//                                               });
+        mypage_color_change.setOnClickListener(new View.OnClickListener() {
+                                                   @Override
+                                                   public void onClick(View v) {
+                                                       Intent startIntent = new Intent(getActivity(), Main3Activity.class); //일단은 이 화면으로 했음
+                                                       startActivity(startIntent);
+                                                   }
+                                               });
 
 
         tv_emotion_num.setText(125 + "개");
