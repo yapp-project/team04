@@ -1,6 +1,7 @@
 package yapp14th.co.kr.myplant.ui.main.tab3_mypage;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,19 +10,16 @@ import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
 
-import java.util.ArrayList;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.viewpager.widget.ViewPager;
+import de.hdodenhof.circleimageview.CircleImageView;
 import yapp14th.co.kr.myplant.R;
 import yapp14th.co.kr.myplant.base.BaseFragment;
 import yapp14th.co.kr.myplant.recyclerView.Main3Activity;
+import yapp14th.co.kr.myplant.utils.SharedPreferenceUtil;
 
 
 // TODO 필수 선언 1. 기본 레이아웃 설정
@@ -44,6 +42,7 @@ public class MypageFragment extends BaseFragment {
 
     // 선택 선언 1 (Fragment를 싱글턴으로 사용 시)
     private static MypageFragment INSTANCE = null;
+
     public static synchronized Fragment getInstance() {
         if (INSTANCE == null) {
             INSTANCE = new MypageFragment();
@@ -57,6 +56,15 @@ public class MypageFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return super.onCreateView(inflater, container, savedInstanceState);
     }
+
+    private CircleImageView iv_mypage_01;
+    private CircleImageView iv_mypage_02;
+    private CircleImageView iv_mypage_03;
+    private CircleImageView iv_mypage_04;
+    private CircleImageView iv_mypage_05;
+    private CircleImageView iv_mypage_06;
+    private CircleImageView iv_mypage_07;
+    private CircleImageView iv_mypage_08;
 
     // TODO 필수 선언 4 (onViewCreated)
     @Override
@@ -74,6 +82,16 @@ public class MypageFragment extends BaseFragment {
         // 3. 리싸이클러뷰에 어뎁터 설정
         illust.setAdapter(fragmentAdapter);
 
+        iv_mypage_01 = view.findViewById(R.id.iv_mypage_01);
+        iv_mypage_02 = view.findViewById(R.id.iv_mypage_02);
+        iv_mypage_03 = view.findViewById(R.id.iv_mypage_03);
+        iv_mypage_04 = view.findViewById(R.id.iv_mypage_04);
+        iv_mypage_05 = view.findViewById(R.id.iv_mypage_05);
+        iv_mypage_06 = view.findViewById(R.id.iv_mypage_06);
+        iv_mypage_07 = view.findViewById(R.id.iv_mypage_07);
+        iv_mypage_08 = view.findViewById(R.id.iv_mypage_08);
+
+        updateImageViewList();
 
 
 //        ArrayList<Integer> listImage = new ArrayList<>();
@@ -102,22 +120,42 @@ public class MypageFragment extends BaseFragment {
         Switch switch1 = view.findViewById(R.id.switch1);
 
 
-
 //        color_joy.setColorFilter(parseColor("#fecd13"));
 
-        ImageView mypage_color_change=view.findViewById(R.id.mypage_colorchange);
+        ImageView mypage_color_change = view.findViewById(R.id.mypage_colorchange);
 
         mypage_color_change.setOnClickListener(new View.OnClickListener() {
-                                                   @Override
-                                                   public void onClick(View v) {
-                                                       Intent startIntent = new Intent(getActivity(), Main3Activity.class); //일단은 이 화면으로 했음
-                                                       startActivity(startIntent);
-                                                   }
-                                               });
+            @Override
+            public void onClick(View v) {
+                Intent startIntent = new Intent(getActivity(), Main3Activity.class); //일단은 이 화면으로 했음
+                startIntent.putExtra("mypage", true);
+                startActivityForResult(startIntent, 1001);
+            }
+        });
 
 
         tv_emotion_num.setText(125 + "개");
         tv_illus_num.setText(4 + "개");
+    }
+
+    private void updateImageViewList() {
+        iv_mypage_01.setColorFilter(Color.parseColor(SharedPreferenceUtil.getStringData(SharedPreferenceUtil.EMOTION_1)));
+        iv_mypage_02.setColorFilter(Color.parseColor(SharedPreferenceUtil.getStringData(SharedPreferenceUtil.EMOTION_2)));
+        iv_mypage_03.setColorFilter(Color.parseColor(SharedPreferenceUtil.getStringData(SharedPreferenceUtil.EMOTION_3)));
+        iv_mypage_04.setColorFilter(Color.parseColor(SharedPreferenceUtil.getStringData(SharedPreferenceUtil.EMOTION_4)));
+        iv_mypage_05.setColorFilter(Color.parseColor(SharedPreferenceUtil.getStringData(SharedPreferenceUtil.EMOTION_5)));
+        iv_mypage_06.setColorFilter(Color.parseColor(SharedPreferenceUtil.getStringData(SharedPreferenceUtil.EMOTION_6)));
+        iv_mypage_07.setColorFilter(Color.parseColor(SharedPreferenceUtil.getStringData(SharedPreferenceUtil.EMOTION_7)));
+        iv_mypage_08.setColorFilter(Color.parseColor(SharedPreferenceUtil.getStringData(SharedPreferenceUtil.EMOTION_8)));
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(requestCode == 1001){
+            updateImageViewList();
+        }
     }
 }
 
@@ -126,7 +164,7 @@ class FragmentAdapter extends RecyclerView.Adapter<FragmentAdapter.IllustViewHol
     private int[] dataSet;
     private String[] filterSet;
 
-    public FragmentAdapter(int[] dataSet, String[] filterSet){
+    public FragmentAdapter(int[] dataSet, String[] filterSet) {
         this.dataSet = dataSet;
         this.filterSet = filterSet;
     }
@@ -143,6 +181,7 @@ class FragmentAdapter extends RecyclerView.Adapter<FragmentAdapter.IllustViewHol
     @Override
     public void onBindViewHolder(@NonNull FragmentAdapter.IllustViewHolder holder, int position) {
         holder.imageView1.setImageResource(dataSet[position]);
+        holder.imageView2.setImageResource(dataSet[position]);
     }
 
     @Override
@@ -151,13 +190,15 @@ class FragmentAdapter extends RecyclerView.Adapter<FragmentAdapter.IllustViewHol
     }
 
 
-    public class IllustViewHolder extends RecyclerView.ViewHolder{
+    public class IllustViewHolder extends RecyclerView.ViewHolder {
 
         ImageView imageView1;
+        ImageView imageView2;
 
         public IllustViewHolder(@NonNull View itemView) {
             super(itemView);
             imageView1 = (ImageView) itemView.findViewById(R.id.showillust);
+            imageView2 = (ImageView) itemView.findViewById(R.id.img_filter);
         }
     }
 }

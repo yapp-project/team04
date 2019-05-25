@@ -1,6 +1,7 @@
 package yapp14th.co.kr.myplant.components
 
 import android.content.Context
+import android.content.SharedPreferences
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.ColorMatrix
@@ -11,6 +12,7 @@ import android.util.AttributeSet
 import android.util.Log
 import android.view.MotionEvent
 import android.view.View
+import yapp14th.co.kr.myplant.utils.SharedPreferenceUtil
 import java.nio.channels.FileLock
 
 
@@ -20,6 +22,7 @@ class ColorPickerView(
         attrs: AttributeSet? = null,
         defStyleAttr: Int = 0,
         defStyleRes: Int = 0) : View(context, attrs, defStyleAttr, defStyleRes) {
+    private var position = -1
     private var CENTER_X = 200      // 너비
     private var CENTER_Y = 200      // 높이
     private var CENTER_RADIUS = 64  // radius
@@ -73,6 +76,19 @@ class ColorPickerView(
         this.CENTER_X = width
         this.CENTER_Y = height
         this.CENTER_RADIUS = radius
+    }
+
+    fun positionInit(position: Int) {
+        this.position = position
+        this.pinX = SharedPreferenceUtil.getFloatData("EMOTION_${position + 1}_PIN_X")
+        this.pinY = SharedPreferenceUtil.getFloatData("EMOTION_${position + 1}_PIN_Y")
+    }
+
+    fun colorInit(color: Int, red: Int, green: Int, blue: Int) {
+        this.color = color
+        this.red = red
+        this.green = green
+        this.blue = blue
     }
 
     fun changeChroma(mListener: ColorPickerView.OnColorChangedListener, hsv: FloatArray) {
@@ -300,7 +316,9 @@ class ColorPickerView(
         val inCenter = java.lang.Math.sqrt((x * x + y * y).toDouble()) <= CENTER_RADIUS
 
         pinX = x
+        SharedPreferenceUtil.setData("EMOTION_${position + 1}_PIN_X", pinX)
         pinY = y
+        SharedPreferenceUtil.setData("EMOTION_${position + 1}_PIN_Y", pinY)
 
         when (event.action) {
             MotionEvent.ACTION_DOWN -> {

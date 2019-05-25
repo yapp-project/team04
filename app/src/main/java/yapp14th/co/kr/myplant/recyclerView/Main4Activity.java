@@ -34,7 +34,7 @@ public class Main4Activity extends AppCompatActivity {
 
         Intent intent = getIntent();
         String[] emotion = intent.getStringArrayExtra("emotion");
-
+        boolean mypage = intent.getBooleanExtra("mypage", false);
 
         binding.emotion1.setText(emotion[0]);
         binding.emotion2.setText(emotion[1]);
@@ -55,8 +55,12 @@ public class Main4Activity extends AppCompatActivity {
         binding.emotion8Iv.setColorFilter(Color.parseColor(SharedPreferenceUtil.getStringData(SharedPreferenceUtil.EMOTION_8)));
 
         binding.finishBtn.setOnClickListener(view -> {
-            startActivity(new Intent(getApplicationContext(), InsertActivity.class));
-            finish();
+            if (mypage) {
+                finish();
+            } else {
+                startActivity(new Intent(getApplicationContext(), InsertActivity.class));
+                finish();
+            }
         });
     }
 }
