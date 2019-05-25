@@ -59,7 +59,7 @@
                 app:mcv_leftArrow="@color/transparent"
                 app:mcv_monthLabels="@array/custom_months"
                 app:mcv_rightArrow="@color/transparent"
-                app:mcv_selectionColor="#00F"
+                app:mcv_selectionColor="@color/transparent"
                 app:mcv_showOtherDates="none"
                 app:mcv_weekDayLabels="@array/custom_weekdays" />
 
@@ -94,7 +94,8 @@
                 android:id="@+id/img_filter"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/img_filter_background_mock"
+                app:calendarFilterBackground="@{icMonth}"
+                tools:background="@drawable/img_filter_background_mock"
                 app:layout_constraintBottom_toBottomOf="@+id/img_picture"
                 app:layout_constraintLeft_toLeftOf="@+id/img_picture"
                 app:layout_constraintRight_toRightOf="@+id/img_picture"

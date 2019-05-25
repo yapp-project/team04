@@ -5,6 +5,7 @@ import buv.co.kr.ui.login.data.HomeRemoteSource
 import io.reactivex.Scheduler
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
+import yapp14th.co.kr.myplant.ui.main.tab1_home.CDayVO
 import yapp14th.co.kr.myplant.ui.main.tab1_home.CalendarMonth
 
 class HomeRepositoryImpl : HomeRepository {
@@ -12,7 +13,7 @@ class HomeRepositoryImpl : HomeRepository {
     val remoteHomeSource = HomeRemoteSource()
 
     override fun getYears(currentYear: Int, scheduler: Scheduler, success: (years: List<Int>) -> Unit, error: (throwable: Throwable) -> Unit): Disposable {
-        return mockHomeSource.getYears(currentYear)
+        return remoteHomeSource.getYears(currentYear)
                 .subscribeOn(scheduler)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ years ->
@@ -41,6 +42,18 @@ class HomeRepositoryImpl : HomeRepository {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ emotions ->
                     success(emotions)
+                })
+                { t ->
+                    error(t)
+                }
+    }
+
+    override fun getComments(year: Int, month: Int, scheduler: Scheduler, success: (emotions: List<CDayVO>) -> Unit, error: (throwable: Throwable) -> Unit): Disposable {
+        return remoteHomeSource.getComments(year, month)
+                .subscribeOn(scheduler)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({ comments ->
+                    success(comments)
                 })
                 { t ->
                     error(t)

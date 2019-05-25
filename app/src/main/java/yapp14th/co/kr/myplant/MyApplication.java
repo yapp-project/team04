@@ -5,16 +5,29 @@ import android.content.Context;
 import android.util.DisplayMetrics;
 
 import androidx.core.content.ContextCompat;
+import io.realm.Realm;
+import io.realm.RealmConfiguration;
 import yapp14th.co.kr.myplant.utils.SharedPreferenceUtil;
 
 public class MyApplication extends Application {
     public static int DIALOG_OK = 1;
     public static int DIALOG_OK_CANCEL = 2;
 
+
     @Override
     public void onCreate() {
         super.onCreate();
         SharedPreferenceUtil.sharedPreferenceInit(this);
+        Realm.init(this);
+        RealmConfiguration config = new RealmConfiguration.Builder()
+                .name("bora.realm")
+                .schemaVersion(1)
+                // .modules(new MySchemaModule())
+                // .migration(new MyMigration())
+                .build();
+
+        // 설정을 사용합니다.
+        Realm.setDefaultConfiguration(config);
     }
 
     /**

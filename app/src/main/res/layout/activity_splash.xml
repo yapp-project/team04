@@ -14,14 +14,25 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:background="@{splashVM.imgSplash}"
+        android:gravity="center"
+        android:orientation="vertical"
+        tools:background="@drawable/img_splash_background">
 
         <ImageView
-            android:id="@+id/iv_splash"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@{splashVM.imgSplash}"
-            tools:background="@drawable/img_splash" />
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/img_logo" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/single_margin"
+            android:gravity="center_horizontal"
+            android:letterSpacing="-0.08"
+            android:textColor="@color/color373768"
+            android:textSize="10sp"
+            tools:text="당신의 감정을 들여다 보라 -" />
 
     </LinearLayout>
 </layout>

@@ -1,6 +1,5 @@
 package yapp14th.co.kr.myplant.recyclerView;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -14,8 +13,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.FrameLayout;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import android.widget.SeekBar;
@@ -25,10 +22,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import yapp14th.co.kr.myplant.MyApplication;
 import yapp14th.co.kr.myplant.R;
 import yapp14th.co.kr.myplant.components.ColorPickerView;
 import yapp14th.co.kr.myplant.utils.SharedPreferenceUtil;
@@ -128,7 +122,7 @@ class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implements Vi
             num = itemView.findViewById(R.id.num);
             name = itemView.findViewById(R.id.name);
             last = itemView.findViewById(R.id.last);
-            input = itemView.findViewById(R.id.input);
+            input = itemView.findViewById(R.id.et_input);
             button = itemView.findViewById(R.id.button);
 
             color_pick = itemView.findViewById(R.id.color_pick);
@@ -225,9 +219,21 @@ class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implements Vi
             intro_sb_brightness.getProgressDrawable().setColorFilter(Color.BLACK, PorterDuff.Mode.SRC_IN);
             intro_sb_chroma.getProgressDrawable().setColorFilter(color, PorterDuff.Mode.SRC_IN);
 
-            SharedPreferenceUtil.setData(String.valueOf(getAdapterPosition()+1),hexcode_tv.getText().toString());
-            Log.d("emottt1", String.valueOf(getAdapterPosition()+1));
-            Log.d("emottt", SharedPreferenceUtil.getStringData(String.valueOf(getAdapterPosition()+1)));
+        // feature/intro_recyclerview
+        //    SharedPreferenceUtil.setData(String.valueOf(getAdapterPosition()+1),hexcode_tv.getText().toString());
+        //    Log.d("emottt1", String.valueOf(getAdapterPosition()+1));
+        //    Log.d("emottt", SharedPreferenceUtil.getStringData(String.valueOf(getAdapterPosition()+1)));
+
+          SharedPreferences.Editor editor = sharedPreferences.edit();
+            if (input.getVisibility() == View.VISIBLE) //사용자 정의 감정 색 선택
+                editor.putString(input.getText().toString(), hexcode_tv.getText().toString());
+
+            else // 정해진 감정 색 선택
+                editor.putString(name.getText().toString(), hexcode_tv.getText().toString());
+            editor.commit();
+
+            Log.d("emottt1", sharedPreferences.getString(input.getText().toString(), "#0000000"));
+            Log.d("emottt", sharedPreferences.getString(name.getText().toString(), "#0000000"));
         }
     }
 
