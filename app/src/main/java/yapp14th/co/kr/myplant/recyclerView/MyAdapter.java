@@ -88,6 +88,7 @@ class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implements Vi
     public void onClick(View view) {
 
         dataset[7] = last_emotion;
+        SharedPreferenceUtil.setData("last",last_emotion);
 
         if(input_empty) //마지막 감정 이름 지정이 되어있지 않은 경우
             Toast.makeText(view.getContext(),"감정의 이름을 지정해 주세요.",Toast.LENGTH_SHORT).show();
@@ -202,7 +203,7 @@ class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implements Vi
                     else
                         input_empty = false;
                     Log.d("last",last_emotion);
-                    SharedPreferenceUtil.setData(String.valueOf(getAdapterPosition()+1),hexcode_tv.getText().toString());
+                    SharedPreferenceUtil.setData("EMOTION_"+String.valueOf(getAdapterPosition()+1),hexcode_tv.getText().toString());
                 }
             });
 
@@ -220,9 +221,9 @@ class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implements Vi
             intro_sb_brightness.getProgressDrawable().setColorFilter(Color.BLACK, PorterDuff.Mode.SRC_IN);
             intro_sb_chroma.getProgressDrawable().setColorFilter(color, PorterDuff.Mode.SRC_IN);
 
-            SharedPreferenceUtil.setData(String.valueOf(getAdapterPosition()+1),hexcode_tv.getText().toString());
-            Log.d("emottt1", String.valueOf(getAdapterPosition()+1));
-            Log.d("emottt", SharedPreferenceUtil.getStringData(String.valueOf(getAdapterPosition()+1)));
+            SharedPreferenceUtil.setData("EMOTION_"+String.valueOf(getAdapterPosition()+1),hexcode_tv.getText().toString());
+            Log.d("emottt1", "EMOTION_"+String.valueOf(getAdapterPosition()+1));
+            Log.d("emottt", SharedPreferenceUtil.getStringData(String.valueOf("EMOTION_"+String.valueOf(getAdapterPosition()+1))));
         }
     }
 
