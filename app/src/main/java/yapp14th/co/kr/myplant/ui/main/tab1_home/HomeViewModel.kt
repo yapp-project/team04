@@ -33,7 +33,9 @@ class HomeViewModel(app: Application) : BaseViewModel(app) {
         currentMonth.set(tempMonth)
 
         // 년도 spinner update
-        GetYears(repositoryImpl, Schedulers.io()).invoke(
+        var yearUseCase = GetYears(repositoryImpl, Schedulers.io())
+
+        yearUseCase(
                 currentYear = getCurrentYear(),
                 success = { list ->
                     years.value = list

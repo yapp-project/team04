@@ -3,6 +3,7 @@ package yapp14th.co.kr.myplant.utils;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
+import android.graphics.Color;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
@@ -10,12 +11,13 @@ import android.view.animation.DecelerateInterpolator;
 import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Calendar;
-import java.util.Date;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 import yapp14th.co.kr.myplant.R;
 import yapp14th.co.kr.myplant.ui.main.tab1_home.CDayVO;
+import yapp14th.co.kr.myplant.ui.main.tab1_home.CalendarMonth;
 
 public class BindingAdapter {
 
@@ -30,6 +32,12 @@ public class BindingAdapter {
     @androidx.databinding.BindingAdapter("android:background")
     public static void setBackground(View view, int resId) {
         view.setBackgroundResource(resId);
+    }
+    @androidx.databinding.BindingAdapter("calendarFilterBackground")
+    public static void setCalendarFilter(View view, CalendarMonth calendarMonth) {
+        // TODO 여기에 달 계산 로직 넣음
+        int colorFilter = Color.parseColor(SharedPreferenceUtil.getStringData(SharedPreferenceUtil.EMOTION_1));
+        view.setBackgroundColor(colorFilter);
     }
 
     @androidx.databinding.BindingAdapter({"setFlipAnimation", "init"})
@@ -111,6 +119,18 @@ public class BindingAdapter {
         calendar.set(Calendar.DATE, comment.getDay());
 
         textView.setText(sdf.format(calendar.getTime()));
+        textView.requestLayout();
+    }
+
+
+    @androidx.databinding.BindingAdapter({"commentEmotionText"})
+    public static void setCommentDate(TextView textView, int emotionType) {
+        String[] array = textView.getContext().getResources().getStringArray(R.array.emotions);
+        array[array.length - 1] = SharedPreferenceUtil.getStringData(SharedPreferenceUtil.last);
+
+        Log.d("emotionList check: ", Arrays.toString(array));
+
+        textView.setText(array[emotionType - 1]);
         textView.requestLayout();
     }
 }

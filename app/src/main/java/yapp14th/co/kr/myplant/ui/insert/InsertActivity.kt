@@ -5,6 +5,7 @@ import android.content.Intent
 import android.graphics.Color
 import android.graphics.PorterDuff
 import android.os.Bundle
+import android.util.Log
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProviders
 import kotlinx.android.synthetic.main.activity_insert.*
@@ -76,13 +77,10 @@ class InsertActivity : BaseActivity() {
                 var maxId = realm.where(CDay::class.java).max("id")
                 var nextId = if (maxId == null) 1 else (maxId.toInt() + 1)
 
-                realm.insert(CDay(
-                        nextId.toLong(),
-                        insertVM.year.toShort(),
-                        insertVM.month.toShort(),
-                        insertVM.day.toShort(),
-                        currentPosition.toShort(),
-                        et_input.text.toString()))
+                CDay(nextId.toLong(), insertVM.year.toShort(), insertVM.month.toShort(), insertVM.day.toShort(), currentPosition.toShort(), et_input.text.toString()).let { cDay ->
+                    realm.insert(cDay)
+                    Log.d("insert completed : ", "$cDay")
+                }
 
                 realm.commitTransaction()
                 // realm.where(CDay::class.java).equalTo("owner", SharedPreferenceUtil.getStringData(SharedPreferenceUtil.email)).equalTo(fieldName, filePath).findAll().deleteAllFromRealm()

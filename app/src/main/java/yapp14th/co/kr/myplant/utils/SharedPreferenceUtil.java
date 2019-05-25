@@ -17,6 +17,7 @@ public class SharedPreferenceUtil {
     public static final String EMOTION_6 = "EMOTION_6";
     public static final String EMOTION_7 = "EMOTION_7";
     public static final String EMOTION_8 = "EMOTION_8";
+    public static final String last = "last";
 
     public static void sharedPreferenceInit(Context context) {
         sharedPreferences = context.getSharedPreferences(context.getPackageName(), Activity.MODE_PRIVATE);

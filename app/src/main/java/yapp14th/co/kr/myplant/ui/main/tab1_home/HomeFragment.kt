@@ -3,9 +3,11 @@ package yapp14th.co.kr.myplant.ui.main.tab1_home
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import android.widget.ArrayAdapter
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
@@ -91,6 +93,8 @@ class HomeFragment : BaseFragment(), OnSnapPositionChangeListener {
 
         rl_calendar.attachSnapHelperWithListener(snapHelper, SnapOnScrollListener.Behavior.NOTIFY_ON_SCROLL, this)
         rl_calendar.setItemViewCacheSize(12)
+
+        oneSecondAnimation(tv_message)
     }
 
     // 선택 선언 5 (LiveData 사용 시)
@@ -175,6 +179,20 @@ class HomeFragment : BaseFragment(), OnSnapPositionChangeListener {
         homeVM.isFlipLive.observe(this, Observer { isFlip ->
             homeHandler.postDelayed({ homeVM.clearFlipAndFlop() }, 1000)
         })
+    }
+
+    private fun oneSecondAnimation(targetView : View){
+        Handler().postDelayed({
+            targetView.visibility = View.VISIBLE
+            val dropDownAnim = AnimationUtils.loadAnimation(activity, R.anim.anim_drop_down)
+            targetView.startAnimation(dropDownAnim)
+
+            Handler().postDelayed({
+                val riseUpAnim = AnimationUtils.loadAnimation(activity, R.anim.anim_rise_up)
+                targetView.startAnimation(riseUpAnim)
+                targetView.visibility = View.GONE
+            }, 2000)
+        }, 1000)
     }
 
     companion object {

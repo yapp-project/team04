@@ -58,7 +58,7 @@ class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHolder> imp
         int emotionColor = Color.parseColor(SharedPreferenceUtil.getStringData("EMOTIONS_$emotionType"));
         holder.iv_color.setColorFilter(emotionColor, PorterDuff.Mode.SRC);
 
-        holder.tv_color.setText(item.getEmotionStr((short) emotionType));
+        // holder.tv_color.setText(item.getEmotionStr((short) emotionType));
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd");
         Calendar calendar = Calendar.getInstance();

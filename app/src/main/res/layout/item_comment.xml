@@ -57,7 +57,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
                 android:letterSpacing="-0.08"
-                android:text="@{icComment.getEmotionStr(icComment.emotionType)}"
+                app:commentEmotionText="@{icComment.emotionType}"
                 android:textColor="@color/color373768"
                 android:textSize="10sp"
                 tools:text="기쁨" />
