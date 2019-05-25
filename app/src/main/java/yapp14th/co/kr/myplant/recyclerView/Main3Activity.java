@@ -9,10 +9,16 @@ import yapp14th.co.kr.myplant.MyApplication;
 import yapp14th.co.kr.myplant.R;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.util.Log;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageButton;
+import android.widget.Toast;
 
 
 public class Main3Activity extends AppCompatActivity {
-    private RecyclerView recyclerView;
+    public static RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;
     private RecyclerView.LayoutManager layoutManager;
 
@@ -25,6 +31,8 @@ public class Main3Activity extends AppCompatActivity {
     int height;
     int radius;
     private int[] color_circle_set;
+
+    int position;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +48,8 @@ public class Main3Activity extends AppCompatActivity {
     }
 
     private void init() {
+        position = 0;
+
         snapHelper = new LinearSnapHelper();
 
         recyclerView = findViewById(R.id.recyclerView);
@@ -52,7 +62,12 @@ public class Main3Activity extends AppCompatActivity {
         recyclerView.setItemViewCacheSize(20);
 
         // use a linear layout manager
-        layoutManager = new LinearLayoutManager(this);
+        layoutManager = new LinearLayoutManager(this) {
+            @Override
+            public boolean canScrollHorizontally() {
+                return false;
+            }
+        };
         ((LinearLayoutManager) layoutManager).setOrientation(LinearLayoutManager.HORIZONTAL);
         recyclerView.setLayoutManager(layoutManager);
 
@@ -68,5 +83,37 @@ public class Main3Activity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
 
 
+    }
+
+    public void pre(View view) {
+//        Log.d("position", "pre: " + MyAdapter.getPosition());
+//        MyAdapter.setPosition(MyAdapter.getPosition()-1);
+//        Log.d("position", "pre: " + MyAdapter.getPosition());
+        recyclerView.scrollToPosition(--position);
+        Log.d("position", "pre: " + position);
+        if (position == 0) {
+            ImageButton button = (ImageButton) findViewById(R.id.pre);
+            button.setVisibility(View.INVISIBLE);
+        }
+        if (position < 7) {
+            ImageButton button = (ImageButton) findViewById(R.id.succ);
+            button.setVisibility(View.VISIBLE);
+        }
+    }
+
+    public void succ(View view) {
+//        Log.d("position", "succ: " + MyAdapter.getPosition());
+//        MyAdapter.setPosition(MyAdapter.getPosition()+1);
+//        Log.d("position", "succ: " + MyAdapter.getPosition());
+        recyclerView.scrollToPosition(++position);
+        Log.d("position", "succ: " + position);
+        if (position > 0) {
+            ImageButton button = (ImageButton) findViewById(R.id.pre);
+            button.setVisibility(View.VISIBLE);
+        }
+        if (position == 7) {
+            ImageButton button = (ImageButton) findViewById(R.id.succ);
+            button.setVisibility(View.INVISIBLE);
+        }
     }
 }

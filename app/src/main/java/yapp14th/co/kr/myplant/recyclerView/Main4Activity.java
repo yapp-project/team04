@@ -6,6 +6,7 @@ import yapp14th.co.kr.myplant.R;
 import yapp14th.co.kr.myplant.databinding.ActivityMain4Binding;
 import yapp14th.co.kr.myplant.ui.insert.InsertActivity;
 import yapp14th.co.kr.myplant.ui.main.MainActivity;
+import yapp14th.co.kr.myplant.utils.SharedPreferenceUtil;
 
 import android.content.Context;
 import android.content.Intent;
@@ -34,7 +35,6 @@ public class Main4Activity extends AppCompatActivity {
         Intent intent = getIntent();
         String[] emotion = intent.getStringArrayExtra("emotion");
 
-        SharedPreferences pref = getSharedPreferences("sFile", MODE_PRIVATE);
 
         binding.emotion1.setText(emotion[0]);
         binding.emotion2.setText(emotion[1]);
@@ -43,16 +43,16 @@ public class Main4Activity extends AppCompatActivity {
         binding.emotion5.setText(emotion[4]);
         binding.emotion6.setText(emotion[5]);
         binding.emotion7.setText(emotion[6]);
-        binding.emotion8.setText(emotion[7]);
+        binding.emotion8.setText(SharedPreferenceUtil.getStringData("last"));
 
-        binding.emotion1Iv.setColorFilter(Color.parseColor(pref.getString(emotion[0], "#000000")));
-        binding.emotion2Iv.setColorFilter(Color.parseColor(pref.getString(emotion[1], "#000000")));
-        binding.emotion3Iv.setColorFilter(Color.parseColor(pref.getString(emotion[2], "#000000")));
-        binding.emotion4Iv.setColorFilter(Color.parseColor(pref.getString(emotion[3], "#000000")));
-        binding.emotion5Iv.setColorFilter(Color.parseColor(pref.getString(emotion[4], "#000000")));
-        binding.emotion6Iv.setColorFilter(Color.parseColor(pref.getString(emotion[5], "#000000")));
-        binding.emotion7Iv.setColorFilter(Color.parseColor(pref.getString(emotion[6], "#000000")));
-        binding.emotion8Iv.setColorFilter(Color.parseColor(pref.getString(emotion[7], "#000000")));
+        binding.emotion1Iv.setColorFilter(Color.parseColor(SharedPreferenceUtil.getStringData(SharedPreferenceUtil.EMOTION_1)));
+        binding.emotion2Iv.setColorFilter(Color.parseColor(SharedPreferenceUtil.getStringData(SharedPreferenceUtil.EMOTION_2)));
+        binding.emotion3Iv.setColorFilter(Color.parseColor(SharedPreferenceUtil.getStringData(SharedPreferenceUtil.EMOTION_3)));
+        binding.emotion4Iv.setColorFilter(Color.parseColor(SharedPreferenceUtil.getStringData(SharedPreferenceUtil.EMOTION_4)));
+        binding.emotion5Iv.setColorFilter(Color.parseColor(SharedPreferenceUtil.getStringData(SharedPreferenceUtil.EMOTION_5)));
+        binding.emotion6Iv.setColorFilter(Color.parseColor(SharedPreferenceUtil.getStringData(SharedPreferenceUtil.EMOTION_6)));
+        binding.emotion7Iv.setColorFilter(Color.parseColor(SharedPreferenceUtil.getStringData(SharedPreferenceUtil.EMOTION_7)));
+        binding.emotion8Iv.setColorFilter(Color.parseColor(SharedPreferenceUtil.getStringData(SharedPreferenceUtil.EMOTION_8)));
 
         binding.finishBtn.setOnClickListener(view -> {
             startActivity(new Intent(getApplicationContext(), InsertActivity.class));
