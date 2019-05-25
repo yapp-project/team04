@@ -146,6 +146,7 @@ class StatisticFragment : BaseFragment() {
                     }
 
                     val max = array.max()
+                    Log.e("StaticticFragment", array.indexOf(max!!).toString())
 
                     when (array.indexOf(max!!)) {
                         1 -> color = Color.parseColor(SharedPreferenceUtil.getStringData(SharedPreferenceUtil.EMOTION_1))
@@ -157,6 +158,8 @@ class StatisticFragment : BaseFragment() {
                         7 -> color = Color.parseColor(SharedPreferenceUtil.getStringData(SharedPreferenceUtil.EMOTION_7))
                         8 -> color = Color.parseColor(SharedPreferenceUtil.getStringData(SharedPreferenceUtil.EMOTION_8))
                     }
+
+                    Log.e("Statictic", SharedPreferenceUtil.getStringData("EMOTION_6"))
                     holder.itemView.cv_month_color.setColorFilter(color, PorterDuff.Mode.SRC)
 
                     holder.itemView.setOnClickListener(View.OnClickListener {
