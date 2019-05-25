@@ -1,9 +1,11 @@
 package buv.co.kr.ui.login.data
 
 import io.reactivex.Single
+import io.realm.Realm
+import yapp14th.co.kr.myplant.ui.main.tab1_home.CDay
+import yapp14th.co.kr.myplant.ui.main.tab1_home.CDayVO
 import yapp14th.co.kr.myplant.ui.main.tab1_home.CalendarMonth
-import yapp14th.co.kr.myplant.utils.getCurrentYear
-import yapp14th.co.kr.myplant.utils.getMockDayEmotions
+import yapp14th.co.kr.myplant.utils.getGeneratedDayEmotions
 
 // 서버에서 데이터를 받아온다
 class HomeRemoteSource : HomeDataSource {
@@ -34,16 +36,49 @@ class HomeRemoteSource : HomeDataSource {
 
     override fun getYearEmotions(year: Int): Single<List<CalendarMonth>> {
         return Single.create<List<CalendarMonth>> {
-            val emotionsList = mutableListOf<CalendarMonth>()
+
+            val realm = Realm.getDefaultInstance()
+
+            val emotions = mutableListOf<CalendarMonth>()
             for (month in 1..12) {
-                emotionsList.add(CalendarMonth(
-                        _year = getCurrentYear().toShort(),
+                var monthData = realm.where(CDay::class.java)
+                        .equalTo("year", year.toShort())
+                        .equalTo("month", month)
+                        .findAllSorted("emotionType")
+
+                emotions.add(CalendarMonth(
+                        _year = year.toShort(),
                         _month = month.toShort(),
-                        _dayList = getMockDayEmotions(year, month)
+                        _dayList = getGeneratedDayEmotions(monthData)
                 ))
             }
 
-            it.onSuccess(emotionsList)
+            it.onSuccess(emotions)
+        }
+    }
+
+    override fun getComments(year: Int, month: Int): Single<List<CDayVO>> {
+        return Single.create<List<CDayVO>> {
+
+            val realm = Realm.getDefaultInstance()
+
+            val comments = mutableListOf<CDayVO>()
+
+            var monthData = realm.where(CDay::class.java)
+                    .equalTo("year", year)
+                    .equalTo("month", month).findAllSorted("day")
+
+            monthData.forEach { cDay ->
+                comments.add(CDayVO(
+                        year = cDay.year,
+                        month = cDay.month,
+                        day = cDay.day,
+                        emotionType = cDay.emotionType,
+                        comment = cDay.comment
+                ))
+            }
+
+            it.onSuccess(comments)
         }
     }
 }
