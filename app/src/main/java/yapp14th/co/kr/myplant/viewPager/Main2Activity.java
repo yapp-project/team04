@@ -5,43 +5,67 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
+
+import yapp14th.co.kr.myplant.MyApplication;
 import yapp14th.co.kr.myplant.R;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageButton;
 
 import java.util.ArrayList;
 
 public class Main2Activity extends AppCompatActivity {
+    ViewPager viewPager;
+
+    private String[] myDataset;
+
+    int width;
+    int height;
+    int radius;
+    private int[] color_circle_set;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
 
+        width = (int) MyApplication.convertDpToPixel(90F, this);
+        height = (int) MyApplication.convertDpToPixel(90F, this);
+        radius = (int) MyApplication.convertDpToPixel(25F, this);
+
         init();
     }
 
     private void init() {
-        ViewPager viewPager = findViewById(R.id.viewPager);
+        viewPager = findViewById(R.id.viewPager);
         FragmentAdapter fragmentAdapter = new FragmentAdapter(getSupportFragmentManager());
 // ViewPager와  FragmentAdapter 연결
         viewPager.setAdapter(fragmentAdapter);
+        viewPager.setOffscreenPageLimit(8);
 
-        ArrayList<String> listText = new ArrayList<>();
-        listText.add("기쁨");
-        listText.add("행복");
-        listText.add("신남");
-        listText.add("평화");
-        listText.add("슬픔");
-        listText.add("불안");
-        listText.add("분노");
-        listText.add("짜증");
+        myDataset = getResources().getStringArray(R.array.emotions);
+        myDataset[7] = "짜증";
+
+        color_circle_set = new int[]{width, height, radius};
+
+//        ArrayList<String> listText = new ArrayList<>();
+//        listText.add("기쁨");
+//        listText.add("행복");
+//        listText.add("신남");
+//        listText.add("평화");
+//        listText.add("슬픔");
+//        listText.add("불안");
+//        listText.add("분노");
+//        listText.add("짜증");
 
         // FragmentAdapter에 Fragment 추가, Image 개수만큼 추가
-        for (int i = 0; i < listText.size(); i++) {
-            BlankFragment blankFragment = new BlankFragment();
+        for (int i = 0; i < myDataset.length; i++) {
+            BlankFragment blankFragment = new BlankFragment(myDataset, color_circle_set);
             Bundle bundle = new Bundle();
-            bundle.putString("key", listText.get(i));
+            bundle.putInt("position", i);
+            bundle.putString("key", myDataset[i]);
             blankFragment.setArguments(bundle);
             fragmentAdapter.addItem(blankFragment);
         }
@@ -53,6 +77,30 @@ public class Main2Activity extends AppCompatActivity {
         int margin = (int) (dpValue * d);
         viewPager.setPadding(margin, 0, margin, 0);
         viewPager.setPageMargin(margin/2);
+    }
+
+    public void pre(View view) {
+            viewPager.setCurrentItem(viewPager.getCurrentItem() - 1);
+            if (viewPager.getCurrentItem() == 0) {
+                ImageButton button = (ImageButton) findViewById(R.id.pre);
+                button.setVisibility(View.INVISIBLE);
+            }
+        if (viewPager.getCurrentItem() < 7) {
+            ImageButton button = (ImageButton) findViewById(R.id.succ);
+            button.setVisibility(View.VISIBLE);
+        }
+    }
+
+    public void succ(View view) {
+            viewPager.setCurrentItem(viewPager.getCurrentItem() + 1);
+            if (viewPager.getCurrentItem() > 0) {
+                ImageButton button = (ImageButton) findViewById(R.id.pre);
+                button.setVisibility(View.VISIBLE);
+            }
+            if (viewPager.getCurrentItem() == 7) {
+                ImageButton button = (ImageButton) findViewById(R.id.succ);
+                button.setVisibility(View.INVISIBLE);
+            }
     }
 }
 

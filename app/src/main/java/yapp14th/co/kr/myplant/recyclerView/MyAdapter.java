@@ -1,6 +1,5 @@
 package yapp14th.co.kr.myplant.recyclerView;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -14,7 +13,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
 import android.widget.SeekBar;
@@ -24,9 +22,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
-import yapp14th.co.kr.myplant.MyApplication;
 import yapp14th.co.kr.myplant.R;
 import yapp14th.co.kr.myplant.components.ColorPickerView;
 import yapp14th.co.kr.myplant.utils.SharedPreferenceUtil;
@@ -41,6 +37,7 @@ class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implements Vi
    int red;
    int blue;
    int green;
+
     String last_emotion;
     Boolean input_empty = true;
 
@@ -65,7 +62,9 @@ class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implements Vi
         if (position!= 7) {
             holder.last.setVisibility(View.GONE);
             holder.input.setVisibility(View.GONE);
+//            holder.input.clearFocus();
             holder.name.setVisibility(View.VISIBLE);
+//            holder.name.requestFocus();
             holder.name.setText(dataset[position]);
             holder.button.setVisibility(View.INVISIBLE);
 
@@ -73,6 +72,7 @@ class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implements Vi
             holder.name.setVisibility(View.GONE);
             holder.last.setVisibility(View.VISIBLE);
             holder.input.setVisibility(View.VISIBLE);
+//            holder.input.requestFocus(View.FOCUS_DOWN);
             holder.button.setVisibility(View.VISIBLE);
             holder.button.setOnClickListener(this);
 
@@ -88,7 +88,9 @@ class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implements Vi
     public void onClick(View view) {
 
         dataset[7] = last_emotion;
+
         SharedPreferenceUtil.setData("last",last_emotion);
+
 
         if(input_empty) //마지막 감정 이름 지정이 되어있지 않은 경우
             Toast.makeText(view.getContext(),"감정의 이름을 지정해 주세요.",Toast.LENGTH_SHORT).show();
@@ -124,7 +126,7 @@ class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implements Vi
             num = itemView.findViewById(R.id.num);
             name = itemView.findViewById(R.id.name);
             last = itemView.findViewById(R.id.last);
-            input = itemView.findViewById(R.id.input);
+            input = itemView.findViewById(R.id.et_input);
             button = itemView.findViewById(R.id.button);
 
             color_pick = itemView.findViewById(R.id.color_pick);
@@ -181,7 +183,6 @@ class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implements Vi
                 }
             });
 
-
             input.addTextChangedListener(new TextWatcher() {
                 @Override
                 public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -203,7 +204,9 @@ class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implements Vi
                     else
                         input_empty = false;
                     Log.d("last",last_emotion);
+
                     SharedPreferenceUtil.setData("EMOTION_"+String.valueOf(getAdapterPosition()+1),hexcode_tv.getText().toString());
+
                 }
             });
 
@@ -224,6 +227,7 @@ class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implements Vi
             SharedPreferenceUtil.setData("EMOTION_"+String.valueOf(getAdapterPosition()+1),hexcode_tv.getText().toString());
             Log.d("emottt1", "EMOTION_"+String.valueOf(getAdapterPosition()+1));
             Log.d("emottt", SharedPreferenceUtil.getStringData(String.valueOf("EMOTION_"+String.valueOf(getAdapterPosition()+1))));
+
         }
     }
 

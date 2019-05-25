@@ -14,12 +14,6 @@
         android:theme="@style/AppTheme.NoActionBar"
         tools:replace="android:allowBackup">
         <activity android:name=".ui.intro.PushAgreeActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <action android:name="android.intent.action.VIEW" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity android:name=".recyclerView.Main5Activity">
 
@@ -27,7 +21,7 @@
         <activity android:name=".recyclerView.Main4Activity" />
         <activity
             android:name=".recyclerView.Main3Activity"
-            android:windowSoftInputMode="adjustNothing" />
+            android:windowSoftInputMode="adjustPan" />
         <activity android:name=".viewPager.Main2Activity" />
         <activity
             android:name=".base.example.template.view.TemplateActivity"
@@ -46,7 +40,10 @@
         <activity
             android:name=".ui.intro.IntroActivity"
             android:theme="@style/AppTheme.NoActionBar">
-
+        </activity>
+        <activity
+            android:name=".ui.comment.CommentActivity"
+            android:theme="@style/AppTheme.NoActionBar">
         </activity>
 
         <activity
@@ -57,6 +54,12 @@
         <activity
             android:name=".ui.insert.InsertActivity"
             android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".ui.intro.IntroColorPickActivity"

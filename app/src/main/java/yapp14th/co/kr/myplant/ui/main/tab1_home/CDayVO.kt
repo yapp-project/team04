@@ -7,12 +7,3 @@ data class CDayVO(
         var emotionType: Short,
         var comment: String
 )
-
-fun generateCalendarMonth(calendarMonth: CDay): CDayVO {
-    return CDayVO(
-            year = calendarMonth.year,
-            month = calendarMonth.month,
-            day = calendarMonth.day,
-            emotionType = calendarMonth.emotionType,
-            comment = calendarMonth.comment)
-}

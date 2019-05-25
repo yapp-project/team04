@@ -1,0 +1,415 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical"
+    app:cardCornerRadius="10dp">
+
+    <ImageView
+        android:id="@+id/iv_image"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="@dimen/half_margin"
+        android:scaleType="centerInside"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_sub_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="서브 카피 및 설명문구가\n들어갑니다."
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="parent"
+        app:layout_constraintEnd_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="parent"
+        app:layout_constraintEnd_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/btn_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/dialog_left_corner"
+            android:gravity="center"
+            android:padding="11dp"
+            android:text="취소"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/white" />
+
+        <TextView
+            android:id="@+id/btn_ok"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/dialog_right_corner"
+            android:gravity="center"
+            android:padding="11dp"
+            android:text="확인"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="@dimen/single_margin"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+a
+            <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:fontFamily="@font/spoqa_han_sans_bold"
+                android:text="1월"
+                android:textColor="@color/color373768"
+                android:textSize="14sp" />
+
+            <ImageButton
+                android:id="@+id/btn_close_dialog"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/btn_close"
+                android:layout_alignParentRight="true"
+                android:layout_marginLeft="14dp"/>
+
+
+        </RelativeLayout>
+
+        <com.github.mikephil.charting.charts.PieChart
+            android:id="@+id/chart_statistic"
+            android:layout_width="160dp"
+            android:layout_height="160dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="10dp" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/view_colors"
+            android:layout_width="312dp"
+            android:layout_height="77dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="20dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent">
+
+            <LinearLayout
+                android:id="@+id/ll_pleasure"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <yapp14th.co.kr.myplant.ui.main.tab2_statistic.EmotionView
+                    android:id="@+id/view_color_pleasure"
+                    android:layout_width="15dp"
+                    android:layout_height="4dp"
+                    android:layout_marginRight="3dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/statistic_pleasure"
+                    android:textColor="@color/color373768"
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:id="@+id/tv_percent_pleasure"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="13dp"
+                    android:fontFamily="@font/roboto_bold"
+                    android:text="13%"
+                    android:textColor="@color/color373768"
+                    android:textSize="11sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_happy"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                app:layout_constraintLeft_toRightOf="@id/ll_pleasure"
+                app:layout_constraintRight_toLeftOf="@id/ll_excited"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <yapp14th.co.kr.myplant.ui.main.tab2_statistic.EmotionView
+                    android:id="@+id/view_color_happy"
+                    android:layout_width="15dp"
+                    android:layout_height="4dp"
+                    android:layout_marginRight="3dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/statistic_happy"
+                    android:textColor="@color/color373768"
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:id="@+id/tv_percent_happy"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="13dp"
+                    android:fontFamily="@font/roboto_bold"
+                    android:text="13%"
+                    android:textColor="@color/color373768"
+                    android:textSize="11sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_excited"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <yapp14th.co.kr.myplant.ui.main.tab2_statistic.EmotionView
+                    android:id="@+id/view_color_excited"
+                    android:layout_width="15dp"
+                    android:layout_height="4dp"
+                    android:layout_marginRight="3dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/statistic_exciting"
+                    android:textColor="@color/color373768"
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:id="@+id/tv_percent_excited"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="13dp"
+                    android:fontFamily="@font/roboto_bold"
+                    android:text="13%"
+                    android:textColor="@color/color373768"
+                    android:textSize="11sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_peace"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/ll_pleasure">
+
+                <yapp14th.co.kr.myplant.ui.main.tab2_statistic.EmotionView
+                    android:id="@+id/view_color_peace"
+                    android:layout_width="15dp"
+                    android:layout_height="4dp"
+                    android:layout_marginRight="3dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/statistic_peace"
+                    android:textColor="@color/color373768"
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:id="@+id/tv_percent_peace"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="13dp"
+                    android:fontFamily="@font/roboto_bold"
+                    android:text="13%"
+                    android:textColor="@color/color373768"
+                    android:textSize="11sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_sad"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                app:layout_constraintLeft_toRightOf="@id/ll_peace"
+                app:layout_constraintRight_toLeftOf="@id/ll_unrest"
+                app:layout_constraintTop_toBottomOf="@id/ll_happy">
+
+                <yapp14th.co.kr.myplant.ui.main.tab2_statistic.EmotionView
+                    android:id="@+id/view_color_sad"
+                    android:layout_width="15dp"
+                    android:layout_height="4dp"
+                    android:layout_marginRight="3dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/statistic_sadness"
+                    android:textColor="@color/color373768"
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:id="@+id/tv_percent_sad"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="13dp"
+                    android:fontFamily="@font/roboto_bold"
+                    android:text="13%"
+                    android:textColor="@color/color373768"
+                    android:textSize="11sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_unrest"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/ll_excited">
+
+                <yapp14th.co.kr.myplant.ui.main.tab2_statistic.EmotionView
+                    android:id="@+id/view_color_unrest"
+                    android:layout_width="15dp"
+                    android:layout_height="4dp"
+                    android:layout_marginRight="3dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/statistic_unrest"
+                    android:textColor="@color/color373768"
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:id="@+id/tv_percent_unrest"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="13dp"
+                    android:fontFamily="@font/roboto_bold"
+                    android:text="13%"
+                    android:textColor="@color/color373768"
+                    android:textSize="11sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_anger"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/ll_peace">
+
+                <yapp14th.co.kr.myplant.ui.main.tab2_statistic.EmotionView
+                    android:id="@+id/view_color_anger"
+                    android:layout_width="15dp"
+                    android:layout_height="4dp"
+                    android:layout_marginRight="3dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/statistic_anger"
+                    android:textColor="@color/color373768"
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:id="@+id/tv_percent_anger"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="13dp"
+                    android:fontFamily="@font/roboto_bold"
+                    android:text="13%"
+                    android:textColor="@color/color373768"
+                    android:textSize="11sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_user"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                app:layout_constraintLeft_toRightOf="@id/ll_peace"
+                app:layout_constraintRight_toLeftOf="@id/ll_unrest"
+                app:layout_constraintTop_toBottomOf="@id/ll_sad">
+
+                <yapp14th.co.kr.myplant.ui.main.tab2_statistic.EmotionView
+                    android:id="@+id/view_color_user"
+                    android:layout_width="15dp"
+                    android:layout_height="4dp"
+                    android:layout_marginRight="3dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/statistic_sadness"
+                    android:textColor="@color/color373768"
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:id="@+id/tv_percent_user"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="13dp"
+                    android:fontFamily="@font/roboto_bold"
+                    android:text="13%"
+                    android:textColor="@color/color373768"
+                    android:textSize="11sp" />
+            </LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>
+</layout>
