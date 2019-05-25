@@ -4,6 +4,10 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SnapHelper
 import filaroid.co.kr.filaroid.components.OnSnapPositionChangeListener
 import filaroid.co.kr.filaroid.components.SnapOnScrollListener
+import io.realm.RealmResults
+import yapp14th.co.kr.myplant.ui.main.tab1_home.CDay
+import yapp14th.co.kr.myplant.ui.main.tab1_home.CDayVO
+import java.util.*
 
 fun getMonthDay(year: Int, month: Int): Int {
     return when (month) {
@@ -16,6 +20,56 @@ fun getMonthDay(year: Int, month: Int): Int {
                 28
         else -> -1
     }
+}
+
+fun getCurrentYear() = Calendar.getInstance().get(Calendar.YEAR)
+
+fun getCurrentMonth() = Calendar.getInstance().get(Calendar.MONTH)
+fun getCurrentRefinedMonth() = Calendar.getInstance().get(Calendar.MONTH) + 1
+fun getRefinedMonth(month: Short) = (month + 1).toShort()
+
+fun getCurrentDate() = Calendar.getInstance().get(Calendar.DATE)
+fun getEmotionsList() = arrayListOf(
+        "기쁨",
+        "행복",
+        "신남",
+        "평화",
+        "슬픔",
+        "불안",
+        "분노",
+        ""
+)
+
+fun getMockDayEmotions(year: Int, month: Int): List<CDayVO> {
+    var maximumDay = getMonthDay(year, month)
+    val list = mutableListOf<CDayVO>()
+
+    for (i in 1..maximumDay) {
+        list.add(CDayVO(
+                year = year.toShort(),
+                month = month.toShort(),
+                day = i.toShort(),
+                emotionType = (Math.random() * getEmotionsList().size).toShort(),
+                comment = ""
+        ))
+    }
+
+    return list
+}
+
+fun getGeneratedDayEmotions(datas: RealmResults<CDay>): List<CDayVO> {
+    val list = mutableListOf<CDayVO>()
+
+    datas.forEach { data ->
+        list.add(CDayVO(
+                year = data.year,
+                month = data.month,
+                day = data.day,
+                emotionType = data.emotionType,
+                comment = data.comment))
+    }
+
+    return list
 }
 
 fun SnapHelper.getSnapPosition(recyclerView: RecyclerView): Int {
