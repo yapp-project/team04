@@ -37,13 +37,13 @@
             android:textSize="20sp"
             android:text="안녕하세요:-)" />
 
-        <!--<ImageView-->
-            <!--android:layout_marginTop="2dp"-->
-            <!--android:layout_width="27dp"-->
-            <!--android:layout_height="29dp"-->
-            <!--android:layout_gravity="right"-->
-            <!--android:layout_marginLeft="98dp"-->
-            <!--android:src="@drawable/logout" />-->
+        <ImageView
+            android:layout_marginTop="2dp"
+            android:layout_width="27dp"
+            android:layout_height="29dp"
+            android:layout_gravity="right"
+            android:layout_marginLeft="98dp"
+            android:src="@drawable/logout" />
 
     </LinearLayout>
 
@@ -433,12 +433,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 
-
-    <androidx.viewpager.widget.ViewPager
-        android:layout_marginTop="16dp"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/horizontal_list"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/viewPager">
+        android:layout_height="match_parent"/>
 
-    </androidx.viewpager.widget.ViewPager>
+
+
+
+
 </LinearLayout>

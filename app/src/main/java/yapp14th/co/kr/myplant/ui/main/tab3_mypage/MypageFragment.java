@@ -61,30 +61,30 @@ public class MypageFragment extends BaseFragment {
         super.onViewCreated(view, savedInstanceState);
 
 
-        ViewPager viewPager = view.findViewById(R.id.viewPager);
+//        ViewPager viewPager = view.findViewById(R.id.viewPager);
         FragmentAdapter fragmentAdapter = new FragmentAdapter(getActivity().getSupportFragmentManager());
 
-        viewPager.setAdapter(fragmentAdapter);
+//        viewPager.setAdapter(fragmentAdapter);
 
         ArrayList<Integer> listImage = new ArrayList<>();
         listImage.add(R.drawable.rectangle);
-        listImage.add(R.drawable.rectangle);
-        listImage.add(R.drawable.rectangle);
+        listImage.add(R.drawable.img_splash);
+        listImage.add(R.drawable.dropper);
 
-        viewPager.setClipToPadding(false);
-        int dpValue = 16;
-        float d = getResources().getDisplayMetrics().density;
-        int margin = (int) (dpValue * d);
-        viewPager.setPadding(margin, 0, margin, 0);
-        viewPager.setPageMargin(margin/2);
+//        viewPager.setClipToPadding(false);
+//        int dpValue = 16;
+//        float d = getResources().getDisplayMetrics().density;
+//        int margin = (int) (dpValue * d);
+//        viewPager.setPadding(margin, 0, margin, 0);
+//        viewPager.setPageMargin(margin/2);
 
-        for (int i = 0; i < listImage.size(); i++) {
-            ImageFragment imageFragment = new ImageFragment();
-            Bundle bundle = new Bundle();
-            bundle.putInt("imgRes", listImage.get(i));
-            imageFragment.setArguments(bundle);
-            fragmentAdapter.addItem(imageFragment);
-        }
+//        for (int i = 0; i < listImage.size(); i++) {
+//            ImageFragment imageFragment = new ImageFragment();
+//            Bundle bundle = new Bundle();
+//            bundle.putInt("imgRes", listImage.get(i));
+//            imageFragment.setArguments(bundle);
+//            fragmentAdapter.addItem(imageFragment);
+//        }
         fragmentAdapter.notifyDataSetChanged();
 
         TextView tv_emotion_num = view.findViewById(R.id.tv_emotion_num);
