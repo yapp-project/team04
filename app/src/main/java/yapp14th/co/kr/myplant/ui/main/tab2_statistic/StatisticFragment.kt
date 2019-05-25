@@ -158,7 +158,7 @@ class StatisticFragment : BaseFragment() {
                         8 -> color = Color.parseColor(SharedPreferenceUtil.getStringData("EMOTION_8"))
                     }
 
-                    Log.e("Statictic", "$color")
+                    Log.e("Statictic", SharedPreferenceUtil.getStringData("EMOTION_6"))
                     holder.itemView.cv_month_color.setColorFilter(color, PorterDuff.Mode.SRC)
 
                     holder.itemView.setOnClickListener(View.OnClickListener {
