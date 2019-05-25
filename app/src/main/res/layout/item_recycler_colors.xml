@@ -48,7 +48,6 @@
         android:layout_width="24dp"
         android:layout_height="24dp"
         app:civ_border_width="2dp"
-        android:src = "@color/black"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="12dp"
         android:layout_marginBottom="16dp"
