@@ -59,7 +59,7 @@
                 app:mcv_leftArrow="@color/transparent"
                 app:mcv_monthLabels="@array/custom_months"
                 app:mcv_rightArrow="@color/transparent"
-                app:mcv_selectionColor="#00F"
+                app:mcv_selectionColor="@color/transparent"
                 app:mcv_showOtherDates="none"
                 app:mcv_weekDayLabels="@array/custom_weekdays" />
 

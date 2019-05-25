@@ -12,6 +12,7 @@ import android.widget.Button;
 
 public class PushAgreeActivity extends AppCompatActivity {
     SharedPreferences sharedPreferences;
+    SharedPreferences.Editor editor;
 
     private Button yes;
     private Button no;
@@ -45,7 +46,7 @@ public class PushAgreeActivity extends AppCompatActivity {
     }
 
     private void push_commit(boolean b) {
-        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor = sharedPreferences.edit();
         editor.putBoolean("push", b);
         editor.commit();
 

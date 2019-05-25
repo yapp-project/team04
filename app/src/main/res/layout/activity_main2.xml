@@ -4,16 +4,47 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/b_5_3_x"
     tools:context=".viewPager.Main2Activity">
 
-    <androidx.viewpager.widget.ViewPager
-        android:id="@+id/viewPager"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="8dp"
+    <ImageButton
+        android:visibility="invisible"
+        android:background="@android:color/transparent"
+        android:id="@+id/pre"
+        android:layout_width="42dp"
+        android:layout_height="36dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
+        android:onClick="pre"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/viewPager"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/side" />
+
+    <ImageButton
+        android:background="@android:color/transparent"
+        android:id="@+id/succ"
+        android:layout_width="27dp"
+        android:layout_height="34dp"
+        android:layout_marginTop="8dp"
+        android:onClick="succ"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/viewPager"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/side" />
+
+    <yapp14th.co.kr.myplant.viewPager.SwipeableViewPager
+        android:id="@+id/viewPager"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="44dp"
+        android:layout_marginTop="100dp"
+        android:layout_marginEnd="44dp"
+        android:layout_marginBottom="44dp"
+        android:paddingHorizontal="44dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
