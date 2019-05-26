@@ -34,12 +34,16 @@ class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implements Vi
     private String[] dataset;
    private int[] color_circle_set;
 
-   int red;
-   int blue;
-   int green;
+   private int red;
+   private int blue;
+   private int green;
 
-    String last_emotion;
-    Boolean input_empty = true;
+   private String last_emotion;
+   private Boolean input_empty = true;
+   private int chrome_seekbar;
+   private int brightness_seekbar;
+   private Boolean chorme_sb_touch = false;
+   private Boolean brigntness_sb_touch= false;
 
     public MyAdapter(String[] dataset,int[] color_circle_set) {
         this.dataset = dataset;
@@ -75,7 +79,6 @@ class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implements Vi
 //            holder.input.requestFocus(View.FOCUS_DOWN);
             holder.button.setVisibility(View.VISIBLE);
             holder.button.setOnClickListener(this);
-
         }
     }
 
@@ -146,6 +149,8 @@ class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implements Vi
             intro_sb_brightness.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
                 @Override
                 public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                    brigntness_sb_touch = true;
+                    brightness_seekbar = seekBar.getProgress();
                     float[] hsv = new float[3];
                     Color.RGBToHSV(red, green, blue, hsv);
                     hsv[2] = (float) (intro_sb_brightness.getProgress()) / 100;
@@ -166,6 +171,8 @@ class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implements Vi
             intro_sb_chroma.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
                 @Override
                 public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                    chorme_sb_touch = true;
+                    chrome_seekbar = seekBar.getProgress();
                     float[] hsv = new float[3];
                     Color.RGBToHSV(red, green, blue, hsv);
                     hsv[1] = (float) (intro_sb_chroma.getProgress()) / 100;
@@ -223,6 +230,19 @@ class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implements Vi
             hexcode_tv.setText(String.format("#%04X", color));
             intro_sb_brightness.getProgressDrawable().setColorFilter(Color.BLACK, PorterDuff.Mode.SRC_IN);
             intro_sb_chroma.getProgressDrawable().setColorFilter(color, PorterDuff.Mode.SRC_IN);
+
+            intro_sb_chroma.setProgress(chrome_seekbar);
+            intro_sb_brightness.setProgress(brightness_seekbar);
+            if(brigntness_sb_touch == false && chorme_sb_touch == false){
+                chrome_seekbar = 100;
+                brightness_seekbar = 100;
+            }
+            else{
+                if(brigntness_sb_touch)
+                    brigntness_sb_touch = false;
+                else if(chorme_sb_touch)
+                    chorme_sb_touch = false;
+            }
 
             SharedPreferenceUtil.setData("EMOTION_"+String.valueOf(getAdapterPosition()+1),hexcode_tv.getText().toString());
             Log.d("emottt1", "EMOTION_"+String.valueOf(getAdapterPosition()+1));
