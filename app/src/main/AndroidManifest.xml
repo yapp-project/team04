@@ -14,7 +14,12 @@
         android:theme="@style/AppTheme.NoActionBar"
         tools:replace="android:allowBackup">
         <activity android:name=".ui.intro.PushAgreeActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.VIEW" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity android:name=".recyclerView.Main5Activity">
 
@@ -55,12 +60,7 @@
         <activity
             android:name=".ui.insert.InsertActivity"
             android:theme="@style/AppTheme.NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <action android:name="android.intent.action.VIEW" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".ui.intro.IntroColorPickActivity"
