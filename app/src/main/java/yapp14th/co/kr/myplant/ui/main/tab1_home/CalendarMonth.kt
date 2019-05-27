@@ -5,11 +5,11 @@ import androidx.databinding.Bindable
 import yapp14th.co.kr.myplant.BR
 
 data class CalendarMonth(
-        var _year: Short,
-        var _month: Short,
+        @Bindable var _year: Short,
+        @Bindable var _month: Short,
         @Bindable var _fliped: Boolean = false,
         @Bindable var _init: Boolean = true,
-        var _dayList: List<CDayVO>) : BaseObservable() {
+        @Bindable var _dayList: List<CDayVO>) : BaseObservable() {
 
     var year: Short
         get() = _year

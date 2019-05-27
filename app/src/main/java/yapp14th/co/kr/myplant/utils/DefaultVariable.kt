@@ -1,10 +1,12 @@
 package yapp14th.co.kr.myplant.utils
 
+import android.graphics.Color
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SnapHelper
 import filaroid.co.kr.filaroid.components.OnSnapPositionChangeListener
 import filaroid.co.kr.filaroid.components.SnapOnScrollListener
 import io.realm.RealmResults
+import yapp14th.co.kr.myplant.R
 import yapp14th.co.kr.myplant.ui.main.tab1_home.CDay
 import yapp14th.co.kr.myplant.ui.main.tab1_home.CDayVO
 import java.util.*
@@ -29,15 +31,16 @@ fun getCurrentRefinedMonth() = Calendar.getInstance().get(Calendar.MONTH) + 1
 fun getRefinedMonth(month: Short) = (month + 1).toShort()
 
 fun getCurrentDate() = Calendar.getInstance().get(Calendar.DATE)
-fun getEmotionsList() = arrayListOf(
-        "기쁨",
-        "행복",
-        "신남",
-        "평화",
-        "슬픔",
-        "불안",
-        "분노",
-        ""
+
+fun getcalendarResources() = arrayOf(
+        R.drawable.ic_calendar_background_pleasure,     // 기쁨
+        R.drawable.ic_calendar_background_happy,        // 행복
+        R.drawable.ic_calendar_background_excitement,   // 신남
+        R.drawable.ic_calendar_background_peace,        // 평화
+        R.drawable.ic_calendar_background_sadness,      // 슬픔
+        R.drawable.ic_calendar_background_anxiety,      // 불안
+        R.drawable.ic_calendar_background_anger,        // 분노
+        R.drawable.ic_calendar_background_custom        // 짜증
 )
 
 fun getMockDayEmotions(year: Int, month: Int): List<CDayVO> {
@@ -49,7 +52,7 @@ fun getMockDayEmotions(year: Int, month: Int): List<CDayVO> {
                 year = year.toShort(),
                 month = month.toShort(),
                 day = i.toShort(),
-                emotionType = (Math.random() * getEmotionsList().size).toShort(),
+                emotionType = (Math.random() * 8).toShort(),
                 comment = ""
         ))
     }
@@ -85,4 +88,12 @@ fun RecyclerView.attachSnapHelperWithListener(
     snapHelper.attachToRecyclerView(this)
     val snapOnScrollListener = SnapOnScrollListener(snapHelper, behavior, onSnapPositionChangeListener)
     addOnScrollListener(snapOnScrollListener)
+}
+
+fun adjustAlpha(color: Int, factor: Float): Int {
+    val alpha = Math.round(Color.alpha(color) * factor)
+    val red = Color.red(color)
+    val green = Color.green(color)
+    val blue = Color.blue(color)
+    return Color.argb(alpha, red, green, blue)
 }

@@ -414,6 +414,7 @@
                     tools:src="@drawable/oval_color_irritation" />
 
                 <TextView
+                    android:id="@+id/tv_mypage_08"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"

@@ -55,6 +55,7 @@ public class Main4Activity extends AppCompatActivity {
         binding.emotion8Iv.setColorFilter(Color.parseColor(SharedPreferenceUtil.getStringData(SharedPreferenceUtil.EMOTION_8)));
 
         binding.finishBtn.setOnClickListener(view -> {
+            SharedPreferenceUtil.setData(SharedPreferenceUtil.COLOR_PICK_FINISHED, true);
             if (mypage) {
                 finish();
             } else {

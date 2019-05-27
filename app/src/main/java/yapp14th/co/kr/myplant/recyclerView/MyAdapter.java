@@ -35,9 +35,9 @@ class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implements Vi
     private String[] dataset;
     private int[] color_circle_set;
 
-    int red;
-    int blue;
-    int green;
+    private int red;
+    private int blue;
+    private int green;
 
     String last_emotion;
     Boolean input_empty = true;

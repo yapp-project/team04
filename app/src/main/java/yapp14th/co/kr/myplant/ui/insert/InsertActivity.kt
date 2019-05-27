@@ -5,7 +5,6 @@ import android.content.Intent
 import android.graphics.Color
 import android.graphics.PorterDuff
 import android.os.Bundle
-import android.util.Log
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProviders
 import kotlinx.android.synthetic.main.activity_insert.*
@@ -13,14 +12,13 @@ import yapp14th.co.kr.myplant.base.BaseActivity
 import yapp14th.co.kr.myplant.components.MaterialColorAdapter
 import yapp14th.co.kr.myplant.databinding.ActivityInsertBinding
 import yapp14th.co.kr.myplant.ui.main.MainActivity
-import yapp14th.co.kr.myplant.ui.main.tab1_home.CDay
 import yapp14th.co.kr.myplant.utils.*
 
 class InsertActivity : BaseActivity() {
     override fun getLayoutRes() = R.layout.activity_insert
     override fun getIsUseDataBinding() = true
     lateinit var binding: ActivityInsertBinding
-    var currentPosition: Int = 0
+    private var comingFromAppStart = false
 
     private val insertVM: InsertViewModel by lazy {
         ViewModelProviders.of(this).get(InsertViewModel::class.java)
@@ -36,21 +34,26 @@ class InsertActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        insertVM.year = intent.getIntExtra("year", getCurrentYear())
-        insertVM.month = intent.getIntExtra("month", getCurrentRefinedMonth())
-        insertVM.day = intent.getIntExtra("day", getCurrentDate())
+        val year = intent.getIntExtra("year", getCurrentYear())
+        val month = intent.getIntExtra("month", getCurrentRefinedMonth())
+        val day = intent.getIntExtra("day", getCurrentDate())
 
-        insertVM.date = getRealmInstance.where(CDay::class.java)
-                .equalTo("year", insertVM.year)
-                .equalTo("month", insertVM.month)
-                .equalTo("day", insertVM.day).findAll()
+        // -1은 나올수 없는 감정 (ViewModel에서는 해당 값을 0으로 치환 진행)
+        val emotionType = intent.getIntExtra("emotionType", -1)
+        val comment = intent.getStringExtra("comment") ?: ""
+        comingFromAppStart = intent.getIntExtra("year", -1) < 0
 
-        if (insertVM.date?.size != 0) {
+        insertVM.setDate(year, month, day, emotionType, comment)
+        var dataSize = insertVM.setTargetDate(getRealmInstance, year, month, day)
+
+        // emotionType = -1 : 처음 앱 켜서 옴 | emotionType = 0 : 추가시키기 위해 옴 | emotionType = 1~8 : 수정하기 위해 옴
+        if (emotionType == -1 && dataSize != 0) {
             startActivity(Intent(this@InsertActivity, MainActivity::class.java))
             finish()
         } else {
             wv_color.adapter = MaterialColorAdapter(insertVM.emotionsColor)
 
+            // 초기 wheel listener 설정
             wv_color.setOnWheelItemSelectedListener { parent, itemDrawable, position ->
                 //the adapter position that is closest to the selection angle and it's drawable
 
@@ -65,27 +68,42 @@ class InsertActivity : BaseActivity() {
 
                 img_color.setColorFilter(color, PorterDuff.Mode.SRC)
 
-                currentPosition = position + 1
+                insertVM.currentEmotion = position + 1
                 tv_emotion.text = insertVM.emotionsTitle[position]
-                // insertVM.emotionsColor.get(position)
             }
 
+            // 초기 wheel init 값 설정
+            wv_color.setSelected(insertVM.currentEmotion - 1)
+
             btn_completed.setOnClickListener {
-                val realm = getRealmInstance
-                realm.beginTransaction()
+                if (dataSize == 0 || emotionType == 0) {
+                    insertVM.realmInsertDate(
+                            realm = getRealmInstance,
+                            year = year.toShort(),
+                            month = month.toShort(),
+                            day = day.toShort(),
+                            emotionType = insertVM.currentEmotion.toShort(),
+                            comment = et_input.text.toString())
 
-                var maxId = realm.where(CDay::class.java).max("id")
-                var nextId = if (maxId == null) 1 else (maxId.toInt() + 1)
+                    if (comingFromAppStart)
+                        startActivity(Intent(this@InsertActivity, MainActivity::class.java))
+                    finish()
+                } else {
+                    insertVM.realmUpdateDate(
+                            realm = getRealmInstance,
+                            year = year.toShort(),
+                            month = month.toShort(),
+                            day = day.toShort(),
+                            emotionType = insertVM.currentEmotion.toShort(),
+                            comment = et_input.text.toString())
 
-                CDay(nextId.toLong(), insertVM.year.toShort(), insertVM.month.toShort(), insertVM.day.toShort(), currentPosition.toShort(), et_input.text.toString()).let { cDay ->
-                    realm.insert(cDay)
-                    Log.d("insert completed : ", "$cDay")
+                    finish()
                 }
+            }
 
-                realm.commitTransaction()
-                // realm.where(CDay::class.java).equalTo("owner", SharedPreferenceUtil.getStringData(SharedPreferenceUtil.email)).equalTo(fieldName, filePath).findAll().deleteAllFromRealm()
-
-                startActivity(Intent(this@InsertActivity, MainActivity::class.java))
+            btn_close.setOnClickListener {
+                if (comingFromAppStart)
+                    startActivity(Intent(this@InsertActivity, MainActivity::class.java))
                 finish()
             }
         }

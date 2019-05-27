@@ -19,6 +19,8 @@ import yapp14th.co.kr.myplant.R;
 import yapp14th.co.kr.myplant.ui.main.tab1_home.CDayVO;
 import yapp14th.co.kr.myplant.ui.main.tab1_home.CalendarMonth;
 
+import static yapp14th.co.kr.myplant.utils.DefaultVariableKt.adjustAlpha;
+
 public class BindingAdapter {
 
     @androidx.databinding.BindingAdapter("android:visibility")
@@ -29,14 +31,23 @@ public class BindingAdapter {
             view.setVisibility(View.GONE);
     }
 
+    @androidx.databinding.BindingAdapter("visibility")
+    public static void setBackgroundInvisible(View view, boolean isVisible) {
+        if (isVisible)
+            view.setVisibility(View.VISIBLE);
+        else
+            view.setVisibility(View.INVISIBLE);
+    }
+
     @androidx.databinding.BindingAdapter("android:background")
     public static void setBackground(View view, int resId) {
         view.setBackgroundResource(resId);
     }
+
     @androidx.databinding.BindingAdapter("calendarFilterBackground")
     public static void setCalendarFilter(View view, CalendarMonth calendarMonth) {
         // TODO 여기에 달 계산 로직 넣음
-        int colorFilter = Color.parseColor(SharedPreferenceUtil.getStringData(SharedPreferenceUtil.EMOTION_1));
+        int colorFilter = adjustAlpha(Color.parseColor(SharedPreferenceUtil.getStringData(SharedPreferenceUtil.EMOTION_1)), 0.5f);
         view.setBackgroundColor(colorFilter);
     }
 

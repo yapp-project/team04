@@ -21,11 +21,11 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/ll_front"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/half_margin"
+            android:layout_height="0dp"
             android:background="@drawable/img_calendar_background"
             android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="@+id/ll_back"
+            app:layout_constraintDimensionRatio="435:565"
             app:layout_constraintLeft_toLeftOf="@+id/ll_back"
             app:layout_constraintRight_toRightOf="@+id/ll_back"
             app:layout_constraintTop_toTopOf="@+id/ll_back">
@@ -56,6 +56,7 @@
                 android:gravity="center"
                 app:layout_constraintBottom_toTopOf="@+id/btn_diary"
                 app:layout_constraintTop_toBottomOf="@+id/tv_title"
+                app:mcv_dateTextAppearance="@style/TextAppearance.MyCustomDay"
                 app:mcv_leftArrow="@color/transparent"
                 app:mcv_monthLabels="@array/custom_months"
                 app:mcv_rightArrow="@color/transparent"
@@ -80,27 +81,29 @@
             android:id="@+id/ll_back"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            app:layout_constraintDimensionRatio="9:11"
+            android:layout_marginHorizontal="@dimen/half_margin"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintDimensionRatio="435:565"
             app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
                 android:id="@+id/img_picture"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:src="@drawable/img_calendar_background_mock" />
+                android:src="@drawable/ic_calendar_background_peace" />
 
             <ImageView
                 android:id="@+id/img_filter"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_margin="@dimen/half_margin"
                 app:calendarFilterBackground="@{icMonth}"
-                tools:background="@drawable/img_filter_background_mock"
                 app:layout_constraintBottom_toBottomOf="@+id/img_picture"
                 app:layout_constraintLeft_toLeftOf="@+id/img_picture"
                 app:layout_constraintRight_toRightOf="@+id/img_picture"
-                app:layout_constraintTop_toTopOf="@+id/img_picture" />
+                app:layout_constraintTop_toTopOf="@+id/img_picture"
+                tools:background="@drawable/img_filter_background_mock" />
 
             <LinearLayout
                 android:layout_width="wrap_content"

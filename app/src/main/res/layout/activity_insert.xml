@@ -141,6 +141,7 @@
                 android:layout_marginLeft="@dimen/single_margin"
                 android:background="@null"
                 android:hint="감정을 글로도 표현해보세요!"
+                android:text="@={insertVM.commentStr}"
                 android:textColor="#373768"
                 android:textSize="12sp"
                 app:layout_constraintBottom_toBottomOf="parent"

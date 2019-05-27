@@ -3,6 +3,7 @@ package yapp14th.co.kr.myplant.ui.intro;
 import androidx.appcompat.app.AppCompatActivity;
 import yapp14th.co.kr.myplant.R;
 import yapp14th.co.kr.myplant.recyclerView.Main5Activity;
+import yapp14th.co.kr.myplant.utils.SharedPreferenceUtil;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -22,7 +23,11 @@ public class PushAgreeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_push_agree);
 
-        init();
+        if (!SharedPreferenceUtil.getBooleanData(SharedPreferenceUtil.PUSH_CHECK_FINISHED))
+            init();
+        else
+            gotoColorActivity();
+
     }
 
     private void init() {
@@ -46,10 +51,11 @@ public class PushAgreeActivity extends AppCompatActivity {
     }
 
     private void push_commit(boolean b) {
-        editor = sharedPreferences.edit();
-        editor.putBoolean("push", b);
-        editor.commit();
+        SharedPreferenceUtil.setData(SharedPreferenceUtil.PUSH_CHECK_FINISHED, b);
+        gotoColorActivity();
+    }
 
+    private void gotoColorActivity() {
         Intent intent = new Intent(getApplicationContext(), Main5Activity.class);
         startActivity(intent);
         finish();

@@ -9,6 +9,9 @@ public class SharedPreferenceUtil {
     private static SharedPreferences sharedPreferences;
     private static SharedPreferences.Editor editor;
 
+    public static final String PUSH_CHECK_FINISHED = "PUSH_CHECK_FINISHED";
+    public static final String COLOR_PICK_FINISHED = "COLOR_PICK_FINISHED";
+
     public static final String EMOTION_1 = "EMOTION_1";
     public static final String EMOTION_1_PIN_X = "EMOTION_1_PIN_X";
     public static final String EMOTION_1_PIN_Y = "EMOTION_1_PIN_Y";
@@ -58,6 +61,10 @@ public class SharedPreferenceUtil {
         return sharedPreferences.getFloat(key, 0);
     }
 
+    public static boolean getBooleanData(String key) {
+        return sharedPreferences.getBoolean(key, false);
+    }
+
     public static void setData(String key, String value) {
         editor.putString(key, value);
         editor.commit();
@@ -70,6 +77,11 @@ public class SharedPreferenceUtil {
 
     public static void setData(String key, float value) {
         editor.putFloat(key, value);
+        editor.commit();
+    }
+
+    public static void setData(String key, boolean value) {
+        editor.putBoolean(key, value);
         editor.commit();
     }
 }

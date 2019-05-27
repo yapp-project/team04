@@ -2,7 +2,9 @@ package yapp14th.co.kr.myplant.recyclerView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import yapp14th.co.kr.myplant.R;
+import yapp14th.co.kr.myplant.ui.insert.InsertActivity;
 import yapp14th.co.kr.myplant.ui.main.MainActivity;
+import yapp14th.co.kr.myplant.utils.SharedPreferenceUtil;
 import yapp14th.co.kr.myplant.viewPager.Main2Activity;
 
 import android.content.Intent;
@@ -18,7 +20,10 @@ public class Main5Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main5);
 
-        init();
+        if (!SharedPreferenceUtil.getBooleanData(SharedPreferenceUtil.COLOR_PICK_FINISHED))
+            init();
+        else
+            gotoInsertActivity();
     }
 
     private void init() {
@@ -28,5 +33,11 @@ public class Main5Activity extends AppCompatActivity {
             startActivity(intent);
             finish();
         });
+    }
+
+    private void gotoInsertActivity(){
+        Intent intent = new Intent(getApplicationContext(), InsertActivity.class);
+        startActivity(intent);
+        finish();
     }
 }

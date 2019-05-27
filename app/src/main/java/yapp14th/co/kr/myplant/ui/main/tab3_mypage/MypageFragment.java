@@ -2,6 +2,7 @@ package yapp14th.co.kr.myplant.ui.main.tab3_mypage;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,9 +17,12 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import de.hdodenhof.circleimageview.CircleImageView;
+import io.realm.Realm;
+import io.realm.RealmResults;
 import yapp14th.co.kr.myplant.R;
 import yapp14th.co.kr.myplant.base.BaseFragment;
 import yapp14th.co.kr.myplant.recyclerView.Main3Activity;
+import yapp14th.co.kr.myplant.ui.main.tab1_home.CDay;
 import yapp14th.co.kr.myplant.utils.SharedPreferenceUtil;
 
 
@@ -77,7 +81,13 @@ public class MypageFragment extends BaseFragment {
         illust.setLayoutManager(mLayoutManager);
 
         // 2. 어뎁터 인스턴스 생성
-        FragmentAdapter fragmentAdapter = new FragmentAdapter(new int[]{R.drawable.rectangle, R.drawable.rectangle, R.drawable.rectangle, R.drawable.rectangle}, new String[]{"", "", "", ""});
+        FragmentAdapter fragmentAdapter = new FragmentAdapter(
+                new int[]{R.drawable.rectangle, R.drawable.rectangle, R.drawable.rectangle, R.drawable.rectangle},
+                new String[]{
+                        SharedPreferenceUtil.getStringData(SharedPreferenceUtil.EMOTION_1),
+                        SharedPreferenceUtil.getStringData(SharedPreferenceUtil.EMOTION_2),
+                        SharedPreferenceUtil.getStringData(SharedPreferenceUtil.EMOTION_3),
+                        SharedPreferenceUtil.getStringData(SharedPreferenceUtil.EMOTION_4)});
 
         // 3. 리싸이클러뷰에 어뎁터 설정
         illust.setAdapter(fragmentAdapter);
@@ -117,25 +127,20 @@ public class MypageFragment extends BaseFragment {
 
         TextView tv_emotion_num = view.findViewById(R.id.tv_emotion_num);
         TextView tv_illus_num = view.findViewById(R.id.tv_illus_num);
+        TextView tv_mypage_08 = view.findViewById(R.id.tv_mypage_08);
         Switch switch1 = view.findViewById(R.id.switch1);
-
-
-//        color_joy.setColorFilter(parseColor("#fecd13"));
-
         ImageView mypage_color_change = view.findViewById(R.id.mypage_colorchange);
 
-        mypage_color_change.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent startIntent = new Intent(getActivity(), Main3Activity.class); //일단은 이 화면으로 했음
-                startIntent.putExtra("mypage", true);
-                startActivityForResult(startIntent, 1001);
-            }
+        mypage_color_change.setOnClickListener(v -> {
+            Intent startIntent = new Intent(getActivity(), Main3Activity.class); //일단은 이 화면으로 했음
+            startIntent.putExtra("mypage", true);
+            startActivityForResult(startIntent, 1001);
         });
 
 
-        tv_emotion_num.setText(125 + "개");
-        tv_illus_num.setText(4 + "개");
+        tv_emotion_num.setText(getEmotionsCount());
+        tv_illus_num.setText(getAlbumsCount());
+        tv_mypage_08.setText(SharedPreferenceUtil.getStringData(SharedPreferenceUtil.last));
     }
 
     private void updateImageViewList() {
@@ -153,9 +158,33 @@ public class MypageFragment extends BaseFragment {
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if(requestCode == 1001){
+        if (requestCode == 1001) {
             updateImageViewList();
         }
+    }
+
+    public String getEmotionsCount(){
+        Realm realm = getRealmInstance;
+
+        getRealmInstance.beginTransaction();
+
+        RealmResults abcd = realm.where(CDay.class).findAll();
+
+        getRealmInstance.commitTransaction();
+
+        return abcd.size() + "개";
+    }
+
+    public String getAlbumsCount(){
+        Realm realm = getRealmInstance;
+
+        getRealmInstance.beginTransaction();
+
+        RealmResults abcd = realm.where(CDay.class).findAll();
+
+        getRealmInstance.commitTransaction();
+
+        return abcd.size() + "개";
     }
 }
 
@@ -181,7 +210,7 @@ class FragmentAdapter extends RecyclerView.Adapter<FragmentAdapter.IllustViewHol
     @Override
     public void onBindViewHolder(@NonNull FragmentAdapter.IllustViewHolder holder, int position) {
         holder.imageView1.setImageResource(dataSet[position]);
-        holder.imageView2.setImageResource(dataSet[position]);
+        holder.imageView2.setColorFilter(Color.parseColor(filterSet[position]), PorterDuff.Mode.SRC);
     }
 
     @Override

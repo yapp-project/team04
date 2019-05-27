@@ -1,5 +1,6 @@
-package buv.co.kr.ui.login.data
+package yapp14th.co.kr.myplant.ui.main.tab1_home.data
 
+import buv.co.kr.ui.login.data.HomeDataSource
 import io.reactivex.Single
 import io.realm.Realm
 import yapp14th.co.kr.myplant.ui.main.tab1_home.CDay
@@ -38,7 +39,7 @@ class HomeRemoteSource : HomeDataSource {
         return Single.create<List<CalendarMonth>> {
 
             val realm = Realm.getDefaultInstance()
-
+            realm.beginTransaction()
             val emotions = mutableListOf<CalendarMonth>()
             for (month in 1..12) {
                 var monthData = realm.where(CDay::class.java)
@@ -52,7 +53,7 @@ class HomeRemoteSource : HomeDataSource {
                         _dayList = getGeneratedDayEmotions(monthData)
                 ))
             }
-
+            realm.commitTransaction()
             it.onSuccess(emotions)
         }
     }
@@ -63,7 +64,7 @@ class HomeRemoteSource : HomeDataSource {
             val realm = Realm.getDefaultInstance()
 
             val comments = mutableListOf<CDayVO>()
-
+            realm.beginTransaction()
             var monthData = realm.where(CDay::class.java)
                     .equalTo("year", year)
                     .equalTo("month", month).findAllSorted("day")
@@ -77,7 +78,7 @@ class HomeRemoteSource : HomeDataSource {
                         comment = cDay.comment
                 ))
             }
-
+            realm.commitTransaction()
             it.onSuccess(comments)
         }
     }
