@@ -21,9 +21,11 @@ import com.github.mikephil.charting.data.BarEntry
 import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
+import kotlinx.android.synthetic.main.fragment_mypage.*
 import kotlinx.android.synthetic.main.fragment_statistic.*
 import kotlinx.android.synthetic.main.fragment_statistic.view.*
 import kotlinx.android.synthetic.main.item_recycler_colors.view.*
+import yapp14th.co.kr.myplant.BR
 import yapp14th.co.kr.myplant.R
 import yapp14th.co.kr.myplant.base.BaseFragment
 import yapp14th.co.kr.myplant.base.BaseRecyclerView
@@ -32,13 +34,15 @@ import yapp14th.co.kr.myplant.components.SpacesItemDecoration
 import yapp14th.co.kr.myplant.databinding.FragmentStatisticBinding
 import yapp14th.co.kr.myplant.databinding.FragmentTemplateBinding
 import yapp14th.co.kr.myplant.databinding.ItemRecyclerColorsBinding
+import yapp14th.co.kr.myplant.ui.main.tab1_home.CDayVO
 import yapp14th.co.kr.myplant.ui.main.tab1_home.CalendarMonth
+import yapp14th.co.kr.myplant.utils.SharedPreferenceUtil
 import yapp14th.co.kr.myplant.utils.getCurrentYear
 
 class StatisticFragment : BaseFragment() {
 
     private lateinit var binding: FragmentStatisticBinding
-    private lateinit var statisticDialog : StatisticDialog
+    private lateinit var statisticDialog: StatisticDialog
     private lateinit var adapter: BaseRecyclerView.Adapter<CalendarMonth, ItemRecyclerColorsBinding>
 
 
@@ -53,7 +57,7 @@ class StatisticFragment : BaseFragment() {
         return super.onCreateView(inflater, container, savedInstanceState)
     }
 
-    private val statisticVM : StatisticViewModel by lazy {
+    private val statisticVM: StatisticViewModel by lazy {
         ViewModelProviders.of(this).get(StatisticViewModel::class.java)
     }
 
@@ -87,11 +91,13 @@ class StatisticFragment : BaseFragment() {
             type: Int,
             title: String,
             subTitle: String,
-            layoutRes: Int) {
+            layoutRes: Int, emotion: IntArray) {
         // 초기 설정
         statisticDialog.setInit(layoutRes, type)
+        statisticDialog.setList(emotion)
         statisticDialog.setTitle(title, subTitle)
 
+        statisticDialog
         statisticDialog.setOkButtonListener(View.OnClickListener {})
         statisticDialog.setCancelButtonListener(View.OnClickListener {})
         val params = statisticDialog.window.attributes;
@@ -120,7 +126,7 @@ class StatisticFragment : BaseFragment() {
 
             adapter = object : BaseRecyclerView.Adapter<CalendarMonth, ItemRecyclerColorsBinding>(
                     layoutResId = R.layout.item_recycler_colors,
-                    bindingVariableId = null){
+                    bindingVariableId = BR.viewItem) {
                 override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder<ItemRecyclerColorsBinding> {
                     return super.onCreateViewHolder(parent, viewType).apply {
 
@@ -130,14 +136,40 @@ class StatisticFragment : BaseFragment() {
                 override fun onBindViewHolder(holder: ViewHolder<ItemRecyclerColorsBinding>, position: Int) {
                     super.onBindViewHolder(holder, position)
 
-                    var month = emotions[position].month.toInt()
-                    var color = Color.parseColor("#373768")
-                    holder.itemView.cv_month_color.setColorFilter(color, PorterDuff.Mode.SRC)
+                    val month = emotions[position].month.toInt()
+                    var color = 0
                     holder.itemView.item_month.text = month.toString()
-                    Log.e("Statistic", month.toString())
+
+                    val array = IntArray(9)
+                    emotions[position].dayList.forEach { cday ->
+                        array[cday.emotionType.toInt()]++
+                    }
+
+                    val max = array.max()
+                    Log.e("StaticticFragment", array.indexOf(max!!).toString())
+
+                    when (array.indexOf(max!!)) {
+                        1 -> color = Color.parseColor(SharedPreferenceUtil.getStringData(SharedPreferenceUtil.EMOTION_1))
+                        2 -> color = Color.parseColor(SharedPreferenceUtil.getStringData(SharedPreferenceUtil.EMOTION_2))
+                        3 -> color = Color.parseColor(SharedPreferenceUtil.getStringData(SharedPreferenceUtil.EMOTION_3))
+                        4 -> color = Color.parseColor(SharedPreferenceUtil.getStringData(SharedPreferenceUtil.EMOTION_4))
+                        5 -> color = Color.parseColor(SharedPreferenceUtil.getStringData(SharedPreferenceUtil.EMOTION_5))
+                        6 -> color = Color.parseColor(SharedPreferenceUtil.getStringData(SharedPreferenceUtil.EMOTION_6))
+                        7 -> color = Color.parseColor(SharedPreferenceUtil.getStringData(SharedPreferenceUtil.EMOTION_7))
+                        8 -> color = Color.parseColor(SharedPreferenceUtil.getStringData(SharedPreferenceUtil.EMOTION_8))
+                    }
+
+                    Log.e("Statictic", SharedPreferenceUtil.getStringData("EMOTION_6"))
+                    holder.itemView.cv_month_color.setColorFilter(color, PorterDuff.Mode.SRC)
+
                     holder.itemView.setOnClickListener(View.OnClickListener {
-                        openStatisticDialog(0, month.toString()+"월", "", R.layout.dialog_statistic )
-                        Log.e("Statistic", position.toString())
+                        val array = IntArray(9)
+                        emotions[position].dayList.forEach { cday ->
+                            array[cday.emotionType.toInt()]++
+                        }
+
+                        openStatisticDialog(0, month.toString() + "월", "", R.layout.dialog_statistic, array)
+                        Log.e("Statistic", emotions[position].dayList.size.toString())
                     })
 
 

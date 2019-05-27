@@ -103,8 +103,8 @@ a
 
             <ImageButton
                 android:id="@+id/btn_close_dialog"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
                 android:background="@drawable/btn_close"
                 android:layout_alignParentRight="true"
                 android:layout_marginLeft="14dp"/>
@@ -160,7 +160,7 @@ a
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="13dp"
                     android:fontFamily="@font/roboto_bold"
-                    android:text="13%"
+                    android:text="0%"
                     android:textColor="@color/color373768"
                     android:textSize="11sp" />
 
@@ -195,7 +195,7 @@ a
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="13dp"
                     android:fontFamily="@font/roboto_bold"
-                    android:text="13%"
+                    android:text="0%"
                     android:textColor="@color/color373768"
                     android:textSize="11sp" />
             </LinearLayout>
@@ -228,7 +228,7 @@ a
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="13dp"
                     android:fontFamily="@font/roboto_bold"
-                    android:text="13%"
+                    android:text="0%"
                     android:textColor="@color/color373768"
                     android:textSize="11sp" />
             </LinearLayout>
@@ -262,7 +262,7 @@ a
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="13dp"
                     android:fontFamily="@font/roboto_bold"
-                    android:text="13%"
+                    android:text="0%"
                     android:textColor="@color/color373768"
                     android:textSize="11sp" />
 
@@ -298,7 +298,7 @@ a
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="13dp"
                     android:fontFamily="@font/roboto_bold"
-                    android:text="13%"
+                    android:text="0%"
                     android:textColor="@color/color373768"
                     android:textSize="11sp" />
             </LinearLayout>
@@ -332,7 +332,7 @@ a
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="13dp"
                     android:fontFamily="@font/roboto_bold"
-                    android:text="13%"
+                    android:text="0%"
                     android:textColor="@color/color373768"
                     android:textSize="11sp" />
             </LinearLayout>
@@ -366,7 +366,7 @@ a
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="13dp"
                     android:fontFamily="@font/roboto_bold"
-                    android:text="13%"
+                    android:text="0%"
                     android:textColor="@color/color373768"
                     android:textSize="11sp" />
 
@@ -390,6 +390,7 @@ a
                     android:layout_marginRight="3dp" />
 
                 <TextView
+                    android:id="@+id/tv_user"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/statistic_sadness"
@@ -402,7 +403,7 @@ a
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="13dp"
                     android:fontFamily="@font/roboto_bold"
-                    android:text="13%"
+                    android:text="0%"
                     android:textColor="@color/color373768"
                     android:textSize="11sp" />
             </LinearLayout>

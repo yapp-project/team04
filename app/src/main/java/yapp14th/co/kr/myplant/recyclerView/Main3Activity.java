@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.SnapHelper;
 import yapp14th.co.kr.myplant.MyApplication;
 import yapp14th.co.kr.myplant.R;
+import yapp14th.co.kr.myplant.utils.SharedPreferenceUtil;
 
 import android.os.Bundle;
 import android.os.Handler;
@@ -16,21 +17,22 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 
 public class Main3Activity extends AppCompatActivity {
     public static RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;
     private RecyclerView.LayoutManager layoutManager;
 
-
     private String[] myDataset;
-
     private SnapHelper snapHelper;
 
     int width;
     int height;
     int radius;
     private int[] color_circle_set;
+    private boolean mypage;
 
     int position;
 
@@ -43,11 +45,14 @@ public class Main3Activity extends AppCompatActivity {
         height = (int) MyApplication.convertDpToPixel(90F, this);
         radius = (int) MyApplication.convertDpToPixel(25F, this);
 
-        init();
-
+        mypage = getIntent().getBooleanExtra("mypage", false);
+        if (mypage) {
+            init(true);
+        } else
+            init(false);
     }
 
-    private void init() {
+    private void init(boolean mypage) {
         position = 0;
 
         snapHelper = new LinearSnapHelper();
@@ -79,7 +84,45 @@ public class Main3Activity extends AppCompatActivity {
 
         // specify an adapter (see also next example)
 
-        adapter = new MyAdapter(myDataset, color_circle_set);
+        if (mypage) {
+            String prevLast = SharedPreferenceUtil.getStringData(SharedPreferenceUtil.last);
+            String[] prevColorSet = new String[]{
+                    SharedPreferenceUtil.getStringData(SharedPreferenceUtil.EMOTION_1),
+                    SharedPreferenceUtil.getStringData(SharedPreferenceUtil.EMOTION_2),
+                    SharedPreferenceUtil.getStringData(SharedPreferenceUtil.EMOTION_3),
+                    SharedPreferenceUtil.getStringData(SharedPreferenceUtil.EMOTION_4),
+                    SharedPreferenceUtil.getStringData(SharedPreferenceUtil.EMOTION_5),
+                    SharedPreferenceUtil.getStringData(SharedPreferenceUtil.EMOTION_6),
+                    SharedPreferenceUtil.getStringData(SharedPreferenceUtil.EMOTION_7),
+                    SharedPreferenceUtil.getStringData(SharedPreferenceUtil.EMOTION_8)
+            };
+
+            float[] prevPinXSet = new float[]{
+                    SharedPreferenceUtil.getFloatData(SharedPreferenceUtil.EMOTION_1_PIN_X),
+                    SharedPreferenceUtil.getFloatData(SharedPreferenceUtil.EMOTION_2_PIN_X),
+                    SharedPreferenceUtil.getFloatData(SharedPreferenceUtil.EMOTION_3_PIN_X),
+                    SharedPreferenceUtil.getFloatData(SharedPreferenceUtil.EMOTION_4_PIN_X),
+                    SharedPreferenceUtil.getFloatData(SharedPreferenceUtil.EMOTION_5_PIN_X),
+                    SharedPreferenceUtil.getFloatData(SharedPreferenceUtil.EMOTION_6_PIN_X),
+                    SharedPreferenceUtil.getFloatData(SharedPreferenceUtil.EMOTION_7_PIN_X),
+                    SharedPreferenceUtil.getFloatData(SharedPreferenceUtil.EMOTION_8_PIN_X)
+            };
+
+            float[] prevPinYSet = new float[]{
+                    SharedPreferenceUtil.getFloatData(SharedPreferenceUtil.EMOTION_1_PIN_Y),
+                    SharedPreferenceUtil.getFloatData(SharedPreferenceUtil.EMOTION_2_PIN_Y),
+                    SharedPreferenceUtil.getFloatData(SharedPreferenceUtil.EMOTION_3_PIN_Y),
+                    SharedPreferenceUtil.getFloatData(SharedPreferenceUtil.EMOTION_4_PIN_Y),
+                    SharedPreferenceUtil.getFloatData(SharedPreferenceUtil.EMOTION_5_PIN_Y),
+                    SharedPreferenceUtil.getFloatData(SharedPreferenceUtil.EMOTION_6_PIN_Y),
+                    SharedPreferenceUtil.getFloatData(SharedPreferenceUtil.EMOTION_7_PIN_Y),
+                    SharedPreferenceUtil.getFloatData(SharedPreferenceUtil.EMOTION_8_PIN_Y)
+            };
+
+
+            adapter = new MyAdapter(mypage, myDataset, color_circle_set, prevLast, prevColorSet, prevPinXSet, prevPinYSet);
+        } else
+            adapter = new MyAdapter(mypage, myDataset, color_circle_set);
         recyclerView.setAdapter(adapter);
 
 
@@ -92,11 +135,11 @@ public class Main3Activity extends AppCompatActivity {
         recyclerView.scrollToPosition(--position);
         Log.d("position", "pre: " + position);
         if (position == 0) {
-            ImageButton button = (ImageButton) findViewById(R.id.pre);
+            ImageButton button = findViewById(R.id.pre);
             button.setVisibility(View.INVISIBLE);
         }
         if (position < 7) {
-            ImageButton button = (ImageButton) findViewById(R.id.succ);
+            ImageButton button = findViewById(R.id.succ);
             button.setVisibility(View.VISIBLE);
         }
     }
@@ -108,11 +151,11 @@ public class Main3Activity extends AppCompatActivity {
         recyclerView.scrollToPosition(++position);
         Log.d("position", "succ: " + position);
         if (position > 0) {
-            ImageButton button = (ImageButton) findViewById(R.id.pre);
+            ImageButton button = findViewById(R.id.pre);
             button.setVisibility(View.VISIBLE);
         }
         if (position == 7) {
-            ImageButton button = (ImageButton) findViewById(R.id.succ);
+            ImageButton button = findViewById(R.id.succ);
             button.setVisibility(View.INVISIBLE);
         }
     }
