@@ -36,7 +36,6 @@
             android:layout_width="170dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
-
             android:max="100" />
 
     </LinearLayout>
@@ -106,7 +105,7 @@
                     android:textColor="#373768"/>
                 <TextView
                     android:id="@+id/B_et"
-                    android:layout_marginLeft="15dp"
+                    android:layout_marginStart="15dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="#373768"/>
@@ -118,14 +117,13 @@
             android:id="@+id/hax_container"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="50dp"
+            android:layout_marginStart="50dp"
             android:layout_toRightOf="@+id/RGB_container">
 
             <LinearLayout
                 android:id="@+id/hax_code"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
                 android:orientation="vertical">
                 <TextView
                     android:id="@+id/hex_code_tv"
