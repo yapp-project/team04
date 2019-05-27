@@ -67,6 +67,4 @@ public abstract class BaseFragment extends Fragment {
     protected abstract int getLayoutRes();
 
     protected abstract boolean getIsUseDataBinding();
-
-    public Realm getRealmInstance = Realm.getDefaultInstance();
 }

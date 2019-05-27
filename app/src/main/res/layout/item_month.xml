@@ -92,12 +92,15 @@
                 android:id="@+id/img_picture"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:src="@drawable/ic_calendar_background_peace" />
+                android:scaleType="fitXY"
+                app:calendarPictureBackground="@{icMonth}"
+                tools:src="@drawable/ic_calendar_background_peace" />
 
             <ImageView
                 android:id="@+id/img_filter"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:scaleType="fitXY"
                 app:calendarFilterBackground="@{icMonth}"
                 app:layout_constraintBottom_toBottomOf="@+id/img_picture"
                 app:layout_constraintLeft_toLeftOf="@+id/img_picture"

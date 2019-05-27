@@ -4,7 +4,7 @@
     package="yapp14th.co.kr.myplant">
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:name=".MyApplication"
@@ -48,15 +48,14 @@
         </activity>
         <activity
             android:name=".ui.intro.IntroActivity"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
             android:name=".ui.comment.CommentActivity"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar"></activity>
 
         <activity
             android:name=".ui.main.MainActivity"
+            android:noHistory="true"
             android:theme="@style/AppTheme.NoActionBar">
 
         </activity>
@@ -68,6 +67,15 @@
         <activity
             android:name=".ui.intro.IntroColorPickActivity"
             android:theme="@style/AppTheme.NoActionBar" />
+
+        <receiver
+            android:name="sisonfarmtory.co.kr.drrecipe.ui.main.AlarmRepeatBroadCastReciever"
+            android:enabled="true"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

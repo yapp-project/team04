@@ -1,6 +1,7 @@
 package yapp14th.co.kr.myplant.ui.main.tab1_home
 
 import android.app.Application
+import android.graphics.Color
 import android.util.Log
 import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
@@ -11,9 +12,7 @@ import yapp14th.co.kr.myplant.components.SingleLiveEvent
 import yapp14th.co.kr.myplant.ui.main.tab1_home.domain.repository.HomeRepositoryImpl
 import yapp14th.co.kr.myplant.ui.main.tab1_home.domain.usecase.GetYearEmotions
 import yapp14th.co.kr.myplant.ui.main.tab1_home.domain.usecase.GetYears
-import yapp14th.co.kr.myplant.utils.getCurrentMonth
-import yapp14th.co.kr.myplant.utils.getCurrentRefinedMonth
-import yapp14th.co.kr.myplant.utils.getCurrentYear
+import yapp14th.co.kr.myplant.utils.*
 
 class HomeViewModel(app: Application) : BaseViewModel(app) {
     var currentYear = ObservableField<Int>()
@@ -109,12 +108,36 @@ class HomeViewModel(app: Application) : BaseViewModel(app) {
         GetYearEmotions(repositoryImpl, Schedulers.io())(
                 year = currentYear.get() ?: getCurrentYear(),
                 success = { list ->
-                    emotions.value?.get(currentMonth.get() ?: getCurrentRefinedMonth())?.dayList = list[currentMonth.get() ?: getCurrentRefinedMonth()].dayList
+                    emotions.value?.get(currentMonth.get()
+                            ?: getCurrentRefinedMonth())?.dayList = list[currentMonth.get()
+                            ?: getCurrentRefinedMonth()].dayList
                 },
                 error = { t ->
                     System.out.println(t)
                 }
         )
+    }
+
+    fun getBiggestEmotionImage(month: Int): Int {
+        val array = arrayOf(0, 0, 0, 0, 0, 0, 0, 0, 0)
+        emotions.value!![month].dayList.forEach { cDayVO ->
+            array[cDayVO.emotionType.toInt()]++
+        }
+
+        val maxIndex = array.indexOf(array.max())
+        return getcalendarResources()[maxIndex]
+    }
+
+    fun getBiggestEmotionFilter(month: Int): Int {
+        val array = arrayOf(0, 0, 0, 0, 0, 0, 0, 0, 0)
+        emotions.value!![month].dayList.forEach { cDayVO ->
+            array[cDayVO.emotionType.toInt()]++
+        }
+
+        val maxIndex = array.indexOf(array.max())
+        Log.d("${month + 1}월 : ", "EMOTION_$maxIndex")
+
+        return adjustAlpha(Color.parseColor(SharedPreferenceUtil.getStringData("EMOTION_$maxIndex")), 0.4f)
     }
 
 

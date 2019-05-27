@@ -33,6 +33,7 @@ fun getRefinedMonth(month: Short) = (month + 1).toShort()
 fun getCurrentDate() = Calendar.getInstance().get(Calendar.DATE)
 
 fun getcalendarResources() = arrayOf(
+        R.drawable.ic_calendar_background_zero,         // 이미지가 없을 경우
         R.drawable.ic_calendar_background_pleasure,     // 기쁨
         R.drawable.ic_calendar_background_happy,        // 행복
         R.drawable.ic_calendar_background_excitement,   // 신남

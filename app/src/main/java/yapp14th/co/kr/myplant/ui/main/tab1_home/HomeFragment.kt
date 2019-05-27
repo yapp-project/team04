@@ -103,7 +103,6 @@ class HomeFragment : BaseFragment(), OnSnapPositionChangeListener {
             }
         })
         snapHelper.attachToRecyclerView(rl_calendar)
-        rl_calendar.addItemDecoration(LinePagerIndicatorDecoration(activity!!, false))
         rl_calendar.addOnScrollListener(scrollListener)
 
         rl_calendar.attachSnapHelperWithListener(snapHelper, SnapOnScrollListener.Behavior.NOTIFY_ON_SCROLL, this)
@@ -132,6 +131,8 @@ class HomeFragment : BaseFragment(), OnSnapPositionChangeListener {
         homeVM.emotions.observe(this, Observer { emotions ->
             // view에서 할 내용이 없다면, 추후 ViewModel 단으로 옮김
             if (initSetting) {
+                rl_calendar.addItemDecoration(LinePagerIndicatorDecoration(activity!!, false))
+
                 adapter = object : BaseRecyclerView.Adapter<CalendarMonth, ItemMonthBinding>(
                         layoutResId = R.layout.item_month,
                         bindingVariableId = BR.icMonth) {
@@ -164,20 +165,13 @@ class HomeFragment : BaseFragment(), OnSnapPositionChangeListener {
                         holder.itemView.cv_calendar.setOnDateChangedListener { widget, date, selected ->
                             if (selected) {
                                 Toast.makeText(activity, "클릭 할꺼야 안할꺼야 ${date.year} ${date.month} ${date.day}", Toast.LENGTH_SHORT).show()
+
+                                var value = getTargetDate(date.year, date.month, date.day)
                                 var intent = Intent(activity, InsertActivity::class.java)
+
                                 intent.putExtra("year", date.year)
                                 intent.putExtra("month", date.month)
                                 intent.putExtra("day", date.day)
-
-                                getRealmInstance.beginTransaction()
-
-                                var value = getRealmInstance.where(CDay::class.java)
-                                        .equalTo("year", date.year)
-                                        .equalTo("month", date.month)
-                                        .equalTo("day", date.day).findAll()
-
-                                getRealmInstance.commitTransaction()
-
                                 intent.putExtra("emotionType", if (value.size == 0) 0 else value[0].emotionType.toInt())
                                 intent.putExtra("comment", if (value.size == 0) "" else value[0].comment)
 
@@ -217,11 +211,11 @@ class HomeFragment : BaseFragment(), OnSnapPositionChangeListener {
                                 val tempFile = File(tempFilePath)
 
                                 // 2. 테마색이 반영된 비트맵 생성
-                                val bitmapPhoto = BitmapFactory.decodeResource(resources, R.drawable.ic_calendar_background_peace)
+                                val bitmapPhoto = BitmapFactory.decodeResource(resources, homeVM.getBiggestEmotionImage(month - 1))
                                 val copyBitmap: Bitmap = bitmapPhoto.copy(Bitmap.Config.ARGB_8888, true)
 
                                 var canvas = Canvas(copyBitmap)
-                                canvas.drawColor(adjustAlpha(Color.parseColor(SharedPreferenceUtil.getStringData(SharedPreferenceUtil.EMOTION_1)), 0.5f))
+                                canvas.drawColor(adjustAlpha(homeVM.getBiggestEmotionFilter(month - 1), 0.4f))
                                 canvas.drawBitmap(copyBitmap, 0F, 0F, null)
 
                                 // 3. 만들어진 비트맵을 파일과 매칭
@@ -248,7 +242,10 @@ class HomeFragment : BaseFragment(), OnSnapPositionChangeListener {
                             }
                         }
 
-                        // holder.setIsRecyclable(false)
+                        // holder.itemView.img_picture.setImageResource(homeVM.getBiggestEmotionImage(month - 1))
+                        // holder.itemView.img_filter.setBackgroundColor(homeVM.getBiggestEmotionFilter(month - 1))
+
+                        holder.setIsRecyclable(false)
                     }
                 }
                 initSetting = false

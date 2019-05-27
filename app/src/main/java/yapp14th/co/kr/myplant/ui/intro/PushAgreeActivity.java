@@ -12,9 +12,6 @@ import android.view.View;
 import android.widget.Button;
 
 public class PushAgreeActivity extends AppCompatActivity {
-    SharedPreferences sharedPreferences;
-    SharedPreferences.Editor editor;
-
     private Button yes;
     private Button no;
 
@@ -31,27 +28,17 @@ public class PushAgreeActivity extends AppCompatActivity {
     }
 
     private void init() {
-        sharedPreferences = getSharedPreferences("user", MODE_PRIVATE);
-
         yes = (Button) findViewById(R.id.yes);
         no = (Button) findViewById(R.id.no);
 
-        yes.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                push_commit(true);
-            }
-        });
-        no.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                push_commit(false);
-            }
-        });
+        yes.setOnClickListener(view -> push_commit(true));
+        no.setOnClickListener(view -> push_commit(false));
     }
 
     private void push_commit(boolean b) {
-        SharedPreferenceUtil.setData(SharedPreferenceUtil.PUSH_CHECK_FINISHED, b);
+        SharedPreferenceUtil.setData(SharedPreferenceUtil.PUSH_CHECK_FINISHED, true);
+        SharedPreferenceUtil.setData(SharedPreferenceUtil.PUSH_CHECK_ENABLED, b);
+
         gotoColorActivity();
     }
 

@@ -10,6 +10,7 @@ public class SharedPreferenceUtil {
     private static SharedPreferences.Editor editor;
 
     public static final String PUSH_CHECK_FINISHED = "PUSH_CHECK_FINISHED";
+    public static final String PUSH_CHECK_ENABLED = "PUSH_CHECK_ENABLED";
     public static final String COLOR_PICK_FINISHED = "COLOR_PICK_FINISHED";
 
     public static final String EMOTION_1 = "EMOTION_1";
@@ -46,8 +47,9 @@ public class SharedPreferenceUtil {
 
     public static String getStringData(String key) {
         if (key.startsWith("EMOTION")) {
-            String data = "#" + ((int) (Math.random() * 89999999 + 10000000));
+            // String data = "#" + ((int) (Math.random() * 89999999 + 10000000));
             // Log.d("color" + key, " : " + data);
+            String data = "#FFFFFFFF";  // 이제는 transparent로 처리
             return sharedPreferences.getString(key, data);
         } else
             return sharedPreferences.getString(key, "");

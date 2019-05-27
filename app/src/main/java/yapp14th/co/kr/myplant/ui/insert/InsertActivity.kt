@@ -44,7 +44,7 @@ class InsertActivity : BaseActivity() {
         comingFromAppStart = intent.getIntExtra("year", -1) < 0
 
         insertVM.setDate(year, month, day, emotionType, comment)
-        var dataSize = insertVM.setTargetDate(getRealmInstance, year, month, day)
+        var dataSize = insertVM.setTargetDate(year, month, day)
 
         // emotionType = -1 : 처음 앱 켜서 옴 | emotionType = 0 : 추가시키기 위해 옴 | emotionType = 1~8 : 수정하기 위해 옴
         if (emotionType == -1 && dataSize != 0) {
@@ -77,8 +77,7 @@ class InsertActivity : BaseActivity() {
 
             btn_completed.setOnClickListener {
                 if (dataSize == 0 || emotionType == 0) {
-                    insertVM.realmInsertDate(
-                            realm = getRealmInstance,
+                    insertDate(
                             year = year.toShort(),
                             month = month.toShort(),
                             day = day.toShort(),
@@ -89,8 +88,8 @@ class InsertActivity : BaseActivity() {
                         startActivity(Intent(this@InsertActivity, MainActivity::class.java))
                     finish()
                 } else {
-                    insertVM.realmUpdateDate(
-                            realm = getRealmInstance,
+                    updateDate(
+                            date = insertVM.date,
                             year = year.toShort(),
                             month = month.toShort(),
                             day = day.toShort(),

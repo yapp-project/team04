@@ -103,7 +103,7 @@ class StatisticFragment : BaseFragment() {
         val params = statisticDialog.window.attributes;
         params.width = WindowManager.LayoutParams.WRAP_CONTENT;
         params.height = WindowManager.LayoutParams.WRAP_CONTENT;
-        statisticDialog.window.setAttributes(params)
+        statisticDialog.window.attributes = params
 
         statisticDialog.callFunction()
     }
@@ -121,7 +121,7 @@ class StatisticFragment : BaseFragment() {
             sp_year_statis.adapter = adapter
         })
 
-        statisticVM.emotions.observe(this, Observer { emotions ->
+        statisticVM.emotions.observe(this, Observer { tempEmotions ->
             rv_color.addItemDecoration(SpacesItemDecoration(15))
 
             adapter = object : BaseRecyclerView.Adapter<CalendarMonth, ItemRecyclerColorsBinding>(
@@ -136,12 +136,13 @@ class StatisticFragment : BaseFragment() {
                 override fun onBindViewHolder(holder: ViewHolder<ItemRecyclerColorsBinding>, position: Int) {
                     super.onBindViewHolder(holder, position)
 
+                    var emotions = statisticVM.emotions.value!!
                     val month = emotions[position].month.toInt()
                     var color = 0
                     holder.itemView.item_month.text = month.toString()
 
                     val array = IntArray(9)
-                    emotions[position].dayList.forEach { cday ->
+                    statisticVM.emotions.value!![position].dayList.forEach { cday ->
                         array[cday.emotionType.toInt()]++
                     }
 
@@ -162,7 +163,7 @@ class StatisticFragment : BaseFragment() {
                     Log.e("Statictic", SharedPreferenceUtil.getStringData("EMOTION_6"))
                     holder.itemView.cv_month_color.setColorFilter(color, PorterDuff.Mode.SRC)
 
-                    holder.itemView.setOnClickListener(View.OnClickListener {
+                    holder.itemView.setOnClickListener {
                         val array = IntArray(9)
                         emotions[position].dayList.forEach { cday ->
                             array[cday.emotionType.toInt()]++
@@ -170,12 +171,11 @@ class StatisticFragment : BaseFragment() {
 
                         openStatisticDialog(0, month.toString() + "월", "", R.layout.dialog_statistic, array)
                         Log.e("Statistic", emotions[position].dayList.size.toString())
-                    })
-
-
+                    }
                 }
             }
-            adapter.replaceAll(emotions)
+
+            adapter.replaceAll(tempEmotions)
             rv_color.adapter = adapter
             rv_color.layoutManager = GridLayoutManager(this.context, 3)
 
