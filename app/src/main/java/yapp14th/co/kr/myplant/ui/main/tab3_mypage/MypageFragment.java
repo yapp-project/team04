@@ -17,8 +17,11 @@ import java.util.List;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager.widget.ViewPager;
 import de.hdodenhof.circleimageview.CircleImageView;
 import io.reactivex.schedulers.Schedulers;
 import kotlin.Unit;
@@ -36,7 +39,6 @@ import static yapp14th.co.kr.myplant.utils.DefaultVariableKt.getCurrentYear;
 import static yapp14th.co.kr.myplant.utils.DefaultVariableKt.getcalendarResources;
 import static yapp14th.co.kr.myplant.utils.RealmUseCaseKt.getAlbumsCount;
 import static yapp14th.co.kr.myplant.utils.RealmUseCaseKt.getEmotionsCount;
-
 
 // TODO 필수 선언 1. 기본 레이아웃 설정
 // TODO 필수 선언 2. 데이터 바인딩 사용할지 말지 결정
