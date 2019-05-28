@@ -21,7 +21,7 @@
         app:layout_constraintEnd_toStartOf="@+id/viewPager"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/side" />
+        app:srcCompat="@drawable/ic_arrow_right" />
 
     <ImageButton
         android:background="@android:color/transparent"
@@ -34,7 +34,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/viewPager"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/side" />
+        app:srcCompat="@drawable/ic_arrow_right" />
 
     <yapp14th.co.kr.myplant.viewPager.SwipeableViewPager
         android:id="@+id/viewPager"

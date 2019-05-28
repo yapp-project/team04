@@ -21,10 +21,16 @@ class CommentViewModel(app: Application) : BaseViewModel(app) {
         this.year.set(year)
         this.month.set(month)
 
-        GetComments(repository, Schedulers.io()).invoke(year, month, success = { list ->
+        GetComments(repository, Schedulers.io())(year, month, success = { list ->
             comments.value = list
         }, error = { throwable ->
             System.out.println(throwable)
         })
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+
+        comments.value = listOf()
     }
 }

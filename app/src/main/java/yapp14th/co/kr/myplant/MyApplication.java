@@ -2,12 +2,15 @@ package yapp14th.co.kr.myplant;
 
 import android.app.Application;
 import android.content.Context;
+import android.os.Build;
 import android.util.DisplayMetrics;
 
 import androidx.core.content.ContextCompat;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 import yapp14th.co.kr.myplant.utils.SharedPreferenceUtil;
+import yapp14th.co.kr.myplant.utils.alarm.AlarmUtil;
+import yapp14th.co.kr.myplant.utils.alarm.NotificationManager;
 
 public class MyApplication extends Application {
     public static int DIALOG_OK = 1;
@@ -28,6 +31,12 @@ public class MyApplication extends Application {
 
         // 설정을 사용합니다.
         Realm.setDefaultConfiguration(config);
+
+        AlarmUtil.Companion.getInstance().startEightPMAlarm(this);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationManager.INSTANCE.createChannel(this);
+        }
     }
 
     /**
