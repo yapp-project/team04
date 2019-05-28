@@ -121,7 +121,7 @@ class StatisticFragment : BaseFragment() {
         })
 
         statisticVM.emotions.observe(this, Observer { emotions ->
-            rv_color.addItemDecoration(SpacesItemDecoration(15))
+            rv_color.addItemDecoration(SpacesItemDecoration(17))
 
             adapter = object : BaseRecyclerView.Adapter<CalendarMonth, ItemRecyclerColorsBinding>(
                     layoutResId = R.layout.item_recycler_colors,

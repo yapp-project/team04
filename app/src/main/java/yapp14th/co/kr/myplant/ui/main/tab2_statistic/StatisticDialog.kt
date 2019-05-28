@@ -93,7 +93,7 @@ class StatisticDialog(context: Context) : BaseDialog(context) {
         chartView.description.isEnabled = false
         chartView.centerText = "1순위감정"
         chartView.setCenterTextColor(context.resources.getColor(R.color.color373768))
-        chartView.setCenterTextTypeface(Typeface.create("spoqa_han_sans_bold",Typeface.BOLD))
+        chartView.setCenterTextTypeface(Typeface.create("spoqa_han_sans_bold",Typeface.NORMAL))
         chartView.legend.isEnabled = false
 
         chartView.isDrawHoleEnabled = true
@@ -103,28 +103,40 @@ class StatisticDialog(context: Context) : BaseDialog(context) {
 
         for(i in cdays.indices){
             if(cdays[i] != 0) {
-                emotionList.add(PieEntry((cdays[i] / cdays.sum() * 100).toFloat()))
+                emotionList.add(PieEntry(((cdays[i] / cdays.sum().toDouble()) * 100).toFloat()))
+
             } else{
                 emotionList.add(PieEntry(0f))
             }
-            Log.e("StatisticDialog", cdays[i].toString() +","+ i)
             if(cdays.sum() != 0) {
                 when (i) {
-                    1 -> pleasure.text = (cdays[i] / cdays.sum() * 100).toString() + "%"
-                    2 -> happy.text = (cdays[i] / cdays.sum() * 100).toString() + "%"
-                    3 -> excited.text = (cdays[i] / cdays.sum() * 100).toString() + "%"
-                    4 -> peace.text = (cdays[i] / cdays.sum() * 100).toString() + "%"
-                    5 -> sad.text = (cdays[i] / cdays.sum() * 100).toString() + "%"
-                    6 -> unset.text = (cdays[i] / cdays.sum() * 100).toString() + "%"
-                    7 -> anger.text = (cdays[i] / cdays.sum() * 100).toString() + "%"
-                    8 -> user.text = (cdays[i] / cdays.sum() * 100).toString() + "%"
+                    1 -> pleasure.text = (cdays[i] / cdays.sum().toDouble() * 100).toString() + "%"
+                    2 -> happy.text = (cdays[i] / cdays.sum().toDouble() * 100).toString() + "%"
+                    3 -> excited.text = (cdays[i] / cdays.sum().toDouble() * 100).toString() + "%"
+                    4 -> peace.text = (cdays[i] / cdays.sum().toDouble() * 100).toString() + "%"
+                    5 -> sad.text = (cdays[i] / cdays.sum().toDouble() * 100).toString() + "%"
+                    6 -> unset.text = (cdays[i] / cdays.sum().toDouble() * 100).toString() + "%"
+                    7 -> anger.text = (cdays[i] / cdays.sum().toDouble() * 100).toString() + "%"
+                    8 -> user.text = (cdays[i] / cdays.sum().toDouble() * 100).toString() + "%"
                 }
             }
         }
 
         if(cdays.sum() == 0)
             emotionList.add(PieEntry(100f))
+        else{
+            when(cdays.indexOf(cdays.max()!!)){
+                1 -> chartView.centerText = chartView.centerText.toString() + "기쁨"
+                2 -> chartView.centerText = chartView.centerText.toString() + "행복"
+                3 -> chartView.centerText = chartView.centerText.toString() + "신남"
+                4 -> chartView.centerText = chartView.centerText.toString() + "평화"
+                5 -> chartView.centerText = chartView.centerText.toString() + "슬픔"
+                6 -> chartView.centerText = chartView.centerText.toString() + "불안"
+                7 -> chartView.centerText = chartView.centerText.toString() + "분노"
+                8 ->chartView.centerText = chartView.centerText.toString() + SharedPreferenceUtil.getStringData(SharedPreferenceUtil.last)
 
+            }
+        }
         Log.e("StatisticDialog", emotionList.size.toString())
 
 
@@ -132,25 +144,21 @@ class StatisticDialog(context: Context) : BaseDialog(context) {
 
         val colors = intArrayOf(
                 Color.TRANSPARENT,
-                 Color.parseColor(SharedPreferenceUtil.getStringData("EMOTION_1")),
-                 Color.parseColor(SharedPreferenceUtil.getStringData("EMOTION_2")),
-                 Color.parseColor(SharedPreferenceUtil.getStringData("EMOTION_3")),
-                 Color.parseColor(SharedPreferenceUtil.getStringData("EMOTION_4")),
-                 Color.parseColor(SharedPreferenceUtil.getStringData("EMOTION_5")),
+                Color.parseColor(SharedPreferenceUtil.getStringData("EMOTION_1")),
+                Color.parseColor(SharedPreferenceUtil.getStringData("EMOTION_2")),
+                Color.parseColor(SharedPreferenceUtil.getStringData("EMOTION_3")),
+                Color.parseColor(SharedPreferenceUtil.getStringData("EMOTION_4")),
+                Color.parseColor(SharedPreferenceUtil.getStringData("EMOTION_5")),
                 Color.parseColor(SharedPreferenceUtil.getStringData("EMOTION_6")),
-                 Color.parseColor(SharedPreferenceUtil.getStringData("EMOTION_7")),
-                 Color.parseColor(SharedPreferenceUtil.getStringData("EMOTION_8"))
+                Color.parseColor(SharedPreferenceUtil.getStringData("EMOTION_7")),
+                Color.parseColor(SharedPreferenceUtil.getStringData("EMOTION_8"))
         )
 
         dataSet.setColors(colors.toList())
         dataSet.setDrawValues(false)
         val data = PieData(dataSet)
 
-//        var color = Color.parseColor("#67894568")
-//        img_color.setColorFilter(color, PorterDuff.Mode.SRC)
-
         chartView.data = data
-
     }
 
     override fun callFunction() {
