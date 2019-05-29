@@ -7,7 +7,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
 
-class BaseRecyclerView {
+abstract class BaseRecyclerView {
     abstract class Adapter<ITEM : Any, B : ViewDataBinding>(
             @LayoutRes private val layoutResId: Int,
             private val bindingVariableId: Int? = null

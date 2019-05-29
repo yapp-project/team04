@@ -47,9 +47,7 @@
                 android:layout_width="@dimen/single_margin"
                 android:layout_height="@dimen/single_margin"
                 android:layout_marginRight="@dimen/single_quarter_margin"
-                android:background="@color/transparent"
-                android:src="@color/transparent"
-                tools:src="@color/color373768" />
+                android:src="@color/transparent" />
 
             <TextView
                 android:id="@+id/tv_color"
@@ -57,9 +55,9 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
                 android:letterSpacing="-0.08"
-                app:commentEmotionText="@{icComment.emotionType}"
                 android:textColor="@color/color373768"
                 android:textSize="10sp"
+                app:commentEmotionText="@{icComment.emotionType}"
                 tools:text="기쁨" />
         </LinearLayout>
 

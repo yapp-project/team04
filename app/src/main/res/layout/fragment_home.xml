@@ -24,14 +24,16 @@
 
         <Spinner
             android:id="@+id/sp_year"
-            replaceAll="@{homeVM.years}"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/single_margin" />
+        <!--app:replaceSpinners="@{homeVM.years}"-->
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rl_calendar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
+        <!--replaceRecyclers="@{homeVM.emotions}"-->
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -47,15 +49,15 @@
                 android:layout_marginRight="@dimen/three_quarter_margin"
                 android:background="@drawable/img_message_background"
                 android:gravity="center"
-                android:visibility="invisible"
                 android:letterSpacing="-0.08"
                 android:paddingHorizontal="@dimen/single_margin"
+                android:text="한달간 기록된 색깔 중 상위 1,2순위를 조합해 해당\n감정에 어울리는 일러스트로 표현해드립니다:)"
                 android:textColor="#ffffff"
                 android:textSize="10sp"
+                android:visibility="invisible"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintRight_toLeftOf="@+id/btn_flip"
-                app:layout_constraintTop_toTopOf="parent"
-                android:text="한달간 기록된 색깔 중 상위 1,2순위를 조합해 해당\n감정에 어울리는 일러스트로 표현해드립니다:)" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
                 android:id="@+id/btn_flip"
@@ -66,7 +68,7 @@
                 android:padding="@dimen/single_margin"
                 android:scaleType="centerInside"
                 android:src="@drawable/btn_flip"
-                android:visibility="@{!homeVM.isFlip}"
+                app:visibility="@{!homeVM.isFlip}"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 

@@ -49,7 +49,6 @@ class CommentActivity : BaseActivity() {
         ViewModelProviders.of(this).get(CommentViewModel::class.java)
     }
 
-
     override fun onDataBinding() {
         super.onDataBinding()
         binding = DataBindingUtil.setContentView(this, layoutRes)
@@ -77,7 +76,7 @@ class CommentActivity : BaseActivity() {
                     super.onBindViewHolder(holder, position)
 
                     val emotionType = comments[position].emotionType
-                    val emotionColor = Color.parseColor(SharedPreferenceUtil.getStringData("EMOTIONS_$emotionType"))
+                    val emotionColor = Color.parseColor(SharedPreferenceUtil.getStringData("EMOTION_$emotionType"))
 
                     holder.itemView.iv_color.setColorFilter(emotionColor, PorterDuff.Mode.SRC)
                 }

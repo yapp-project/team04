@@ -23,6 +23,7 @@ class LinePagerIndicatorDecoration(context: Context, indicatorEnabled: Boolean) 
     private var ctx = context
     private var colorActive = MyApplication.convertColor(ctx, if (indicatorEnabled) R.color.white else R.color.black)
     private var colorInactive = MyApplication.convertColor(ctx, if (indicatorEnabled) R.color.gray else R.color.gray)
+    private var firstPage = true
 
     /**
      * Height of the space the indicator takes up at the bottom of the view.
@@ -150,6 +151,9 @@ class LinePagerIndicatorDecoration(context: Context, indicatorEnabled: Boolean) 
             }
             parent.getChildAdapterPosition(view) == state.itemCount - 1 -> {
                 setupOutRect(outRect, offset - lp.rightMargin, false)
+            }
+            firstPage == true -> {
+
             }
         }
     }

@@ -2,21 +2,21 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
 
-    android:descendantFocusability="afterDescendants"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/b_5_3_x"
+    android:descendantFocusability="afterDescendants"
     tools:context=".recyclerView.Main3Activity">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:focusableInTouchMode="true"
-        android:descendantFocusability="afterDescendants"
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginStart="44dp"
         android:layout_marginEnd="44dp"
+        android:descendantFocusability="afterDescendants"
+        android:focusableInTouchMode="true"
         android:nestedScrollingEnabled="false"
         android:scrollbars="horizontal"
         app:fastScrollEnabled="false"
@@ -28,30 +28,31 @@
         app:layout_constraintVertical_bias="0.0" />
 
     <ImageButton
-        android:visibility="invisible"
-        android:background="@android:color/transparent"
         android:id="@+id/pre"
         android:layout_width="42dp"
         android:layout_height="36dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
+        android:background="@android:color/transparent"
         android:onClick="pre"
+        android:rotation="180"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/side" />
+        app:srcCompat="@drawable/ic_arrow_right" />
 
     <ImageButton
-        android:background="@android:color/transparent"
         android:id="@+id/succ"
         android:layout_width="27dp"
         android:layout_height="34dp"
         android:layout_marginTop="8dp"
+        android:background="@android:color/transparent"
         android:onClick="succ"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/side" />
+        app:srcCompat="@drawable/ic_arrow_right" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

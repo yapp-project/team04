@@ -8,16 +8,21 @@ import android.util.Log;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.List;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 import yapp14th.co.kr.myplant.R;
 import yapp14th.co.kr.myplant.ui.main.tab1_home.CDayVO;
 import yapp14th.co.kr.myplant.ui.main.tab1_home.CalendarMonth;
+
+import static yapp14th.co.kr.myplant.utils.DefaultVariableKt.adjustAlpha;
+import static yapp14th.co.kr.myplant.utils.DefaultVariableKt.getcalendarResources;
 
 public class BindingAdapter {
 
@@ -29,15 +34,55 @@ public class BindingAdapter {
             view.setVisibility(View.GONE);
     }
 
+    @androidx.databinding.BindingAdapter("visibility")
+    public static void setBackgroundInvisible(View view, boolean isVisible) {
+        if (isVisible)
+            view.setVisibility(View.VISIBLE);
+        else
+            view.setVisibility(View.INVISIBLE);
+    }
+
     @androidx.databinding.BindingAdapter("android:background")
     public static void setBackground(View view, int resId) {
         view.setBackgroundResource(resId);
     }
+
+    @androidx.databinding.BindingAdapter("calendarPictureBackground")
+    public static void setCalendarPicture(ImageView view, CalendarMonth icMonth) {
+        // TODO 여기에 달 계산 로직 넣음0
+        List<CDayVO> monthDays = icMonth.get_dayList();
+        int[] array = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0};
+        for (int i = 0; i < monthDays.size(); i++) {
+            array[monthDays.get(i).getEmotionType()]++;
+        }
+
+        int maxIndex = 0;
+        for (int emotionNum = 0; emotionNum < array.length - 1; emotionNum++) {
+            maxIndex = array[maxIndex] < array[emotionNum + 1] ? emotionNum + 1 : maxIndex;
+        }
+
+        int picture = getcalendarResources()[maxIndex];
+        view.setImageResource(picture);
+        view.requestLayout();
+    }
+
     @androidx.databinding.BindingAdapter("calendarFilterBackground")
-    public static void setCalendarFilter(View view, CalendarMonth calendarMonth) {
+    public static void setCalendarFilter(ImageView view, CalendarMonth icMonth) {
         // TODO 여기에 달 계산 로직 넣음
-        int colorFilter = Color.parseColor(SharedPreferenceUtil.getStringData(SharedPreferenceUtil.EMOTION_1));
-        view.setBackgroundColor(colorFilter);
+        List<CDayVO> monthDays = icMonth.get_dayList();
+        int[] array = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0};
+        for (int i = 0; i < monthDays.size(); i++) {
+            array[monthDays.get(i).getEmotionType()]++;
+        }
+
+        int maxIndex = 0;
+        for (int emotionNum = 0; emotionNum < array.length - 1; emotionNum++) {
+            maxIndex = array[maxIndex] < array[emotionNum + 1] ? emotionNum + 1 : maxIndex;
+        }
+
+        int color = adjustAlpha(Color.parseColor(SharedPreferenceUtil.getStringData("EMOTION_" + maxIndex)), 0.4f);
+        view.setBackgroundColor(color);
+        view.requestLayout();
     }
 
     @androidx.databinding.BindingAdapter({"setFlipAnimation", "init"})

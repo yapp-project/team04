@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/b_3_3_x"
+    android:background="@drawable/img_splash_background"
     tools:context=".recyclerView.Main5Activity">
 
     <ImageView
@@ -26,5 +26,5 @@
         android:layout_marginBottom="50dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/side" />
+        app:srcCompat="@drawable/ic_arrow_right" />
 </androidx.constraintlayout.widget.ConstraintLayout>

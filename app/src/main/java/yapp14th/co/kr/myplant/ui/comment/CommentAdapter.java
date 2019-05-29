@@ -55,7 +55,7 @@ class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHolder> imp
         CDayVO item = dataSet[position];
 
         int emotionType = item.getEmotionType();
-        int emotionColor = Color.parseColor(SharedPreferenceUtil.getStringData("EMOTIONS_$emotionType"));
+        int emotionColor = Color.parseColor(SharedPreferenceUtil.getStringData("EMOTION_$emotionType"));
         holder.iv_color.setColorFilter(emotionColor, PorterDuff.Mode.SRC);
 
         // holder.tv_color.setText(item.getEmotionStr((short) emotionType));

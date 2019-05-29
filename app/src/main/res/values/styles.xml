@@ -17,4 +17,10 @@
         <!--<item name="android:fontFamily">@font/default_font</item>-->
     </style>
 
+    <style name="TextAppearance.MyCustomDay" parent="android:TextAppearance.DeviceDefault.Small">
+        <item name="android:textSize">12sp</item>
+        <item name="android:fontFamily">@font/spoqa_han_sans_regular</item>
+        <item name="android:textColor">@drawable/tv_calendar_text_color</item>
+    </style>
+
 </resources>
