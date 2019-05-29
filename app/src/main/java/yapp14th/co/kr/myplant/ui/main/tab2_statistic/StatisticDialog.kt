@@ -110,14 +110,14 @@ class StatisticDialog(context: Context) : BaseDialog(context) {
             }
             if(cdays.sum() != 0) {
                 when (i) {
-                    1 -> pleasure.text = (cdays[i] / cdays.sum().toDouble() * 100).toString() + "%"
-                    2 -> happy.text = (cdays[i] / cdays.sum().toDouble() * 100).toString() + "%"
-                    3 -> excited.text = (cdays[i] / cdays.sum().toDouble() * 100).toString() + "%"
-                    4 -> peace.text = (cdays[i] / cdays.sum().toDouble() * 100).toString() + "%"
-                    5 -> sad.text = (cdays[i] / cdays.sum().toDouble() * 100).toString() + "%"
-                    6 -> unset.text = (cdays[i] / cdays.sum().toDouble() * 100).toString() + "%"
-                    7 -> anger.text = (cdays[i] / cdays.sum().toDouble() * 100).toString() + "%"
-                    8 -> user.text = (cdays[i] / cdays.sum().toDouble() * 100).toString() + "%"
+                    1 -> pleasure.text = String.format("%.1f%%",(cdays[i] / cdays.sum().toDouble() * 100))
+                    2 -> happy.text =  String.format("%.1f%%",(cdays[i] / cdays.sum().toDouble() * 100))
+                    3 -> excited.text =  String.format("%.1f%%",(cdays[i] / cdays.sum().toDouble() * 100))
+                    4 -> peace.text =  String.format("%.1f%%",(cdays[i] / cdays.sum().toDouble() * 100))
+                    5 -> sad.text =  String.format("%.1f%%",(cdays[i] / cdays.sum().toDouble() * 100))
+                    6 -> unset.text =  String.format("%.1f%%",(cdays[i] / cdays.sum().toDouble() * 100))
+                    7 -> anger.text =  String.format("%.1f%%",(cdays[i] / cdays.sum().toDouble() * 100))
+                    8 -> user.text =  String.format("%.1f%%",(cdays[i] / cdays.sum().toDouble() * 100))
                 }
             }
         }
@@ -126,13 +126,13 @@ class StatisticDialog(context: Context) : BaseDialog(context) {
             emotionList.add(PieEntry(100f))
         else{
             when(cdays.indexOf(cdays.max()!!)){
-                1 -> chartView.centerText = chartView.centerText.toString() + "기쁨"
-                2 -> chartView.centerText = chartView.centerText.toString() + "행복"
-                3 -> chartView.centerText = chartView.centerText.toString() + "신남"
-                4 -> chartView.centerText = chartView.centerText.toString() + "평화"
-                5 -> chartView.centerText = chartView.centerText.toString() + "슬픔"
-                6 -> chartView.centerText = chartView.centerText.toString() + "불안"
-                7 -> chartView.centerText = chartView.centerText.toString() + "분노"
+                1 -> chartView.centerText = chartView.centerText.toString() + "\n기쁨"
+                2 -> chartView.centerText = chartView.centerText.toString() + "\n행복"
+                3 -> chartView.centerText = chartView.centerText.toString() + "\n신남"
+                4 -> chartView.centerText = chartView.centerText.toString() + "\n평화"
+                5 -> chartView.centerText = chartView.centerText.toString() + "\n슬픔"
+                6 -> chartView.centerText = chartView.centerText.toString() + "\n불안"
+                7 -> chartView.centerText = chartView.centerText.toString() + "\n분노"
                 8 ->chartView.centerText = chartView.centerText.toString() + SharedPreferenceUtil.getStringData(SharedPreferenceUtil.last)
 
             }
