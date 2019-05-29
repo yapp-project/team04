@@ -9,6 +9,7 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 import yapp14th.co.kr.myplant.R
 import yapp14th.co.kr.myplant.ui.intro.PushAgreeActivity
+import yapp14th.co.kr.myplant.ui.main.MainActivity
 
 object NotificationManager {
 
@@ -70,7 +71,7 @@ object NotificationManager {
                     .setAutoCancel(true)
         }
 
-        val notificationIntent = Intent(context, PushAgreeActivity::class.java)
+        val notificationIntent = Intent(context, MainActivity::class.java)
         notificationIntent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
 
         val pendingIntentActivity = PendingIntent.getActivity(context, 0, notificationIntent, 0)

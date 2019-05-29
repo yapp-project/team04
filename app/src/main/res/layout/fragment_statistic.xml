@@ -101,6 +101,7 @@
                             android:layout_height="wrap_content"
                             android:layout_alignParentRight="true" />
                         <!--app:replaceSpinners="@{stVm.years}"-->
+                        <!--replaceAll="@{stVm.years}"-->
                     </RelativeLayout>
 
 
@@ -110,9 +111,12 @@
                         android:layout_height="match_parent"
                         android:layout_marginTop="20dp"
                         android:layout_marginBottom="49dp" />
+                        android:layout_marginBottom="45dp"
+                        android:overScrollMode="never" />
                 </LinearLayout>
             </androidx.core.widget.NestedScrollView>
         </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+
 </layout>

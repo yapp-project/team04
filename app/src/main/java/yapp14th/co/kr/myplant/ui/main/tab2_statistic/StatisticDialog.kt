@@ -110,14 +110,14 @@ class StatisticDialog(context: Context) : BaseDialog(context) {
             }
             if(cdays.sum() != 0) {
                 when (i) {
-                    1 -> pleasure.text = String.format("%.2f%",(cdays[i] / cdays.sum().toDouble() * 100))
-                    2 -> happy.text =  String.format("%.2f%",(cdays[i] / cdays.sum().toDouble() * 100))
-                    3 -> excited.text =  String.format("%.2f%",(cdays[i] / cdays.sum().toDouble() * 100))
-                    4 -> peace.text =  String.format("%.2f%",(cdays[i] / cdays.sum().toDouble() * 100))
-                    5 -> sad.text =  String.format("%.2f%",(cdays[i] / cdays.sum().toDouble() * 100))
-                    6 -> unset.text =  String.format("%.2f%",(cdays[i] / cdays.sum().toDouble() * 100))
-                    7 -> anger.text =  String.format("%.2f%",(cdays[i] / cdays.sum().toDouble() * 100))
-                    8 -> user.text =  String.format("%.2f%",(cdays[i] / cdays.sum().toDouble() * 100))
+                    1 -> pleasure.text = String.format("%.1f%%",(cdays[i] / cdays.sum().toDouble() * 100))
+                    2 -> happy.text =  String.format("%.1f%%",(cdays[i] / cdays.sum().toDouble() * 100))
+                    3 -> excited.text =  String.format("%.1f%%",(cdays[i] / cdays.sum().toDouble() * 100))
+                    4 -> peace.text =  String.format("%.1f%%",(cdays[i] / cdays.sum().toDouble() * 100))
+                    5 -> sad.text =  String.format("%.1f%%",(cdays[i] / cdays.sum().toDouble() * 100))
+                    6 -> unset.text =  String.format("%.1f%%",(cdays[i] / cdays.sum().toDouble() * 100))
+                    7 -> anger.text =  String.format("%.1f%%",(cdays[i] / cdays.sum().toDouble() * 100))
+                    8 -> user.text =  String.format("%.1f%%",(cdays[i] / cdays.sum().toDouble() * 100))
                 }
             }
         }
