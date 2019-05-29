@@ -76,12 +76,12 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="36dp"
             android:letterSpacing="-0.08"
+            android:text="기쁨"
             android:textColor="#373768"
             android:textSize="16sp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ll_title_bottom"
-            android:text="기쁨" />
+            app:layout_constraintTop_toBottomOf="@+id/ll_title_bottom" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/cl_wheel"
@@ -112,6 +112,15 @@
                 app:wheelPosition="top"
                 app:wheelRadius="112dp" />
 
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/single_margin"
+                android:src="@drawable/img_pin"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/img_color"
                 android:layout_width="128dp"
@@ -121,7 +130,9 @@
                 app:layout_constraintBottom_toBottomOf="@+id/cl_wheel"
                 app:layout_constraintLeft_toLeftOf="@+id/cl_wheel"
                 app:layout_constraintRight_toRightOf="@+id/cl_wheel"
-                app:layout_constraintTop_toTopOf="@+id/cl_wheel" />
+                app:layout_constraintTop_toTopOf="@+id/cl_wheel"
+                tools:src="@drawable/img_splash_background" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -136,15 +147,17 @@
 
             <EditText
                 android:id="@+id/et_input"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="18dp"
                 android:layout_marginLeft="@dimen/single_margin"
                 android:background="@null"
                 android:hint="감정을 글로도 표현해보세요!"
                 android:text="@={insertVM.commentStr}"
+                android:singleLine="true"
                 android:textColor="#373768"
                 android:textSize="12sp"
                 app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintRight_toLeftOf="@+id/btn_edit"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 

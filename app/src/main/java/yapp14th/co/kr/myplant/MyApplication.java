@@ -2,6 +2,7 @@ package yapp14th.co.kr.myplant;
 
 import android.app.Application;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
 import android.util.DisplayMetrics;
 
@@ -10,6 +11,7 @@ import io.realm.Realm;
 import io.realm.RealmConfiguration;
 import yapp14th.co.kr.myplant.utils.SharedPreferenceUtil;
 import yapp14th.co.kr.myplant.utils.alarm.AlarmUtil;
+import yapp14th.co.kr.myplant.utils.alarm.ClosingService;
 import yapp14th.co.kr.myplant.utils.alarm.NotificationManager;
 
 public class MyApplication extends Application {
@@ -32,7 +34,10 @@ public class MyApplication extends Application {
         // 설정을 사용합니다.
         Realm.setDefaultConfiguration(config);
 
-        AlarmUtil.Companion.getInstance().startEightPMAlarm(this);
+        Intent intent = new Intent(
+                getApplicationContext(),//현재제어권자
+                ClosingService.class); // 이동할 컴포넌트
+        startService(intent); // 서비스 시작
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             NotificationManager.INSTANCE.createChannel(this);

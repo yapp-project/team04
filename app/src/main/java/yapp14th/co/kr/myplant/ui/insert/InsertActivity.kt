@@ -7,12 +7,16 @@ import android.graphics.PorterDuff
 import android.os.Bundle
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProviders
+import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.android.synthetic.main.activity_insert.*
 import yapp14th.co.kr.myplant.base.BaseActivity
 import yapp14th.co.kr.myplant.components.MaterialColorAdapter
 import yapp14th.co.kr.myplant.databinding.ActivityInsertBinding
 import yapp14th.co.kr.myplant.ui.main.MainActivity
 import yapp14th.co.kr.myplant.utils.*
+import android.graphics.drawable.GradientDrawable
+import android.widget.ImageView
+import android.widget.Toast
 
 class InsertActivity : BaseActivity() {
     override fun getLayoutRes() = R.layout.activity_insert
@@ -66,10 +70,27 @@ class InsertActivity : BaseActivity() {
 //
 //                img_color.setColorFilter(Color.argb(alpha, red, green, blue))
 
-                img_color.setColorFilter(color, PorterDuff.Mode.SRC)
+                setCenterColor(img_color, color)
 
                 insertVM.currentEmotion = position + 1
                 tv_emotion.text = insertVM.emotionsTitle[position]
+            }
+
+            wv_color.setOnWheelItemClickListener { parent, position, isSelected ->
+                val color = Color.parseColor(insertVM.emotionsColor[position])
+//                val alpha = Color.alpha(color)
+//                val blue = Color.blue(color)
+//                val green = Color.green(color)
+//                val red = Color.red(color)
+//                Log.d("color$position : ", "$alpha $red $green $blue")
+//
+//                img_color.setColorFilter(Color.argb(alpha, red, green, blue))
+
+                setCenterColor(img_color, color)
+
+                insertVM.currentEmotion = position + 1
+                tv_emotion.text = insertVM.emotionsTitle[position]
+                wv_color.setSelected(insertVM.currentEmotion - 1)
             }
 
             // 초기 wheel init 값 설정
@@ -106,5 +127,15 @@ class InsertActivity : BaseActivity() {
                 finish()
             }
         }
+
+        Toast.makeText(this, "원을 클릭하거나 휠을 돌려 색을 선택할 수 있습니다.", Toast.LENGTH_LONG).show()
+    }
+
+    private fun setCenterColor(img_color: CircleImageView, color: Int) {
+        // val gd = GradientDrawable(GradientDrawable.Orientation.TOP_BOTTOM, intArrayOf(color, Color.parseColor("#ffffff")))
+        // gd.cornerRadius = 0f
+
+        // img_color.setImageDrawable(gd)
+        img_color.setColorFilter(color, PorterDuff.Mode.SRC)
     }
 }

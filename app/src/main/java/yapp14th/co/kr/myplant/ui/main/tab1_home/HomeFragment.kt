@@ -165,7 +165,7 @@ class HomeFragment : BaseFragment(), OnSnapPositionChangeListener {
 
                         holder.itemView.cv_calendar.setOnDateChangedListener { widget, date, selected ->
                             if (selected) {
-                                Toast.makeText(activity, "클릭 할꺼야 안할꺼야 ${date.year} ${date.month} ${date.day}", Toast.LENGTH_SHORT).show()
+                                // Toast.makeText(activity, "클릭 할꺼야 안할꺼야 ${date.year} ${date.month} ${date.day}", Toast.LENGTH_SHORT).show()
 
                                 var value = getTargetDate(date.year, date.month, date.day)
                                 var intent = Intent(activity, InsertActivity::class.java)
@@ -232,7 +232,7 @@ class HomeFragment : BaseFragment(), OnSnapPositionChangeListener {
                                     Log.d("갤러리 저장 ", "디렉토리 생성완료")
                                 }
 
-                                val galleryFilePath = "$path/${year}_${month}_calendar_photo.jpg"
+                                val galleryFilePath = "$path/${year}_${month}_calendar_photo_${System.currentTimeMillis()}.jpg"
                                 val galleryFile = File(galleryFilePath)
                                 Log.d("galleryAddPic.newFile", galleryFilePath)
 
@@ -240,6 +240,9 @@ class HomeFragment : BaseFragment(), OnSnapPositionChangeListener {
 
                                 activity?.sendBroadcast(Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.parse("file://$galleryFilePath")))
                                 activity?.sendBroadcast(Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.fromFile(newFile)))
+
+                                // 5. 갤러리로 copy 한 후 내장되어있는 파일은 삭제한다.
+                                tempFile.delete()
 
                                 Toast.makeText(activity, "성공적으로 갤러리에 저장되었습니다.", Toast.LENGTH_SHORT).show()
                             }
