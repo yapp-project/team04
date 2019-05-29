@@ -53,6 +53,9 @@
             android:name=".ui.comment.CommentActivity"
             android:theme="@style/AppTheme.NoActionBar"></activity>
 
+        <service android:name=".utils.alarm.ClosingService"
+            android:stopWithTask="false"/>
+
         <activity
             android:name=".ui.main.MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
@@ -68,7 +71,7 @@
             android:theme="@style/AppTheme.NoActionBar" />
 
         <receiver
-            android:name="sisonfarmtory.co.kr.drrecipe.ui.main.AlarmRepeatBroadCastReciever"
+            android:name=".utils.alarm.AlarmRepeatBroadCastReciever"
             android:enabled="true"
             android:exported="false">
             <intent-filter>

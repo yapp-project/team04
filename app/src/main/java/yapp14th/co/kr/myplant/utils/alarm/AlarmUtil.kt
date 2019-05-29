@@ -5,11 +5,8 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.os.Build
-import sisonfarmtory.co.kr.drrecipe.ui.main.AlarmRepeatBroadCastReciever
 import java.util.*
-import android.R.id
 import android.util.Log
-import androidx.core.content.ContextCompat.getSystemService
 
 
 class AlarmUtil {
@@ -25,25 +22,49 @@ class AlarmUtil {
         val findIntent = PendingIntent.getBroadcast(context, 1001, alarmIntent, PendingIntent.FLAG_NO_CREATE)
         if (findIntent == null) {
             // TODO: 이미 설정된 알람이 없는 경우
-            Log.d("설정된 알람이 : ", "없음")
+            Log.d("startEightPMAlarm ", "설정된 알람이 없음")
+
+            // 1분뒤에 AlarmOneMinuteBroadcastReceiver 호출 한다.
+            var todayCalendar = Calendar.getInstance()
+            var tomorrow8PMCalendar = Calendar.getInstance()
+            tomorrow8PMCalendar.set(todayCalendar.get(Calendar.YEAR), todayCalendar.get(Calendar.MONTH), todayCalendar.get(Calendar.DATE), 20, 0, 0)
+
+            // 이미 알람 시간을 지났을 경우
+            if (tomorrow8PMCalendar.timeInMillis - Calendar.getInstance().timeInMillis < 0){
+                Log.d("startEightPMAlarm ", "이미 알람 시간을 지났을 경우")
+                tomorrow8PMCalendar.set(Calendar.DATE, tomorrow8PMCalendar.get(Calendar.DATE) + 1)
+                Log.d("startEightPMAlarm ", "다음날 알람 등록 완료")
+            }
+            startRepeat(context, tomorrow8PMCalendar.timeInMillis, AlarmManager.INTERVAL_DAY)
+            Log.d("startEightPMAlarm ", "알람 새로 등록")
 
         } else {
             // TODO: 이미 설정된 알람이 있는 경우
-            Log.d("설정된 알람이 : ", "있음")
+            Log.d("startEightPMAlarm ", "설정된 알람이 있음")
+            Log.d("startEightPMAlarm ", "알람 등록할 필요 없음")
+//            val am = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+//            am.cancel(findIntent)
+//            findIntent.cancel()
+        }
+    }
+
+    fun clearAlarm(context: Context) {
+        val alarmIntent = Intent(context, AlarmRepeatBroadCastReciever::class.java)
+        alarmIntent.putExtra("sName", "OneMinute")
+
+        val findIntent = PendingIntent.getBroadcast(context, 1001, alarmIntent, PendingIntent.FLAG_NO_CREATE)
+        if (findIntent == null) {
+            // TODO: 이미 설정된 알람이 없는 경우
+            Log.d("clearAlarm ", "설정된 알람이 없음")
+            Log.d("clearAlarm ", "clear 할 필요 없음")
+        } else {
+            // TODO: 이미 설정된 알람이 있는 경우
+            Log.d("clearAlarm ", "설정된 알람이 있음")
             val am = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
             am.cancel(findIntent)
             findIntent.cancel()
+            Log.d("clearAlarm ", "clear 완료")
         }
-
-        // 1분뒤에 AlarmOneMinuteBroadcastReceiver 호출 한다.
-        var todayCalendar = Calendar.getInstance()
-        todayCalendar.time = Date()
-        var tomorrow8PMCalendar = Calendar.getInstance()
-        tomorrow8PMCalendar.set(todayCalendar.get(Calendar.YEAR), todayCalendar.get(Calendar.MONTH), todayCalendar.get(Calendar.DATE), 20, 0, 0)
-
-        // var differentTime = (tomorrow8AMCalendar.timeInMillis - todayCalendar.timeInMillis).toInt()
-        // startAlarm(context, pendingIntent, differentTime)
-        startRepeat(context, tomorrow8PMCalendar.timeInMillis, TIME_24H)
     }
 
 

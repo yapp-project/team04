@@ -50,6 +50,8 @@ public class Main3Activity extends AppCompatActivity {
             init(true);
         } else
             init(false);
+
+        Toast.makeText(this, "색상원의 색깔을 먼저 선택해주세요", Toast.LENGTH_LONG).show();
     }
 
     private void init(boolean mypage) {
