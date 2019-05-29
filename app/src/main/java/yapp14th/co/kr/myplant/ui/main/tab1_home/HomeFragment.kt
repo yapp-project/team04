@@ -92,8 +92,10 @@ class HomeFragment : BaseFragment(), OnSnapPositionChangeListener {
         initSetting = true
 
         val ll = LinearLayoutManager(activity, RecyclerView.HORIZONTAL, false)
-        // ll.scrollToPosition(homeVM.currentMonth.get() ?: 1 - 1)
+        Log.d("scrollToPosition : ", "${homeVM.currentMonth.get() ?: 1 - 1}")
+        ll.scrollToPosition(homeVM.currentMonth.get() ?: 1 - 1)
         rl_calendar.layoutManager = ll
+
 
         val snapHelper = PagerSnapHelper()
         val scrollListener = SnapOnScrollListener(snapHelper, SnapOnScrollListener.Behavior.NOTIFY_ON_SCROLL, object : OnSnapPositionChangeListener {
@@ -107,6 +109,7 @@ class HomeFragment : BaseFragment(), OnSnapPositionChangeListener {
 
         rl_calendar.attachSnapHelperWithListener(snapHelper, SnapOnScrollListener.Behavior.NOTIFY_ON_SCROLL, this)
         rl_calendar.setItemViewCacheSize(12)
+        rl_calendar.addItemDecoration(LinePagerIndicatorDecoration(activity!!, false))
 
         oneSecondAnimation(tv_message)
     }
@@ -131,8 +134,6 @@ class HomeFragment : BaseFragment(), OnSnapPositionChangeListener {
         homeVM.emotions.observe(this, Observer { emotions ->
             // view에서 할 내용이 없다면, 추후 ViewModel 단으로 옮김
             if (initSetting) {
-                rl_calendar.addItemDecoration(LinePagerIndicatorDecoration(activity!!, false))
-
                 adapter = object : BaseRecyclerView.Adapter<CalendarMonth, ItemMonthBinding>(
                         layoutResId = R.layout.item_month,
                         bindingVariableId = BR.icMonth) {
@@ -215,7 +216,7 @@ class HomeFragment : BaseFragment(), OnSnapPositionChangeListener {
                                 val copyBitmap: Bitmap = bitmapPhoto.copy(Bitmap.Config.ARGB_8888, true)
 
                                 var canvas = Canvas(copyBitmap)
-                                canvas.drawColor(adjustAlpha(homeVM.getBiggestEmotionFilter(month - 1), 0.4f))
+                                canvas.drawColor(homeVM.getBiggestEmotionFilter(month - 1))
                                 canvas.drawBitmap(copyBitmap, 0F, 0F, null)
 
                                 // 3. 만들어진 비트맵을 파일과 매칭
@@ -239,6 +240,8 @@ class HomeFragment : BaseFragment(), OnSnapPositionChangeListener {
 
                                 activity?.sendBroadcast(Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.parse("file://$galleryFilePath")))
                                 activity?.sendBroadcast(Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.fromFile(newFile)))
+
+                                Toast.makeText(activity, "성공적으로 갤러리에 저장되었습니다.", Toast.LENGTH_SHORT).show()
                             }
                         }
 
@@ -254,8 +257,6 @@ class HomeFragment : BaseFragment(), OnSnapPositionChangeListener {
             }
 
             adapter.replaceAll(emotions)
-            Log.d("scrollToPosition : ", "${homeVM.currentMonth.get() ?: 1 - 1}")
-            rl_calendar.layoutManager?.scrollToPosition(homeVM.currentMonth.get() ?: 1 - 1)
         })
 
         homeVM.isFlipLive.observe(this, Observer { isFlip ->

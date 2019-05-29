@@ -55,7 +55,6 @@
 
         <activity
             android:name=".ui.main.MainActivity"
-            android:noHistory="true"
             android:theme="@style/AppTheme.NoActionBar">
 
         </activity>
