@@ -175,7 +175,7 @@ class StatisticFragment : BaseFragment() {
                 }
             }
 
-            adapter.replaceAll(tempEmotions)
+            adapter.replaceAll(emotions)
             rv_color.adapter = adapter
             rv_color.layoutManager = GridLayoutManager(this.context, 3)
 
