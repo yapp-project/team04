@@ -55,6 +55,8 @@ class InsertActivity : BaseActivity() {
             startActivity(Intent(this@InsertActivity, MainActivity::class.java))
             finish()
         } else {
+            Toast.makeText(this, "원을 클릭하거나 휠을 돌려 색을 선택할 수 있습니다.", Toast.LENGTH_LONG).show()
+
             wv_color.adapter = MaterialColorAdapter(insertVM.emotionsColor)
 
             // 초기 wheel listener 설정
@@ -95,6 +97,7 @@ class InsertActivity : BaseActivity() {
 
             // 초기 wheel init 값 설정
             wv_color.setSelected(insertVM.currentEmotion - 1)
+            setCenterColor(img_color, Color.parseColor(insertVM.emotionsColor[insertVM.currentEmotion - 1]))
 
             btn_completed.setOnClickListener {
                 if (dataSize == 0 || emotionType == 0) {
@@ -127,8 +130,6 @@ class InsertActivity : BaseActivity() {
                 finish()
             }
         }
-
-        Toast.makeText(this, "원을 클릭하거나 휠을 돌려 색을 선택할 수 있습니다.", Toast.LENGTH_LONG).show()
     }
 
     private fun setCenterColor(img_color: CircleImageView, color: Int) {

@@ -45,6 +45,7 @@ import yapp14th.co.kr.myplant.ui.comment.CommentActivity
 import yapp14th.co.kr.myplant.ui.insert.InsertActivity
 import yapp14th.co.kr.myplant.utils.*
 import java.io.File
+import java.util.*
 
 class HomeFragment : BaseFragment(), OnSnapPositionChangeListener {
     // 선택 선언 2_1 (데이터 바인딩)
@@ -164,7 +165,20 @@ class HomeFragment : BaseFragment(), OnSnapPositionChangeListener {
                                 .commit()
 
                         holder.itemView.cv_calendar.setOnDateChangedListener { widget, date, selected ->
-                            if (selected) {
+                            val clickDate = Calendar.getInstance().apply {
+                                set(Calendar.YEAR, date.year)
+                                set(Calendar.MONTH, date.month)
+                                set(Calendar.DATE, date.day - 1)
+                            }
+
+                            val currentDate = Calendar.getInstance().apply {
+                                set(Calendar.MONTH, this.get(Calendar.MONTH) + 1)
+                            }
+
+                            val isPast = (clickDate.timeInMillis - currentDate.timeInMillis < 0)
+                            Log.d("isPast", "$isPast")
+
+                            if (isPast && selected) {
                                 // Toast.makeText(activity, "클릭 할꺼야 안할꺼야 ${date.year} ${date.month} ${date.day}", Toast.LENGTH_SHORT).show()
 
                                 var value = getTargetDate(date.year, date.month, date.day)
@@ -177,6 +191,8 @@ class HomeFragment : BaseFragment(), OnSnapPositionChangeListener {
                                 intent.putExtra("comment", if (value.size == 0) "" else value[0].comment)
 
                                 startActivityForResult(intent, REQ_GO_TO_INSERT)
+                            } else {
+                                Toast.makeText(activity, "미래에 대한 감정을 등록할 수 없습니다.", Toast.LENGTH_SHORT).show()
                             }
                         }
 
