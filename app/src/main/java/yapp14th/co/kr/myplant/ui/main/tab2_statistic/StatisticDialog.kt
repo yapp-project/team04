@@ -133,7 +133,7 @@ class StatisticDialog(context: Context) : BaseDialog(context) {
                 5 -> chartView.centerText = chartView.centerText.toString() + "\n슬픔"
                 6 -> chartView.centerText = chartView.centerText.toString() + "\n불안"
                 7 -> chartView.centerText = chartView.centerText.toString() + "\n분노"
-                8 ->chartView.centerText = chartView.centerText.toString() + SharedPreferenceUtil.getStringData(SharedPreferenceUtil.last)
+                8 ->chartView.centerText = chartView.centerText.toString() + "\n"+SharedPreferenceUtil.getStringData(SharedPreferenceUtil.last)
 
             }
         }
