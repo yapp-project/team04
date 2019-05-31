@@ -2,12 +2,10 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
-
-    >
+    android:orientation="vertical">
 
     <LinearLayout
         android:id="@+id/ll_container"
@@ -22,7 +20,8 @@
         <yapp14th.co.kr.myplant.components.ColorPickerView
             android:id="@+id/colorPickerView_test"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:background="@drawable/img_wheel_background" />
 
         <SeekBar
             android:id="@+id/intro_sb_brightness"
@@ -39,6 +38,7 @@
             android:max="100" />
 
     </LinearLayout>
+
     <RelativeLayout
         android:id="@+id/color_Container"
         android:layout_width="match_parent"
@@ -46,30 +46,33 @@
         android:layout_marginTop="20dp"
         android:layout_marginBottom="20dp"
         android:gravity="center"
-        tools:layout_editor_absoluteX="0dp"
         app:layout_constraintTop_toBottomOf="@+id/ll_container"
-        >
+        tools:layout_editor_absoluteX="0dp">
+
         <LinearLayout
             android:id="@+id/RGB_container"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+
             <LinearLayout
                 android:id="@+id/ll_R"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textStyle="bold"
                     android:text="R"
-                    android:textColor="#373768"/>
+                    android:textColor="#373768"
+                    android:textStyle="bold" />
+
                 <TextView
                     android:id="@+id/R_et"
-                    android:layout_marginLeft="15dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="#373768"/>
+                    android:layout_marginLeft="15dp"
+                    android:textColor="#373768" />
             </LinearLayout>
 
             <LinearLayout
@@ -78,37 +81,42 @@
                 android:layout_height="wrap_content"
 
                 android:layout_below="@+id/ll_R">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textStyle="bold"
                     android:text="G"
-                    android:textColor="#373768"/>
+                    android:textColor="#373768"
+                    android:textStyle="bold" />
+
                 <TextView
                     android:id="@+id/G_et"
-                    android:layout_marginLeft="15dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="#373768"/>
+                    android:layout_marginLeft="15dp"
+                    android:textColor="#373768" />
             </LinearLayout>
+
             <LinearLayout
                 android:id="@+id/ll_B"
-                android:layout_below="@+id/ll_G"
-
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/ll_G">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textStyle="bold"
                     android:text="B"
-                    android:textColor="#373768"/>
+                    android:textColor="#373768"
+                    android:textStyle="bold" />
+
                 <TextView
                     android:id="@+id/B_et"
-                    android:layout_marginStart="15dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="#373768"/>
+                    android:layout_marginStart="15dp"
+                    android:textColor="#373768" />
             </LinearLayout>
 
         </LinearLayout>
@@ -125,19 +133,21 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
+
                 <TextView
                     android:id="@+id/hex_code_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textStyle="bold"
                     android:text="Hex code"
-                    android:textColor="#373768"/>
+                    android:textColor="#373768"
+                    android:textStyle="bold" />
+
                 <TextView
                     android:id="@+id/hex_code_et"
-                    android:layout_marginTop="5dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="#373768"/>
+                    android:layout_marginTop="5dp"
+                    android:textColor="#373768" />
             </LinearLayout>
         </LinearLayout>
 

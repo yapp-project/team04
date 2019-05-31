@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:descendantFocusability="afterDescendants"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_marginTop="100dp"
     android:layout_marginBottom="44dp"
-    android:layout_marginTop="100dp">
+    android:descendantFocusability="afterDescendants">
 
     <LinearLayout
         android:id="@+id/linearLayout"
@@ -20,8 +20,8 @@
             android:id="@+id/num"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="01"
             android:fontFamily="@font/robotoregular"
+            android:text="01"
             android:textColor="#373768"
             android:textSize="16sp" />
 
@@ -29,8 +29,8 @@
             android:id="@+id/total"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="/08"
             android:fontFamily="@font/robotolight"
+            android:text="/08"
             android:textColor="#373768"
             android:textSize="12sp" />
     </LinearLayout>
@@ -40,63 +40,68 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:textSize="20sp"
-        android:textColor="#373768"
-        android:text="기쁨"
         android:fontFamily="@font/spoqahansansbold"
+        android:text="기쁨"
+        android:textColor="#373768"
+        android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
 
     <androidx.cardview.widget.CardView
-        android:descendantFocusability="afterDescendants"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
         android:id="@+id/last"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginHorizontal="2dp"
         android:layout_marginTop="6dp"
         android:layout_marginBottom="9dp"
-        android:layout_marginHorizontal="2dp"
+        android:descendantFocusability="afterDescendants"
         app:cardCornerRadius="10dp"
         app:cardElevation="2dp"
-        android:layout_width="match_parent"
-        android:layout_height="40dp">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout">
+
         <RelativeLayout
-            android:descendantFocusability="afterDescendants"
-            android:clickable="true"
-            android:focusableInTouchMode="true"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:descendantFocusability="afterDescendants"
+            android:focusableInTouchMode="true">
+
             <EditText
-                android:selectAllOnFocus="true"
-                android:focusable="true"
-                android:focusableInTouchMode="true"
+                android:id="@+id/et_input"
+                android:layout_width="match_parent"
+                android:layout_height="18dp"
+                android:layout_alignEnd="@+id/imageView4"
                 android:layout_marginVertical="11dp"
                 android:background="@null"
-                android:paddingLeft="16dp"
-                android:id="@+id/et_input"
-                android:textSize="12sp"
-                android:textColor="#373768"
-                android:hint="마지막 감정은 마음대로 정해보세요! :)"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
                 android:fontFamily="@font/spoqahansansregular"
-                android:layout_width="wrap_content"
-                android:layout_height="18dp" />
+                android:hint="마지막 감정은 마음대로 정해보세요! :)"
+                android:singleLine="true"
+                android:imeOptions="actionDone"
+                android:paddingStart="16dp"
+                android:selectAllOnFocus="true"
+                android:textColor="#373768"
+                android:textSize="12sp" />
 
             <ImageView
-                android:layout_marginVertical="8dp"
-                android:layout_alignParentRight="true"
                 android:id="@+id/imageView4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="16dp"
+                android:layout_alignParentEnd="true"
+                android:layout_marginVertical="8dp"
+                android:layout_marginEnd="16dp"
                 app:srcCompat="@drawable/write" />
         </RelativeLayout>
     </androidx.cardview.widget.CardView>
 
-    <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cv_card"
         android:layout_width="match_parent"
         android:layout_height="354dp"
-        android:layout_marginTop="55dp"
         android:layout_marginHorizontal="2dp"
+        android:layout_marginTop="55dp"
         app:cardCornerRadius="10dp"
         app:cardElevation="2dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -104,10 +109,10 @@
         app:layout_constraintTop_toBottomOf="@+id/linearLayout">
 
         <!--<fragment-->
-            <!--android:id="@+id/color_pick"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_gravity="center">-->
+        <!--android:id="@+id/color_pick"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_gravity="center">-->
         <!--</fragment>-->
         <LinearLayout
             android:id="@+id/color_pick"
@@ -120,15 +125,15 @@
 
 
     <!--<View-->
-        <!--android:id="@+id/color_pick"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="354dp"-->
-        <!--android:layout_marginTop="55dp"-->
-        <!--android:layout_marginHorizontal="2dp"-->
+    <!--android:id="@+id/color_pick"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="354dp"-->
+    <!--android:layout_marginTop="55dp"-->
+    <!--android:layout_marginHorizontal="2dp"-->
 
-        <!--app:layout_constraintEnd_toEndOf="parent"-->
-        <!--app:layout_constraintStart_toStartOf="parent"-->
-        <!--app:layout_constraintTop_toBottomOf="@+id/linearLayout">-->
+    <!--app:layout_constraintEnd_toEndOf="parent"-->
+    <!--app:layout_constraintStart_toStartOf="parent"-->
+    <!--app:layout_constraintTop_toBottomOf="@+id/linearLayout">-->
 
     <!--</View>-->
 
@@ -137,8 +142,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/button"
-        android:text="선택 완료"
         android:fontFamily="@font/spoqahansansregular"
+        android:text="선택 완료"
         android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

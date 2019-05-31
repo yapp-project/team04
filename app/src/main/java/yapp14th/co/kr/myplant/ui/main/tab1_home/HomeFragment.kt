@@ -45,6 +45,7 @@ import yapp14th.co.kr.myplant.ui.comment.CommentActivity
 import yapp14th.co.kr.myplant.ui.insert.InsertActivity
 import yapp14th.co.kr.myplant.utils.*
 import java.io.File
+import java.util.*
 
 class HomeFragment : BaseFragment(), OnSnapPositionChangeListener {
     // 선택 선언 2_1 (데이터 바인딩)
@@ -164,8 +165,21 @@ class HomeFragment : BaseFragment(), OnSnapPositionChangeListener {
                                 .commit()
 
                         holder.itemView.cv_calendar.setOnDateChangedListener { widget, date, selected ->
-                            if (selected) {
-                                Toast.makeText(activity, "클릭 할꺼야 안할꺼야 ${date.year} ${date.month} ${date.day}", Toast.LENGTH_SHORT).show()
+                            val clickDate = Calendar.getInstance().apply {
+                                set(Calendar.YEAR, date.year)
+                                set(Calendar.MONTH, date.month)
+                                set(Calendar.DATE, date.day - 1)
+                            }
+
+                            val currentDate = Calendar.getInstance().apply {
+                                set(Calendar.MONTH, this.get(Calendar.MONTH) + 1)
+                            }
+
+                            val isPast = (clickDate.timeInMillis - currentDate.timeInMillis < 0)
+                            Log.d("isPast", "$isPast")
+
+                            if (isPast && selected) {
+                                // Toast.makeText(activity, "클릭 할꺼야 안할꺼야 ${date.year} ${date.month} ${date.day}", Toast.LENGTH_SHORT).show()
 
                                 var value = getTargetDate(date.year, date.month, date.day)
                                 var intent = Intent(activity, InsertActivity::class.java)
@@ -177,6 +191,8 @@ class HomeFragment : BaseFragment(), OnSnapPositionChangeListener {
                                 intent.putExtra("comment", if (value.size == 0) "" else value[0].comment)
 
                                 startActivityForResult(intent, REQ_GO_TO_INSERT)
+                            } else {
+                                Toast.makeText(activity, "미래에 대한 감정을 등록할 수 없습니다.", Toast.LENGTH_SHORT).show()
                             }
                         }
 
@@ -232,7 +248,7 @@ class HomeFragment : BaseFragment(), OnSnapPositionChangeListener {
                                     Log.d("갤러리 저장 ", "디렉토리 생성완료")
                                 }
 
-                                val galleryFilePath = "$path/${year}_${month}_calendar_photo.jpg"
+                                val galleryFilePath = "$path/${year}_${month}_calendar_photo_${System.currentTimeMillis()}.jpg"
                                 val galleryFile = File(galleryFilePath)
                                 Log.d("galleryAddPic.newFile", galleryFilePath)
 
@@ -240,6 +256,9 @@ class HomeFragment : BaseFragment(), OnSnapPositionChangeListener {
 
                                 activity?.sendBroadcast(Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.parse("file://$galleryFilePath")))
                                 activity?.sendBroadcast(Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.fromFile(newFile)))
+
+                                // 5. 갤러리로 copy 한 후 내장되어있는 파일은 삭제한다.
+                                tempFile.delete()
 
                                 Toast.makeText(activity, "성공적으로 갤러리에 저장되었습니다.", Toast.LENGTH_SHORT).show()
                             }

@@ -5,8 +5,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.LinearSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.SnapHelper;
+import buv.co.kr.base.BaseDialog;
 import yapp14th.co.kr.myplant.MyApplication;
 import yapp14th.co.kr.myplant.R;
+import yapp14th.co.kr.myplant.base.example.template.view.TemplateActivity;
 import yapp14th.co.kr.myplant.utils.SharedPreferenceUtil;
 
 import android.os.Bundle;
@@ -33,6 +35,7 @@ public class Main3Activity extends AppCompatActivity {
     int radius;
     private int[] color_circle_set;
     private boolean mypage;
+    private BaseDialog dialog;
 
     int position;
 
@@ -48,8 +51,11 @@ public class Main3Activity extends AppCompatActivity {
         mypage = getIntent().getBooleanExtra("mypage", false);
         if (mypage) {
             init(true);
-        } else
+            Toast.makeText(this, "색상원의 색깔을 먼저 선택해주세요", Toast.LENGTH_LONG).show();
+        } else {
             init(false);
+            openDialog(1, "색상원의 색깔을 먼저 선택해주세요.", "", R.layout.base_dialog, view -> dialog.dismiss(), view -> dialog.dismiss());
+        }
     }
 
     private void init(boolean mypage) {
@@ -158,5 +164,17 @@ public class Main3Activity extends AppCompatActivity {
             ImageButton button = findViewById(R.id.succ);
             button.setVisibility(View.INVISIBLE);
         }
+    }
+
+    public void openDialog(int type, String title, String subTitle, int layoutRes, View.OnClickListener okListener, View.OnClickListener cancelListener) {
+        // 초기 설정
+        dialog = new BaseDialog(Main3Activity.this);
+
+        dialog.setInit(layoutRes, type);
+        dialog.setTitle(title, subTitle);
+
+        dialog.setOkButtonListener(okListener);
+        dialog.setCancelButtonListener(cancelListener);
+        dialog.callFunction();
     }
 }

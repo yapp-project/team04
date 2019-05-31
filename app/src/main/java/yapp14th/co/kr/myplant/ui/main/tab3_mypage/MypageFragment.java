@@ -4,9 +4,11 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -154,6 +156,14 @@ public class MypageFragment extends BaseFragment {
         TextView tv_emotion_num = view.findViewById(R.id.tv_emotion_num);
         TextView tv_mypage_08 = view.findViewById(R.id.tv_mypage_08);
         Switch switch1 = view.findViewById(R.id.switch1);
+
+        switch1.setChecked(SharedPreferenceUtil.getBooleanData(SharedPreferenceUtil.PUSH_CHECK_ENABLED));
+        switch1.setOnCheckedChangeListener((compoundButton, checked) -> {
+                    SharedPreferenceUtil.setData(SharedPreferenceUtil.PUSH_CHECK_ENABLED, checked);
+                    Log.d("푸시 설정 ", SharedPreferenceUtil.getBooleanData(SharedPreferenceUtil.PUSH_CHECK_ENABLED) + "");
+                }
+        );
+
         ImageView mypage_color_change = view.findViewById(R.id.mypage_colorchange);
 
         mypage_color_change.setOnClickListener(v -> {

@@ -3,7 +3,6 @@ package yapp14th.co.kr.myplant.utils.alarm
 import android.content.Context
 import android.content.Intent
 import android.util.Log
-import sisonfarmtory.co.kr.drrecipe.ui.main.AlarmRepeatBroadCastReciever
 
 class AlarmOneMinuteBroadcastReceiver : AlarmRepeatBroadCastReciever() {
     // 알람을 받음

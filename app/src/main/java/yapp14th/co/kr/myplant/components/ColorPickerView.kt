@@ -39,6 +39,7 @@ class ColorPickerView(
     private var PI = 3.1415926f
 
     private var mPaint: Paint
+    private val mWhitePaint: Paint
     private val mCenterPaint: Paint
     private val mColors: IntArray = intArrayOf(-0x10000, -0xff01, -0xffff01, -0xff0001, -0xff0100, -0x100, -0x10000)
 
@@ -67,6 +68,7 @@ class ColorPickerView(
         mPaint.strokeWidth = 7f    // 원 두께
 
         mCenterPaint = Paint(Paint.ANTI_ALIAS_FLAG)
+        mWhitePaint = Paint(Color.WHITE)
         mCenterPaint.color = color
         mCenterPaint.strokeWidth = 5f   // 가운데원 반지름
     }
@@ -182,7 +184,9 @@ class ColorPickerView(
             var targetX = (pinX / scalingValue * r).toFloat()
             var targetY = (pinY / scalingValue * r).toFloat()
             canvas.drawLine(0f, 0f, targetX, targetY, mCenterPaint)
-            canvas.drawCircle(targetX, targetY, (CENTER_RADIUS / 4).toFloat(), mCenterPaint)
+
+            mWhitePaint.color = Color.parseColor("#ffffff")
+            canvas.drawCircle(targetX, targetY, (CENTER_RADIUS / 4).toFloat(), mWhitePaint)
         }
     }
 
