@@ -118,28 +118,51 @@ class HomeViewModel(app: Application) : BaseViewModel(app) {
         )
     }
 
+
     fun getBiggestEmotionImage(month: Int): Int {
-        val array = arrayOf(0, 0, 0, 0, 0, 0, 0, 0, 0)
-        emotions.value!![month].dayList.forEach { cDayVO ->
-            array[cDayVO.emotionType.toInt()]++
+        val monthDays = emotions.value!![month].dayList
+        val array = intArrayOf(0, 0, 0, 0, 0, 0, 0, 0, 0)
+        for (i in monthDays.indices) {
+            array[monthDays[i].emotionType.toInt()]++
         }
 
-        val maxIndex = array.indexOf(array.max())
+        var maxIndex = 0
+        for (emotionNum in 0 until array.size - 1) {
+            maxIndex = if (array[maxIndex] < array[emotionNum + 1]) emotionNum + 1 else maxIndex
+        }
+
         return getcalendarResources()[maxIndex]
     }
 
-    fun getBiggestEmotionFilter(month: Int): Int {
-        val array = arrayOf(0, 0, 0, 0, 0, 0, 0, 0, 0)
-        emotions.value!![month].dayList.forEach { cDayVO ->
-            array[cDayVO.emotionType.toInt()]++
+    fun getSecondEmotionFilter(month: Int): Int {
+        val monthDays = emotions.value!![month].dayList
+        val array = arrayOf(intArrayOf(0, 0), intArrayOf(1, 0), intArrayOf(2, 0), intArrayOf(3, 0), intArrayOf(4, 0), intArrayOf(5, 0), intArrayOf(6, 0), intArrayOf(7, 0), intArrayOf(8, 0))
+        for (i in monthDays.indices) {
+            array[monthDays[i].emotionType.toInt()][1]++
         }
 
-        val maxIndex = array.indexOf(array.max())
-        Log.d("${month + 1}월 : ", "EMOTION_$maxIndex")
+        JavaUtil.sort(array, 0, array.size - 1)
+        val maxIndex = array[0][0]
+        var secondIndex = array[1][0]
+        if (array[1][1] == 0)
+            secondIndex = maxIndex
 
-        return adjustAlpha(Color.parseColor(SharedPreferenceUtil.getStringData("EMOTION_$maxIndex")), 0.4f)
+        return adjustAlpha(Color.parseColor(SharedPreferenceUtil.getStringData("EMOTION_$secondIndex")), 0.4f)
+//        var array = arrayOf(Pair(0, 0), Pair(1, 0), Pair(2, 0), Pair(3, 0), Pair(4, 0), Pair(5, 0), Pair(6, 0), Pair(7, 0), Pair(8, 0))
+//        emotions.value!![month].dayList.forEach { cDayVO ->
+//            val newPair = array[cDayVO.emotionType.toInt()].apply {
+//                copy(first = this.first, second = this.second + 1)
+//            }
+//            array[cDayVO.emotionType.toInt()] = newPair
+//        }
+//
+//        var newList = array.sortedWith(compareBy { it.second }).reversed()
+//
+//        val maxIndex = if(newList[1].second == 0) 0 else newList[1].first
+//        Log.d("${month + 1}월 : ", "EMOTION_$maxIndex")
+//
+//        return adjustAlpha(Color.parseColor(SharedPreferenceUtil.getStringData("EMOTION_$maxIndex")), 0.4f)
     }
-
 
 //    fun releasePrevPosition() {
 //        emotionsColor.value?.get(getCurrentMonthData())?.init = true

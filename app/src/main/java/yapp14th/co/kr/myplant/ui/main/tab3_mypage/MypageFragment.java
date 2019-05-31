@@ -34,6 +34,7 @@ import yapp14th.co.kr.myplant.ui.main.tab1_home.CDayVO;
 import yapp14th.co.kr.myplant.ui.main.tab1_home.CalendarMonth;
 import yapp14th.co.kr.myplant.ui.main.tab1_home.domain.repository.HomeRepositoryImpl;
 import yapp14th.co.kr.myplant.ui.main.tab1_home.domain.usecase.GetYearEmotions;
+import yapp14th.co.kr.myplant.utils.JavaUtil;
 import yapp14th.co.kr.myplant.utils.SharedPreferenceUtil;
 
 import static yapp14th.co.kr.myplant.utils.DefaultVariableKt.adjustAlpha;
@@ -106,20 +107,30 @@ public class MypageFragment extends BaseFragment {
                         for (CalendarMonth calendar : calendars) {
                             // 각 월 별 그림 산출 시작
                             List<CDayVO> monthDays = calendar.get_dayList();
-                            int[] array = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0};
+                            int[][] array = new int[][]{{0, 0}, {1, 0}, {2, 0}, {3, 0}, {4, 0}, {5, 0}, {6, 0}, {7, 0}, {8, 0}};
                             for (int i = 0; i < monthDays.size(); i++) {
-                                array[monthDays.get(i).getEmotionType()]++;
+                                array[monthDays.get(i).getEmotionType()][1]++;
                             }
 
                             int maxIndex = 0;
-                            for (int emotionNum = 0; emotionNum < array.length - 1; emotionNum++) {
-                                maxIndex = array[maxIndex] < array[emotionNum + 1] ? emotionNum + 1 : maxIndex;
+                            for (int i = 0; i < array.length; i++) {
+                                if (array[maxIndex][1] < array[i][1]) {
+                                    maxIndex = i;
+                                }
                             }
 
+                            JavaUtil.sort(array, 0, array.length - 1);
+                            int secondIndex = array[1][0];
+                            // Log.d(monthDays.get(0).getYear() + "년 " + monthDays.get(0).getMonth() + "월", maxIndex + " / " + secondIndex);
+
                             // 데이터 갱신
-                            if (maxIndex != 0) {
+                            if (array[0][1] != 0) {
                                 dataSet.add(getcalendarResources()[maxIndex]);
-                                filterSet.add(SharedPreferenceUtil.getStringData("EMOTION_" + maxIndex));
+
+                                if (array[1][1] != 0) {
+                                    filterSet.add(SharedPreferenceUtil.getStringData("EMOTION_" + secondIndex));
+                                } else
+                                    filterSet.add(SharedPreferenceUtil.getStringData("EMOTION_" + maxIndex));
                             }
                         }
 
@@ -242,4 +253,6 @@ class MypageListAdapter extends RecyclerView.Adapter<MypageListAdapter.IllustVie
             imageView2 = (ImageView) itemView.findViewById(R.id.img_filter);
         }
     }
+
+
 }

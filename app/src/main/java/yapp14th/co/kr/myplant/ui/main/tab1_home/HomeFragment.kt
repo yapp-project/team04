@@ -6,7 +6,6 @@ import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Canvas
-import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
@@ -232,7 +231,7 @@ class HomeFragment : BaseFragment(), OnSnapPositionChangeListener {
                                 val copyBitmap: Bitmap = bitmapPhoto.copy(Bitmap.Config.ARGB_8888, true)
 
                                 var canvas = Canvas(copyBitmap)
-                                canvas.drawColor(homeVM.getBiggestEmotionFilter(month - 1))
+                                canvas.drawColor(homeVM.getSecondEmotionFilter(month - 1))
                                 canvas.drawBitmap(copyBitmap, 0F, 0F, null)
 
                                 // 3. 만들어진 비트맵을 파일과 매칭
@@ -265,7 +264,7 @@ class HomeFragment : BaseFragment(), OnSnapPositionChangeListener {
                         }
 
                         // holder.itemView.img_picture.setImageResource(homeVM.getBiggestEmotionImage(month - 1))
-                        // holder.itemView.img_filter.setBackgroundColor(homeVM.getBiggestEmotionFilter(month - 1))
+                        // holder.itemView.img_filter.setBackgroundColor(homeVM.getSecondEmotionFilter(month - 1))
 
                         holder.setIsRecyclable(false)
                     }

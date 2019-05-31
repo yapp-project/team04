@@ -15,32 +15,40 @@
             type="yapp14th.co.kr.myplant.ui.main.tab1_home.HomeViewModel" />
     </data>
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fitsSystemWindows="true"
         android:orientation="vertical"
-        android:paddingTop="56dp">
+        android:paddingTop="@dimen/triple_margin">
 
         <Spinner
             android:id="@+id/sp_year"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/single_margin" />
+            android:layout_marginLeft="@dimen/single_margin"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
         <!--app:replaceSpinners="@{homeVM.years}"-->
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rl_calendar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="0dp"
+            android:layout_marginTop="@dimen/double_margin"
+            android:layout_marginBottom="@dimen/one_half_margin"
+            app:layout_constraintBottom_toTopOf="@+id/cl_bottom"
+            app:layout_constraintTop_toBottomOf="@+id/sp_year" />
         <!--replaceRecyclers="@{homeVM.emotions}"-->
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_bottom"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="right"
-            android:layout_marginTop="@dimen/one_half_margin"
-            android:layout_marginRight="@dimen/double_margin">
+            android:layout_marginRight="@dimen/double_margin"
+            android:layout_marginBottom="@dimen/one_half_margin"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent">
 
             <TextView
                 android:id="@+id/tv_message"
@@ -68,9 +76,9 @@
                 android:padding="@dimen/single_margin"
                 android:scaleType="centerInside"
                 android:src="@drawable/btn_flip"
-                app:visibility="@{!homeVM.isFlip}"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:visibility="@{!homeVM.isFlip}" />
 
             <ImageView
                 android:id="@+id/btn_flop"
@@ -92,5 +100,5 @@
         <!--android:src="@color/black"-->
         <!--app:civ_border_color="#FF000000"-->
         <!--app:civ_border_width="2dp" />-->
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -70,17 +70,23 @@ public class BindingAdapter {
     public static void setCalendarFilter(ImageView view, CalendarMonth icMonth) {
         // TODO 여기에 달 계산 로직 넣음
         List<CDayVO> monthDays = icMonth.get_dayList();
-        int[] array = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0};
+        int[][] array = new int[][]{{0, 0}, {1, 0}, {2, 0}, {3, 0}, {4, 0}, {5, 0}, {6, 0}, {7, 0}, {8, 0}};
         for (int i = 0; i < monthDays.size(); i++) {
-            array[monthDays.get(i).getEmotionType()]++;
+            array[monthDays.get(i).getEmotionType()][1]++;
         }
 
-        int maxIndex = 0;
-        for (int emotionNum = 0; emotionNum < array.length - 1; emotionNum++) {
-            maxIndex = array[maxIndex] < array[emotionNum + 1] ? emotionNum + 1 : maxIndex;
-        }
+        JavaUtil.sort(array, 0, array.length - 1);
+        int maxIndex = array[0][0];
+        int secondIndex = array[1][0];
 
-        int color = adjustAlpha(Color.parseColor(SharedPreferenceUtil.getStringData("EMOTION_" + maxIndex)), 0.4f);
+        if (array[0][1] != 0) {
+            if (array[1][1] == 0)
+                secondIndex = maxIndex;
+        }
+        else
+            secondIndex = 0;
+
+        int color = adjustAlpha(Color.parseColor(SharedPreferenceUtil.getStringData("EMOTION_" + secondIndex)), 0.4f);
         view.setBackgroundColor(color);
         view.requestLayout();
     }
