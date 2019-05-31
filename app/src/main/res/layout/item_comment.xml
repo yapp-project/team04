@@ -19,15 +19,17 @@
 
         <TextView
             android:id="@+id/tv_title"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/one_quarter_margin"
             android:layout_marginTop="@dimen/single_margin"
+            android:layout_marginRight="@dimen/half_margin"
             android:letterSpacing="-0.08"
             android:text="@{icComment.comment}"
             android:textColor="@color/color373768"
             android:textSize="12sp"
             app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@+id/ll_color"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="오늘 휴강 개이득!!! 깔깔깔" />
 
