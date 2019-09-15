@@ -5,17 +5,17 @@
         android:id="@+id/action_home"
         app:showAsAction="ifRoom"
         android:enabled="true"
-        android:icon="@android:drawable/ic_dialog_info"
+        android:icon="@drawable/ic_home_enabled"
         android:title="홈" />
     <item
         android:id="@+id/action_static"
         app:showAsAction="ifRoom"
-        android:icon="@android:drawable/ic_dialog_info"
+        android:icon="@drawable/ic_statistic_enabled"
         android:title="감정 통계" />
     <item
         android:id="@+id/action_mypage"
         app:showAsAction="ifRoom"
         android:enabled="true"
-        android:icon="@android:drawable/ic_dialog_info"
+        android:icon="@drawable/ic_mypage_enabled"
         android:title="마이 페이지" />
 </menu>

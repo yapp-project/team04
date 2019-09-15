@@ -3,6 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="yapp14th.co.kr.myplant">
 
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
     <application
         android:name=".MyApplication"
         android:allowBackup="false"
@@ -27,7 +30,7 @@
         <activity android:name=".recyclerView.Main4Activity" />
         <activity
             android:name=".recyclerView.Main3Activity"
-            android:windowSoftInputMode="adjustNothing" />
+            android:windowSoftInputMode="adjustPan" />
         <activity android:name=".viewPager.Main2Activity" />
         <activity
             android:name=".base.example.template.view.TemplateActivity"
@@ -45,9 +48,13 @@
         </activity>
         <activity
             android:name=".ui.intro.IntroActivity"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".ui.comment.CommentActivity"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
 
-        </activity>
+        <service android:name=".utils.alarm.ClosingService"
+            android:stopWithTask="false"/>
 
         <activity
             android:name=".ui.main.MainActivity"
@@ -57,10 +64,20 @@
         <activity
             android:name=".ui.insert.InsertActivity"
             android:theme="@style/AppTheme.NoActionBar">
+
         </activity>
         <activity
             android:name=".ui.intro.IntroColorPickActivity"
             android:theme="@style/AppTheme.NoActionBar" />
+
+        <receiver
+            android:name=".utils.alarm.AlarmRepeatBroadCastReciever"
+            android:enabled="true"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

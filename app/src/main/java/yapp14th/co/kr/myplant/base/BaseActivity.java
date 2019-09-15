@@ -74,9 +74,4 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected abstract int getLayoutRes();
 
     protected abstract boolean getIsUseDataBinding();
-
-    public Realm getRealmInstance() {
-        Realm.init(getApplicationContext());
-        return Realm.getDefaultInstance();
-    }
 }

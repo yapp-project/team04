@@ -15,56 +15,83 @@
             type="yapp14th.co.kr.myplant.ui.main.tab1_home.HomeViewModel" />
     </data>
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fitsSystemWindows="true"
         android:orientation="vertical"
-        android:paddingTop="56dp">
+        android:paddingTop="@dimen/triple_margin">
 
         <Spinner
             android:id="@+id/sp_year"
-            replaceAll="@{homeVM.years}"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/single_margin"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+        <!--app:replaceSpinners="@{homeVM.years}"-->
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rl_calendar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="0dp"
+            android:layout_marginTop="@dimen/double_margin"
+            android:layout_marginBottom="@dimen/one_half_margin"
+            app:layout_constraintBottom_toTopOf="@+id/cl_bottom"
+            app:layout_constraintTop_toBottomOf="@+id/sp_year" />
+        <!--replaceRecyclers="@{homeVM.emotions}"-->
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="wrap_content"
+            android:id="@+id/cl_bottom"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="right"
-            android:layout_marginTop="@dimen/one_half_margin"
-            android:layout_marginRight="44dp">
+            android:layout_marginRight="@dimen/double_margin"
+            android:layout_marginBottom="@dimen/one_half_margin"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent">
+
+            <TextView
+                android:id="@+id/tv_message"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/three_quarter_margin"
+                android:background="@drawable/img_message_background"
+                android:gravity="center"
+                android:letterSpacing="-0.08"
+                android:paddingHorizontal="@dimen/single_margin"
+                android:text="한달간 기록된 색깔 중 상위 1,2순위를 조합해 해당\n감정에 어울리는 일러스트로 표현해드립니다:)"
+                android:textColor="#ffffff"
+                android:textSize="10sp"
+                android:visibility="invisible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintRight_toLeftOf="@+id/btn_flip"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
                 android:id="@+id/btn_flip"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/btn_flip_background"
+                android:onClick="@{() -> homeVM.flipAndFlop(true)}"
                 android:padding="@dimen/single_margin"
                 android:scaleType="centerInside"
                 android:src="@drawable/btn_flip"
-                android:visibility="@{!homeVM.isFlip}"
-                android:onClick="@{() -> homeVM.flipAndFlop(true)}"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent"/>
+                app:layout_constraintTop_toTopOf="parent"
+                app:visibility="@{!homeVM.isFlip}" />
 
             <ImageView
                 android:id="@+id/btn_flop"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/btn_flop_background"
+                android:onClick="@{() -> homeVM.flipAndFlop(false)}"
                 android:padding="@dimen/single_margin"
                 android:scaleType="centerInside"
                 android:src="@drawable/btn_flop"
                 android:visibility="@{homeVM.isFlip}"
-                android:onClick="@{() -> homeVM.flipAndFlop(false)}"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent"/>
+                app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
         <!--<de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"-->
         <!--android:id="@+id/profile_image"-->
@@ -73,5 +100,5 @@
         <!--android:src="@color/black"-->
         <!--app:civ_border_color="#FF000000"-->
         <!--app:civ_border_width="2dp" />-->
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import buv.co.kr.base.BaseDialog;
+import io.realm.Realm;
 import yapp14th.co.kr.myplant.R;
 
 public abstract class BaseFragment extends Fragment {

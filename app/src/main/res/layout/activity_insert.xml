@@ -76,12 +76,12 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="36dp"
             android:letterSpacing="-0.08"
+            android:text="기쁨"
             android:textColor="#373768"
             android:textSize="16sp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ll_title_bottom"
-            tools:text="기쁨" />
+            app:layout_constraintTop_toBottomOf="@+id/ll_title_bottom" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/cl_wheel"
@@ -97,30 +97,42 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@drawable/img_wheel_background"
-                app:repeatItems="true"
-                app:rotatableWheelDrawable="false"
-                app:selectionAngle="90.0"
-                app:wheelColor="@color/transparent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
+                app:repeatItems="true"
+                app:rotatableWheelDrawable="false"
+                app:selectionAngle="90.0"
+                app:wheelColor="@color/transparent"
                 app:wheelItemCount="8"
-                app:wheelItemRadius="16dp"
+                app:wheelItemRadius="12dp"
                 app:wheelOffsetY="128dp"
                 app:wheelPadding="8dp"
                 app:wheelPosition="top"
                 app:wheelRadius="112dp" />
 
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/single_margin"
+                android:src="@drawable/img_pin"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/img_color"
                 android:layout_width="128dp"
                 android:layout_height="128dp"
-                android:src="@color/black"
+                android:background="@color/transparent"
+                android:src="@color/transparent"
                 app:layout_constraintBottom_toBottomOf="@+id/cl_wheel"
                 app:layout_constraintLeft_toLeftOf="@+id/cl_wheel"
                 app:layout_constraintRight_toRightOf="@+id/cl_wheel"
-                app:layout_constraintTop_toTopOf="@+id/cl_wheel" />
+                app:layout_constraintTop_toTopOf="@+id/cl_wheel"
+                tools:src="@drawable/img_splash_background" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -134,15 +146,18 @@
             app:layout_constraintTop_toBottomOf="@+id/cl_wheel">
 
             <EditText
-                android:id="@+id/input"
-                android:layout_width="wrap_content"
+                android:id="@+id/et_input"
+                android:layout_width="0dp"
                 android:layout_height="18dp"
                 android:layout_marginLeft="@dimen/single_margin"
                 android:background="@null"
                 android:hint="감정을 글로도 표현해보세요!"
+                android:text="@={insertVM.commentStr}"
+                android:singleLine="true"
                 android:textColor="#373768"
                 android:textSize="12sp"
                 app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintRight_toLeftOf="@+id/btn_edit"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 

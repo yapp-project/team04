@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/aaa"
+    android:background="@drawable/img_splash_background"
     android:orientation="vertical">
 
     <LinearLayout
@@ -32,32 +32,31 @@
             android:layout_height="29dp"
             android:fontFamily="@font/spoqa_han_sans_light"
 
+            android:text="안녕하세요:-)"
             android:textColor="#373768"
-            android:textSize="20sp"
-            android:text="안녕하세요:-)" />
+            android:textSize="20sp" />
 
-        <!--<ImageView-->
-            <!--android:layout_marginTop="2dp"-->
-            <!--android:layout_width="27dp"-->
-            <!--android:layout_height="29dp"-->
-            <!--android:layout_gravity="right"-->
-            <!--android:layout_marginLeft="98dp"-->
-            <!--android:src="@drawable/logout" />-->
-
+        <ImageView
+            android:layout_width="27dp"
+            android:layout_height="29dp"
+            android:layout_gravity="right"
+            android:layout_marginLeft="98dp"
+            android:layout_marginTop="2dp"
+            android:src="@drawable/logout"
+            android:visibility="invisible" />
     </LinearLayout>
 
 
     <ImageView
-        android:src="@drawable/drawable_dash_line"
-        android:layerType="software"
         android:layout_width="match_parent"
-
-
         android:layout_height="1.5dp"
         android:layout_marginLeft="24dp"
+
+
         android:layout_marginTop="21.5dp"
         android:layout_marginRight="24dp"
-         />
+        android:layerType="software"
+        android:src="@drawable/drawable_dash_line" />
 
     <LinearLayout
         android:layout_width="fill_parent"
@@ -99,20 +98,20 @@
             android:orientation="vertical">
 
             <TextView
-                android:fontFamily="@font/spoqa_han_sans_light"
                 android:id="@+id/tv_emotion_num"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                tools:text="2000개"
-                android:textSize="12sp"/>
-
-            <TextView
                 android:fontFamily="@font/spoqa_han_sans_light"
                 android:textSize="12sp"
+                tools:text="2000개" />
+
+            <TextView
                 android:id="@+id/tv_illus_num"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="3000개" />
+                android:fontFamily="@font/spoqa_han_sans_light"
+                android:text="3000개"
+                android:textSize="12sp" />
         </LinearLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -120,8 +119,6 @@
             android:layout_height="match_parent">
 
             <Switch
-                android:thumb="@drawable/switch_thumb_selector"
-                android:track="@drawable/switch_track_selector"
                 android:id="@+id/switch1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -134,6 +131,8 @@
                 android:textOff="OFF"
                 android:textOn="ON"
                 android:textSize="12sp"
+                android:thumb="@drawable/switch_thumb_selector"
+                android:track="@drawable/switch_track_selector"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -187,15 +186,15 @@
         android:background="@drawable/rectangle_copy_3">
 
         <LinearLayout
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
             android:id="@+id/top_layout"
             android:layout_width="match_parent"
             android:layout_height="73dp"
             android:layout_gravity="center_vertical"
             android:gravity="center"
             android:orientation="horizontal"
+            android:paddingLeft="10dp"
             android:paddingTop="15dp"
+            android:paddingRight="10dp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -207,22 +206,22 @@
                 android:layout_weight="1"
                 android:orientation="vertical">
 
-                <ImageView
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/iv_mypage_01"
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
                     android:layout_gravity="center"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/oval_color_joy"/>
-
-
+                    android:src="@color/color373768"
+                    tools:src="@drawable/oval_color_joy" />
 
                 <TextView
-                    android:textSize="10sp"
-                    android:textColor="#373768"
-                    android:fontFamily="@font/spoqa_han_sans_regular"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:text="기쁨" />
+                    android:fontFamily="@font/spoqa_han_sans_regular"
+                    android:text="기쁨"
+                    android:textColor="#373768"
+                    android:textSize="10sp" />
 
             </LinearLayout>
 
@@ -233,20 +232,22 @@
                 android:layout_weight="1"
                 android:orientation="vertical">
 
-                <ImageView
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/iv_mypage_02"
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
                     android:layout_gravity="center"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/oval_color_happiness"/>
+                    android:src="@color/color373768"
+                    tools:src="@drawable/oval_color_happiness" />
 
                 <TextView
-                    android:textSize="10sp"
-                    android:textColor="#373768"
-                    android:fontFamily="@font/spoqa_han_sans_regular"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:text="행복" />
+                    android:fontFamily="@font/spoqa_han_sans_regular"
+                    android:text="행복"
+                    android:textColor="#373768"
+                    android:textSize="10sp" />
 
             </LinearLayout>
 
@@ -257,20 +258,22 @@
                 android:layout_weight="1"
                 android:orientation="vertical">
 
-                <ImageView
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/iv_mypage_03"
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
                     android:layout_gravity="center"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/oval_color_excitement"/>
+                    android:src="@color/color373768"
+                    tools:src="@drawable/oval_color_excitement" />
 
                 <TextView
-                    android:textSize="10sp"
-                    android:textColor="#373768"
-                    android:fontFamily="@font/spoqa_han_sans_regular"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:text="신남" />
+                    android:fontFamily="@font/spoqa_han_sans_regular"
+                    android:text="신남"
+                    android:textColor="#373768"
+                    android:textSize="10sp" />
 
             </LinearLayout>
 
@@ -281,34 +284,36 @@
                 android:layout_weight="1"
                 android:orientation="vertical">
 
-                <ImageView
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/iv_mypage_04"
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
                     android:layout_gravity="center"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/oval_color_peace"/>
+                    android:src="@color/color373768"
+                    tools:src="@drawable/oval_color_peace" />
 
                 <TextView
-                    android:textSize="10sp"
-                    android:textColor="#373768"
-                    android:fontFamily="@font/spoqa_han_sans_regular"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:text="평화" />
+                    android:fontFamily="@font/spoqa_han_sans_regular"
+                    android:text="평화"
+                    android:textColor="#373768"
+                    android:textSize="10sp" />
 
             </LinearLayout>
         </LinearLayout>
 
         <LinearLayout
-            android:layout_gravity="center_vertical"
             android:id="@+id/bottom_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
             android:gravity="center"
-            android:paddingBottom="18dp"
+            android:orientation="horizontal"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
-            android:orientation="horizontal"
+            android:paddingBottom="18dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
@@ -321,20 +326,22 @@
                 android:layout_weight="1"
                 android:orientation="vertical">
 
-                <ImageView
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/iv_mypage_05"
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
                     android:layout_gravity="center"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/oval_color_sadness"/>
+                    android:src="@color/color373768"
+                    tools:src="@drawable/oval_color_sadness" />
 
                 <TextView
-                    android:textSize="10sp"
-                    android:textColor="#373768"
-                    android:fontFamily="@font/spoqa_han_sans_regular"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:text="슬픔" />
+                    android:fontFamily="@font/spoqa_han_sans_regular"
+                    android:text="슬픔"
+                    android:textColor="#373768"
+                    android:textSize="10sp" />
 
             </LinearLayout>
 
@@ -345,20 +352,22 @@
                 android:layout_weight="1"
                 android:orientation="vertical">
 
-                <ImageView
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/iv_mypage_06"
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
                     android:layout_gravity="center"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/oval_color_anxiety"/>
+                    android:src="@color/color373768"
+                    tools:src="@drawable/oval_color_anxiety" />
 
                 <TextView
-                    android:textSize="10sp"
-                    android:textColor="#373768"
-                    android:fontFamily="@font/spoqa_han_sans_regular"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:text="불안" />
+                    android:fontFamily="@font/spoqa_han_sans_regular"
+                    android:text="불안"
+                    android:textColor="#373768"
+                    android:textSize="10sp" />
 
             </LinearLayout>
 
@@ -369,20 +378,22 @@
                 android:layout_weight="1"
                 android:orientation="vertical">
 
-                <ImageView
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/iv_mypage_07"
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
                     android:layout_gravity="center"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/oval_color_anger"/>
+                    android:src="@color/color373768"
+                    tools:src="@drawable/oval_color_anger" />
 
                 <TextView
-                    android:textSize="10sp"
-                    android:textColor="#373768"
-                    android:fontFamily="@font/spoqa_han_sans_regular"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:text="분노" />
+                    android:fontFamily="@font/spoqa_han_sans_regular"
+                    android:text="분노"
+                    android:textColor="#373768"
+                    android:textSize="10sp" />
 
             </LinearLayout>
 
@@ -393,20 +404,23 @@
                 android:layout_weight="1"
                 android:orientation="vertical">
 
-                <ImageView
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/iv_mypage_08"
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
                     android:layout_gravity="center"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/oval_color_irritation"/>
+                    android:src="@color/color373768"
+                    tools:src="@drawable/oval_color_irritation" />
 
                 <TextView
-                    android:textSize="10sp"
-                    android:textColor="#373768"
+                    android:id="@+id/tv_mypage_08"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/spoqa_han_sans_regular"
                     android:layout_gravity="center"
-                    android:text="짜증" />
+                    android:fontFamily="@font/spoqa_han_sans_regular"
+                    android:text="짜증"
+                    android:textColor="#373768"
+                    android:textSize="10sp" />
 
             </LinearLayout>
         </LinearLayout>
@@ -415,21 +429,20 @@
 
     <TextView
 
-        android:textColor="#373768"
-        android:textSize="12sp"
-        android:text="감정 일러스트"
-        android:layout_marginTop="30dp"
-        android:layout_marginLeft="24dp"
-        android:fontFamily="@font/spoqa_han_sans_bold"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-
-
-    <androidx.viewpager.widget.ViewPager
-        android:layout_marginTop="16dp"
-        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/viewPager">
+        android:layout_marginLeft="24dp"
+        android:layout_marginTop="30dp"
+        android:fontFamily="@font/spoqa_han_sans_bold"
+        android:text="감정 일러스트"
+        android:textColor="#373768"
+        android:textSize="12sp" />
 
-    </androidx.viewpager.widget.ViewPager>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/illust"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="24dp"
+        android:layout_marginTop="16dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 </LinearLayout>

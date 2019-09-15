@@ -5,13 +5,13 @@ import android.graphics.drawable.Drawable
 import android.graphics.drawable.ShapeDrawable
 import android.graphics.drawable.shapes.OvalShape
 import com.lukedeighton.wheelview.adapter.WheelArrayAdapter
-import yapp14th.co.kr.myplant.utils.SharedPreferenceUtil
 
 
 class MaterialColorAdapter(entries: MutableList<String>) : WheelArrayAdapter<String>(entries) {
+    private val entries : List<String> = entries.toList()
 
     override fun getDrawable(position: Int): Drawable {
-        var data = Color.parseColor(SharedPreferenceUtil.getStringData("EMOTION_${position + 1}"))
+        var data = Color.parseColor(entries[position])
         return createOvalDrawable(data)
     }
 

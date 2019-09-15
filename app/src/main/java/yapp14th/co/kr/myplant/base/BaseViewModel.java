@@ -5,8 +5,11 @@ import android.app.Application;
 import androidx.annotation.NonNull;
 import androidx.databinding.ObservableField;
 import androidx.lifecycle.AndroidViewModel;
+import io.reactivex.internal.disposables.DisposableContainer;
 
 public class BaseViewModel extends AndroidViewModel {
+    public DisposableContainer container;
+
     public BaseViewModel(@NonNull Application application) {
         super(application);
     }

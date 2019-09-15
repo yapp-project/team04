@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="icComment"
+            type="yapp14th.co.kr.myplant.ui.main.tab1_home.CDayVO" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/one_quarter_margin"
+        android:layout_marginVertical="@dimen/single_quarter_margin"
+        android:background="@drawable/img_comment_background">
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/one_quarter_margin"
+            android:layout_marginTop="@dimen/single_margin"
+            android:layout_marginRight="@dimen/half_margin"
+            android:letterSpacing="-0.08"
+            android:text="@{icComment.comment}"
+            android:textColor="@color/color373768"
+            android:textSize="12sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@+id/ll_color"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="오늘 휴강 개이득!!! 깔깔깔" />
+
+        <LinearLayout
+            android:id="@+id/ll_color"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/single_margin"
+            android:layout_marginEnd="@dimen/one_quarter_margin"
+            android:gravity="center"
+            android:orientation="horizontal"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/iv_color"
+                android:layout_width="@dimen/single_margin"
+                android:layout_height="@dimen/single_margin"
+                android:layout_marginRight="@dimen/single_quarter_margin"
+                android:src="@color/transparent" />
+
+            <TextView
+                android:id="@+id/tv_color"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:letterSpacing="-0.08"
+                android:textColor="@color/color373768"
+                android:textSize="10sp"
+                app:commentEmotionText="@{icComment.emotionType}"
+                tools:text="기쁨" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/one_half_margin"
+            android:layout_marginTop="@dimen/double_margin"
+            android:letterSpacing="-0.04"
+            android:paddingBottom="@dimen/one_half_margin"
+            android:textColor="@color/color373768"
+            android:textSize="12sp"
+            app:commentDateText="@{icComment}"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_title"
+            tools:text="2019.03.28" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

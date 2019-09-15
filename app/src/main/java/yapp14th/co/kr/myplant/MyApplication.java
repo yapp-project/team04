@@ -2,19 +2,46 @@ package yapp14th.co.kr.myplant;
 
 import android.app.Application;
 import android.content.Context;
+import android.content.Intent;
+import android.os.Build;
 import android.util.DisplayMetrics;
 
 import androidx.core.content.ContextCompat;
+import io.realm.Realm;
+import io.realm.RealmConfiguration;
 import yapp14th.co.kr.myplant.utils.SharedPreferenceUtil;
+import yapp14th.co.kr.myplant.utils.alarm.AlarmUtil;
+import yapp14th.co.kr.myplant.utils.alarm.ClosingService;
+import yapp14th.co.kr.myplant.utils.alarm.NotificationManager;
 
 public class MyApplication extends Application {
     public static int DIALOG_OK = 1;
     public static int DIALOG_OK_CANCEL = 2;
 
+
     @Override
     public void onCreate() {
         super.onCreate();
         SharedPreferenceUtil.sharedPreferenceInit(this);
+        Realm.init(this);
+        RealmConfiguration config = new RealmConfiguration.Builder()
+                .name("bora.realm")
+                .schemaVersion(1)
+                // .modules(new MySchemaModule())
+                // .migration(new MyMigration())
+                .build();
+
+        // 설정을 사용합니다.
+        Realm.setDefaultConfiguration(config);
+
+        Intent intent = new Intent(
+                getApplicationContext(),//현재제어권자
+                ClosingService.class); // 이동할 컴포넌트
+        startService(intent); // 서비스 시작
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationManager.INSTANCE.createChannel(this);
+        }
     }
 
     /**

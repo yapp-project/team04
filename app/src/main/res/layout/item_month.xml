@@ -12,20 +12,35 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="304dp"
+        android:layout_width="272dp"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:init="@{icMonth.getInit}"
         app:setFlipAnimation="@{icMonth.fliped}">
 
+        <!--<androidx.constraintlayout.widget.Guideline-->
+        <!--android:id="@+id/left_guideline"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:orientation="vertical"-->
+        <!--app:layout_constraintGuide_begin="44dp" />-->
+
+
+        <!--<androidx.constraintlayout.widget.Guideline-->
+        <!--android:id="@+id/right_guideline"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:orientation="vertical"-->
+        <!--app:layout_constraintGuide_end="44dp" />-->
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/ll_front"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/half_margin"
+            android:layout_height="0dp"
             android:background="@drawable/img_calendar_background"
             android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="@+id/ll_back"
+            app:layout_constraintDimensionRatio="435:565"
             app:layout_constraintLeft_toLeftOf="@+id/ll_back"
             app:layout_constraintRight_toRightOf="@+id/ll_back"
             app:layout_constraintTop_toTopOf="@+id/ll_back">
@@ -51,15 +66,16 @@
             <com.prolificinteractive.materialcalendarview.MaterialCalendarView
                 android:id="@+id/cv_calendar"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
                 android:layout_marginHorizontal="@dimen/one_half_margin"
                 android:gravity="center"
                 app:layout_constraintBottom_toTopOf="@+id/btn_diary"
                 app:layout_constraintTop_toBottomOf="@+id/tv_title"
+                app:mcv_dateTextAppearance="@style/TextAppearance.MyCustomDay"
                 app:mcv_leftArrow="@color/transparent"
                 app:mcv_monthLabels="@array/custom_months"
                 app:mcv_rightArrow="@color/transparent"
-                app:mcv_selectionColor="#00F"
+                app:mcv_selectionColor="@color/transparent"
                 app:mcv_showOtherDates="none"
                 app:mcv_weekDayLabels="@array/custom_weekdays" />
 
@@ -80,25 +96,32 @@
             android:id="@+id/ll_back"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            app:layout_constraintDimensionRatio="9:11"
+            android:layout_marginHorizontal="@dimen/half_margin"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintDimensionRatio="435:565"
             app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
                 android:id="@+id/img_picture"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:src="@drawable/img_calendar_background_mock" />
+                android:scaleType="fitXY"
+                app:calendarPictureBackground="@{icMonth}"
+                tools:src="@drawable/ic_calendar_background_peace" />
 
             <ImageView
                 android:id="@+id/img_filter"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/img_filter_background_mock"
+                android:scaleType="fitXY"
+                app:calendarFilterBackground="@{icMonth}"
                 app:layout_constraintBottom_toBottomOf="@+id/img_picture"
                 app:layout_constraintLeft_toLeftOf="@+id/img_picture"
                 app:layout_constraintRight_toRightOf="@+id/img_picture"
-                app:layout_constraintTop_toTopOf="@+id/img_picture" />
+                app:layout_constraintTop_toTopOf="@+id/img_picture"
+                tools:background="@drawable/img_filter_background_mock" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -112,7 +135,8 @@
                     android:id="@+id/btn_share"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/btn_share" />
+                    android:src="@drawable/btn_share"
+                    android:visibility="gone" />
 
                 <ImageView
                     android:id="@+id/btn_download"

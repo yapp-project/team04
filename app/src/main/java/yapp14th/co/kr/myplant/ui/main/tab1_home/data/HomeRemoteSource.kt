@@ -1,15 +1,18 @@
-package buv.co.kr.ui.login.data
+package yapp14th.co.kr.myplant.ui.main.tab1_home.data
 
+import buv.co.kr.ui.login.data.HomeDataSource
 import io.reactivex.Single
+import yapp14th.co.kr.myplant.ui.main.tab1_home.CDayVO
 import yapp14th.co.kr.myplant.ui.main.tab1_home.CalendarMonth
-import yapp14th.co.kr.myplant.utils.getCurrentYear
-import yapp14th.co.kr.myplant.utils.getMockDayEmotions
+import yapp14th.co.kr.myplant.utils.getTargetMonthDates
+import yapp14th.co.kr.myplant.utils.getTargetYearEmotions
 
 // 서버에서 데이터를 받아온다
 class HomeRemoteSource : HomeDataSource {
     override fun getYears(currentYear: Int): Single<List<Int>> {
         // return getNetworkInstance().getAuthRefreshToken(Authorization = Authorization)
         return Single.create<List<Int>> {
+            // 추후 년도 계산 로직 필요
             it.onSuccess(listOf(2019))
         }
     }
@@ -34,16 +37,29 @@ class HomeRemoteSource : HomeDataSource {
 
     override fun getYearEmotions(year: Int): Single<List<CalendarMonth>> {
         return Single.create<List<CalendarMonth>> {
-            val emotionsList = mutableListOf<CalendarMonth>()
-            for (month in 1..12) {
-                emotionsList.add(CalendarMonth(
-                        _year = getCurrentYear().toShort(),
-                        _month = month.toShort(),
-                        _dayList = getMockDayEmotions(year, month)
-                ))
-            }
+            var emotions = getTargetYearEmotions(year)
 
-            it.onSuccess(emotionsList)
+            it.onSuccess(emotions)
+        }
+    }
+
+    override fun getComments(year: Int, month: Int): Single<List<CDayVO>> {
+        return Single.create<List<CDayVO>> {
+            var monthDates = getTargetMonthDates(year, month)
+
+            mutableListOf<CDayVO>().apply {
+                monthDates?.forEach { cDay ->
+                    add(CDayVO(
+                            year = cDay.year,
+                            month = cDay.month,
+                            day = cDay.day,
+                            emotionType = cDay.emotionType,
+                            comment = cDay.comment
+                    ))
+                }
+
+                it.onSuccess(this)
+            }
         }
     }
 }
