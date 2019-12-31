@@ -22,6 +22,7 @@ class HomeViewModel(app: Application) : BaseViewModel(app) {
     val isFlipLive = MutableLiveData<Boolean>()
 
     // var calendars = MutableLiveData<List<Pair<Int, Int>>>()
+    val year = MutableLiveData<Int>()
     val years = MutableLiveData<List<Int>>()
     val emotions = MutableLiveData<List<CalendarMonth>>()
 
@@ -34,14 +35,15 @@ class HomeViewModel(app: Application) : BaseViewModel(app) {
 
         // 년도 spinner update
         var yearUseCase = GetYears(repositoryImpl, Schedulers.io())
+        year.value = getCurrentYear()
 
         yearUseCase(
-                currentYear = getCurrentYear(),
+                currentYear = year.value ?: getCurrentYear(),
                 success = { list ->
                     years.value = list
                 },
                 error = { t ->
-                    System.out.println(t)
+                    println(t)
                 })
 
         getEmotionsList()
@@ -82,14 +84,17 @@ class HomeViewModel(app: Application) : BaseViewModel(app) {
         // emotions.value = listOf()
     }
 
-    fun getEmotionsList(year: Int = getCurrentYear()) {
+    fun getEmotionsList() {
         GetYearEmotions(repositoryImpl, Schedulers.io())(
-                year = year,
+                year = year.value ?: getCurrentYear(),
                 success = { list ->
                     emotions.value = list
+
+                    isFlip.set(false)
+                    isFlipLive.value = false
                 },
                 error = { t ->
-                    System.out.println(t)
+                    println(t)
                 }
         )
     }

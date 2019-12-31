@@ -15,6 +15,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
@@ -73,7 +74,11 @@ class HomeFragment : BaseFragment(), OnSnapPositionChangeListener {
     override fun getIsUseDataBinding() = true
 
     // TODO 필수 선언 3 (onCreateView)
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         return super.onCreateView(inflater, container, savedInstanceState)
     }
 
@@ -93,38 +98,61 @@ class HomeFragment : BaseFragment(), OnSnapPositionChangeListener {
 
         val ll = LinearLayoutManager(activity, RecyclerView.HORIZONTAL, false)
         Log.d("scrollToPosition : ", "${homeVM.currentMonth.get() ?: 1 - 1}")
+
         ll.scrollToPosition(homeVM.currentMonth.get() ?: 1 - 1)
         rl_calendar.layoutManager = ll
 
 
         val snapHelper = PagerSnapHelper()
-        val scrollListener = SnapOnScrollListener(snapHelper, SnapOnScrollListener.Behavior.NOTIFY_ON_SCROLL, object : OnSnapPositionChangeListener {
-            override fun onSnapPositionChange(position: Int) {
-                // homeVM.currentMonth.set(position + 1)
-                // Log.d("HomeFragment : ", "currentMonth : ${position + 1}")
-            }
-        })
         snapHelper.attachToRecyclerView(rl_calendar)
+
+        val scrollListener = SnapOnScrollListener(
+            snapHelper,
+            SnapOnScrollListener.Behavior.NOTIFY_ON_SCROLL,
+            object : OnSnapPositionChangeListener {
+                override fun onSnapPositionChange(position: Int) {
+                    // homeVM.currentMonth.set(position + 1)
+                    // Log.d("HomeFragment : ", "currentMonth : ${position + 1}")
+                }
+            })
         rl_calendar.addOnScrollListener(scrollListener)
 
-        rl_calendar.attachSnapHelperWithListener(snapHelper, SnapOnScrollListener.Behavior.NOTIFY_ON_SCROLL, this)
+        rl_calendar.attachSnapHelperWithListener(
+            snapHelper,
+            SnapOnScrollListener.Behavior.NOTIFY_ON_SCROLL,
+            this
+        )
         rl_calendar.setItemViewCacheSize(12)
         rl_calendar.addItemDecoration(LinePagerIndicatorDecoration(activity!!, false))
 
         oneSecondAnimation(tv_message)
+
+        sp_year.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+            override fun onNothingSelected(parentView: AdapterView<*>?) {
+
+            }
+
+            override fun onItemSelected(parentView: AdapterView<*>?, selectedItemView: View?, position: Int, id: Long) {
+                homeVM.year.value = homeVM.years.value?.get(position) ?: getCurrentYear()
+
+                homeVM.getEmotionsList()
+            }
+        }
     }
 
     // 선택 선언 5 (LiveData 사용 시)
     override fun subScribeUI() {
         super.subScribeUI()
 
-        homeVM.years.observe(this, Observer {
+        homeVM.years.observe(this, Observer { years ->
             val adapter = ArrayAdapter(
-                    this@HomeFragment.context,
-                    R.layout.support_simple_spinner_dropdown_item,
-                    homeVM.years.value ?: listOf(getCurrentYear()))
+                this@HomeFragment.context,
+                R.layout.support_simple_spinner_dropdown_item,
+                years ?: listOf(getCurrentYear())
+            )
 
             sp_year.adapter = adapter
+            sp_year.setSelection(years.lastIndex)
         })
 
         // homeVM.calendars.observe(this, Observer { calendars ->
@@ -135,16 +163,23 @@ class HomeFragment : BaseFragment(), OnSnapPositionChangeListener {
             // view에서 할 내용이 없다면, 추후 ViewModel 단으로 옮김
             if (initSetting) {
                 adapter = object : BaseRecyclerView.Adapter<CalendarMonth, ItemMonthBinding>(
-                        layoutResId = R.layout.item_month,
-                        bindingVariableId = BR.icMonth) {
+                    layoutResId = R.layout.item_month,
+                    bindingVariableId = BR.icMonth
+                ) {
 
-                    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder<ItemMonthBinding> {
+                    override fun onCreateViewHolder(
+                        parent: ViewGroup,
+                        viewType: Int
+                    ): ViewHolder<ItemMonthBinding> {
                         return super.onCreateViewHolder(parent, viewType).apply {
 
                         }
                     }
 
-                    override fun onBindViewHolder(holder: ViewHolder<ItemMonthBinding>, position: Int) {
+                    override fun onBindViewHolder(
+                        holder: ViewHolder<ItemMonthBinding>,
+                        position: Int
+                    ) {
                         super.onBindViewHolder(holder, position)
 
                         var emotion = homeVM.emotions.value!![position]
@@ -157,11 +192,11 @@ class HomeFragment : BaseFragment(), OnSnapPositionChangeListener {
 
                         holder.itemView.cv_calendar.topbarVisible = false
                         holder.itemView.cv_calendar.state().edit()
-                                .setFirstDayOfWeek(DayOfWeek.SUNDAY)
-                                .setMinimumDate(CalendarDay.from(year, month, 1))
-                                .setMaximumDate(CalendarDay.from(year, month, maximumDay))
-                                .setCalendarDisplayMode(CalendarMode.MONTHS)
-                                .commit()
+                            .setFirstDayOfWeek(DayOfWeek.SUNDAY)
+                            .setMinimumDate(CalendarDay.from(year, month, 1))
+                            .setMaximumDate(CalendarDay.from(year, month, maximumDay))
+                            .setCalendarDisplayMode(CalendarMode.MONTHS)
+                            .commit()
 
                         holder.itemView.cv_calendar.setOnDateChangedListener { widget, date, selected ->
                             val clickDate = Calendar.getInstance().apply {
@@ -186,12 +221,22 @@ class HomeFragment : BaseFragment(), OnSnapPositionChangeListener {
                                 intent.putExtra("year", date.year)
                                 intent.putExtra("month", date.month)
                                 intent.putExtra("day", date.day)
-                                intent.putExtra("emotionType", if (value.size == 0) 0 else value[0].emotionType.toInt())
-                                intent.putExtra("comment", if (value.size == 0) "" else value[0].comment)
+                                intent.putExtra(
+                                    "emotionType",
+                                    if (value.size == 0) 0 else value[0].emotionType.toInt()
+                                )
+                                intent.putExtra(
+                                    "comment",
+                                    if (value.size == 0) "" else value[0].comment
+                                )
 
                                 startActivityForResult(intent, REQ_GO_TO_INSERT)
                             } else {
-                                Toast.makeText(activity, "미래에 대한 감정을 등록할 수 없습니다.", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(
+                                    activity,
+                                    "미래에 대한 감정을 등록할 수 없습니다.",
+                                    Toast.LENGTH_SHORT
+                                ).show()
                             }
                         }
 
@@ -203,7 +248,11 @@ class HomeFragment : BaseFragment(), OnSnapPositionChangeListener {
                                 cDayVO.emotionType == emotionType.toShort()
                             } as ArrayList<CDayVO>
 
-                            val eventDecorator = EventDecorator(context!!, homeVM.getCalendarDays(targetEmotions), emotionType)
+                            val eventDecorator = EventDecorator(
+                                context!!,
+                                homeVM.getCalendarDays(targetEmotions),
+                                emotionType
+                            )
                             holder.itemView.cv_calendar.addDecorator(eventDecorator)
                         }
                         holder.itemView.cv_calendar.invalidateDecorators()
@@ -219,16 +268,29 @@ class HomeFragment : BaseFragment(), OnSnapPositionChangeListener {
                         }
 
                         holder.itemView.btn_download.setOnClickListener {
-                            if (ContextCompat.checkSelfPermission(activity!!, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-                                ActivityCompat.requestPermissions(activity!!, arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), 113)
+                            if (ContextCompat.checkSelfPermission(
+                                    activity!!,
+                                    Manifest.permission.WRITE_EXTERNAL_STORAGE
+                                ) != PackageManager.PERMISSION_GRANTED
+                            ) {
+                                ActivityCompat.requestPermissions(
+                                    activity!!,
+                                    arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
+                                    113
+                                )
                             } else {
                                 // 1. 갤러리 해당 경로에 파일 생성
-                                val tempFilePath = activity!!.getExternalFilesDir(null).path + "/" + "${year}_${month}_calendar_photo.jpg"
+                                val tempFilePath =
+                                    activity!!.getExternalFilesDir(null).path + "/" + "${year}_${month}_calendar_photo.jpg"
                                 val tempFile = File(tempFilePath)
 
                                 // 2. 테마색이 반영된 비트맵 생성
-                                val bitmapPhoto = BitmapFactory.decodeResource(resources, homeVM.getBiggestEmotionImage(month - 1))
-                                val copyBitmap: Bitmap = bitmapPhoto.copy(Bitmap.Config.ARGB_8888, true)
+                                val bitmapPhoto = BitmapFactory.decodeResource(
+                                    resources,
+                                    homeVM.getBiggestEmotionImage(month - 1)
+                                )
+                                val copyBitmap: Bitmap =
+                                    bitmapPhoto.copy(Bitmap.Config.ARGB_8888, true)
 
                                 var canvas = Canvas(copyBitmap)
                                 canvas.drawColor(homeVM.getSecondEmotionFilter(month - 1))
@@ -238,7 +300,8 @@ class HomeFragment : BaseFragment(), OnSnapPositionChangeListener {
                                 var newFile = getFile(tempFile, copyBitmap)
 
                                 // 4. 갤러리 경로 존재 확인
-                                val path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).absolutePath + "/bora"
+                                val path =
+                                    Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).absolutePath + "/bora"
                                 val file = File(path)
 
                                 // Log.d("Directory Pictures 존재? ", File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).absolutePath).exists().toString())
@@ -247,19 +310,31 @@ class HomeFragment : BaseFragment(), OnSnapPositionChangeListener {
                                     Log.d("갤러리 저장 ", "디렉토리 생성완료")
                                 }
 
-                                val galleryFilePath = "$path/${year}_${month}_calendar_photo_${System.currentTimeMillis()}.jpg"
+                                val galleryFilePath =
+                                    "$path/${year}_${month}_calendar_photo_${System.currentTimeMillis()}.jpg"
                                 val galleryFile = File(galleryFilePath)
                                 Log.d("galleryAddPic.newFile", galleryFilePath)
 
                                 copyFile(tempFile, galleryFile)
 
-                                activity?.sendBroadcast(Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.parse("file://$galleryFilePath")))
-                                activity?.sendBroadcast(Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.fromFile(newFile)))
+                                activity?.sendBroadcast(
+                                    Intent(
+                                        Intent.ACTION_MEDIA_SCANNER_SCAN_FILE,
+                                        Uri.parse("file://$galleryFilePath")
+                                    )
+                                )
+                                activity?.sendBroadcast(
+                                    Intent(
+                                        Intent.ACTION_MEDIA_SCANNER_SCAN_FILE,
+                                        Uri.fromFile(newFile)
+                                    )
+                                )
 
                                 // 5. 갤러리로 copy 한 후 내장되어있는 파일은 삭제한다.
                                 tempFile.delete()
 
-                                Toast.makeText(activity, "성공적으로 갤러리에 저장되었습니다.", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(activity, "성공적으로 갤러리에 저장되었습니다.", Toast.LENGTH_SHORT)
+                                    .show()
                             }
                         }
 
@@ -275,6 +350,7 @@ class HomeFragment : BaseFragment(), OnSnapPositionChangeListener {
             }
 
             adapter.replaceAll(emotions)
+            rl_calendar.scrollToPosition(0)
         })
 
         homeVM.isFlipLive.observe(this, Observer { isFlip ->
@@ -287,6 +363,8 @@ class HomeFragment : BaseFragment(), OnSnapPositionChangeListener {
 
         if (requestCode == REQ_GO_TO_INSERT) {
             homeVM.getEmotionsList()
+
+            sp_year.setSelection(homeVM.years.value?.indexOf(homeVM.year.value ?: getCurrentYear()) ?: 0)
         }
     }
 

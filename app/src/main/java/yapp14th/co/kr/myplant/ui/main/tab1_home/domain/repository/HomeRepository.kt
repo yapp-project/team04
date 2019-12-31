@@ -27,6 +27,12 @@ interface HomeRepository {
             error: (throwable: Throwable) -> Unit
     ): Disposable
 
+    fun getAllEmotions(
+        scheduler: Scheduler,
+        success: (emotions: List<CalendarMonth>) -> Unit,
+        error: (throwable: Throwable) -> Unit
+    ): Disposable
+
     fun getComments(
             year: Int,
             month: Int,

@@ -7,7 +7,7 @@ import yapp14th.co.kr.myplant.ui.main.tab1_home.CalendarMonth
 // 하나의 관련데이터를 가져온다. (Interface를 통한 remote / dummy 처리)
 interface HomeDataSource {
     fun getYears(
-            currentYear: Int
+        currentYear: Int
     ): Single<List<Int>>
 
 //    fun getCalendars(
@@ -15,11 +15,13 @@ interface HomeDataSource {
 //    ): Single<List<Pair<Int, Int>>>
 
     fun getYearEmotions(
-            year: Int
+        year: Int
     ): Single<List<CalendarMonth>>
 
+    fun getAllEmotions(): Single<List<CalendarMonth>>
+
     fun getComments(
-            year : Int,
-            month: Int
-    ) : Single<List<CDayVO>>
+        year: Int,
+        month: Int
+    ): Single<List<CDayVO>>
 }
