@@ -48,6 +48,18 @@ class HomeRepositoryImpl : HomeRepository {
                 }
     }
 
+    override fun getAllEmotions(scheduler: Scheduler, success: (emotions: List<CalendarMonth>) -> Unit, error: (throwable: Throwable) -> Unit): Disposable {
+        return remoteHomeSource.getAllEmotions()
+            .subscribeOn(scheduler)
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({ emotions ->
+                success(emotions)
+            })
+            { t ->
+                error(t)
+            }
+    }
+
     override fun getComments(year: Int, month: Int, scheduler: Scheduler, success: (emotions: List<CDayVO>) -> Unit, error: (throwable: Throwable) -> Unit): Disposable {
         return remoteHomeSource.getComments(year, month)
                 .subscribeOn(scheduler)
