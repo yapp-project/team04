@@ -1,5 +1,6 @@
 package yapp14th.co.kr.myplant.ui.insert
 
+import android.app.Activity
 import yapp14th.co.kr.myplant.R
 import android.content.Intent
 import android.graphics.Color
@@ -110,6 +111,7 @@ class InsertActivity : BaseActivity() {
 
                     if (comingFromAppStart)
                         startActivity(Intent(this@InsertActivity, MainActivity::class.java))
+                    setResult(Activity.RESULT_OK)
                     finish()
                 } else {
                     updateDate(
@@ -119,7 +121,7 @@ class InsertActivity : BaseActivity() {
                             day = day.toShort(),
                             emotionType = insertVM.currentEmotion.toShort(),
                             comment = et_input.text.toString())
-
+                    setResult(Activity.RESULT_OK)
                     finish()
                 }
             }
