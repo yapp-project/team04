@@ -1,15 +1,12 @@
 package yapp14th.co.kr.myplant.ui.main.tab2_statistic
 
 import android.app.Application
-import android.util.Log
 import androidx.databinding.ObservableField
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import io.reactivex.schedulers.Schedulers
 import yapp14th.co.kr.myplant.base.BaseViewModel
 import yapp14th.co.kr.myplant.ui.main.tab1_home.CalendarMonth
 import yapp14th.co.kr.myplant.ui.main.tab1_home.domain.repository.HomeRepositoryImpl
-import yapp14th.co.kr.myplant.ui.main.tab1_home.domain.usecase.GetAllEmotions
 import yapp14th.co.kr.myplant.ui.main.tab1_home.domain.usecase.GetYearEmotions
 import yapp14th.co.kr.myplant.ui.main.tab1_home.domain.usecase.GetYears
 import yapp14th.co.kr.myplant.utils.getCurrentMonth
@@ -20,14 +17,15 @@ class StatisticViewModel(app: Application) : BaseViewModel(app) {
     var currentMonth = ObservableField<Int>()
 
     val emotions = MutableLiveData<List<CalendarMonth>>()
+
     // val avEmotions = MutableLiveData<List<Pair<Int, Short>>>()
     val years = MutableLiveData<List<Int>>()
 
     private val repositoryImpl = HomeRepositoryImpl()
 
     init {
-        var tempYear = getCurrentYear()
-        var tempMonth = getCurrentMonth()
+        val tempYear = getCurrentYear()
+        val tempMonth = getCurrentMonth()
 
         currentYear.set(tempYear)
         currentMonth.set(tempMonth)
@@ -41,14 +39,15 @@ class StatisticViewModel(app: Application) : BaseViewModel(app) {
                 println(t)
             })
 
-        getEmotionsList()
+        getEmotionsList(tempYear)
     }
 
-    fun getEmotionsList() {
-        GetAllEmotions(repositoryImpl, Schedulers.io())(
+    fun getEmotionsList(selectedYear: Int) {
+        currentYear.set(selectedYear)
+        GetYearEmotions(repositoryImpl, Schedulers.io())(
+            year = currentYear.get() ?: 2019,
             success = { list ->
                 emotions.value = list
-                Log.e("ViewModel", emotions.value.toString())
             },
             error = { t ->
                 println(t)

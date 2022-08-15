@@ -1,22 +1,24 @@
 package yapp14th.co.kr.myplant.ui.insert
 
-import yapp14th.co.kr.myplant.R
+import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.PorterDuff
 import android.os.Bundle
+import android.util.Log
+import android.view.MotionEvent
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProviders
 import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.android.synthetic.main.activity_insert.*
+import yapp14th.co.kr.myplant.R
 import yapp14th.co.kr.myplant.base.BaseActivity
 import yapp14th.co.kr.myplant.components.MaterialColorAdapter
 import yapp14th.co.kr.myplant.databinding.ActivityInsertBinding
 import yapp14th.co.kr.myplant.ui.main.MainActivity
 import yapp14th.co.kr.myplant.utils.*
-import android.graphics.drawable.GradientDrawable
-import android.widget.ImageView
-import android.widget.Toast
 
 class InsertActivity : BaseActivity() {
     override fun getLayoutRes() = R.layout.activity_insert
@@ -35,6 +37,7 @@ class InsertActivity : BaseActivity() {
         binding.activity = this
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -59,18 +62,22 @@ class InsertActivity : BaseActivity() {
 
             wv_color.adapter = MaterialColorAdapter(insertVM.emotionsColor)
 
+            wv_color.setOnTouchListener { v, event ->
+                if (event.action == MotionEvent.ACTION_UP) {
+                    wv_color.setSelected(insertVM.currentEmotion - 1)
+
+                    return@setOnTouchListener true
+                } else
+                    return@setOnTouchListener false
+
+            }
+
             // 초기 wheel listener 설정
             wv_color.setOnWheelItemSelectedListener { parent, itemDrawable, position ->
+                Log.i("sangwo-o.lee", "setOnWheelItemSelectedListener $position")
                 //the adapter position that is closest to the selection angle and it's drawable
 
                 val color = Color.parseColor(insertVM.emotionsColor[position])
-//                val alpha = Color.alpha(color)
-//                val blue = Color.blue(color)
-//                val green = Color.green(color)
-//                val red = Color.red(color)
-//                Log.d("color$position : ", "$alpha $red $green $blue")
-//
-//                img_color.setColorFilter(Color.argb(alpha, red, green, blue))
 
                 setCenterColor(img_color, color)
 
@@ -80,13 +87,6 @@ class InsertActivity : BaseActivity() {
 
             wv_color.setOnWheelItemClickListener { parent, position, isSelected ->
                 val color = Color.parseColor(insertVM.emotionsColor[position])
-//                val alpha = Color.alpha(color)
-//                val blue = Color.blue(color)
-//                val green = Color.green(color)
-//                val red = Color.red(color)
-//                Log.d("color$position : ", "$alpha $red $green $blue")
-//
-//                img_color.setColorFilter(Color.argb(alpha, red, green, blue))
 
                 setCenterColor(img_color, color)
 
@@ -97,29 +97,35 @@ class InsertActivity : BaseActivity() {
 
             // 초기 wheel init 값 설정
             wv_color.setSelected(insertVM.currentEmotion - 1)
-            setCenterColor(img_color, Color.parseColor(insertVM.emotionsColor[insertVM.currentEmotion - 1]))
+            setCenterColor(
+                img_color,
+                Color.parseColor(insertVM.emotionsColor[insertVM.currentEmotion - 1])
+            )
 
             btn_completed.setOnClickListener {
                 if (dataSize == 0 || emotionType == 0) {
                     insertDate(
-                            year = year.toShort(),
-                            month = month.toShort(),
-                            day = day.toShort(),
-                            emotionType = insertVM.currentEmotion.toShort(),
-                            comment = et_input.text.toString())
+                        year = year.toShort(),
+                        month = month.toShort(),
+                        day = day.toShort(),
+                        emotionType = insertVM.currentEmotion.toShort(),
+                        comment = et_input.text.toString()
+                    )
 
                     if (comingFromAppStart)
                         startActivity(Intent(this@InsertActivity, MainActivity::class.java))
+                    setResult(Activity.RESULT_OK)
                     finish()
                 } else {
                     updateDate(
-                            date = insertVM.date,
-                            year = year.toShort(),
-                            month = month.toShort(),
-                            day = day.toShort(),
-                            emotionType = insertVM.currentEmotion.toShort(),
-                            comment = et_input.text.toString())
-
+                        date = insertVM.date,
+                        year = year.toShort(),
+                        month = month.toShort(),
+                        day = day.toShort(),
+                        emotionType = insertVM.currentEmotion.toShort(),
+                        comment = et_input.text.toString()
+                    )
+                    setResult(Activity.RESULT_OK)
                     finish()
                 }
             }

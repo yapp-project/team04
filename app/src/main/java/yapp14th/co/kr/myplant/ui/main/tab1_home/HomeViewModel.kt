@@ -8,43 +8,37 @@ import androidx.lifecycle.MutableLiveData
 import com.prolificinteractive.materialcalendarview.CalendarDay
 import io.reactivex.schedulers.Schedulers
 import yapp14th.co.kr.myplant.base.BaseViewModel
-import yapp14th.co.kr.myplant.components.SingleLiveEvent
 import yapp14th.co.kr.myplant.ui.main.tab1_home.domain.repository.HomeRepositoryImpl
 import yapp14th.co.kr.myplant.ui.main.tab1_home.domain.usecase.GetYearEmotions
 import yapp14th.co.kr.myplant.ui.main.tab1_home.domain.usecase.GetYears
 import yapp14th.co.kr.myplant.utils.*
 
 class HomeViewModel(app: Application) : BaseViewModel(app) {
-    var currentYear = ObservableField<Int>()
-    var currentMonth = ObservableField<Int>()
-
     val isFlip = ObservableField<Boolean>()
     val isFlipLive = MutableLiveData<Boolean>()
 
     // var calendars = MutableLiveData<List<Pair<Int, Int>>>()
     val year = MutableLiveData<Int>()
+    var month = ObservableField<Int>()
     val years = MutableLiveData<List<Int>>()
     val emotions = MutableLiveData<List<CalendarMonth>>()
 
     private val repositoryImpl = HomeRepositoryImpl()
 
     init {
-        currentYear.set(getCurrentYear())
-        currentMonth.set(getCurrentMonth())
-        Log.d("DEBUG init", "${currentYear.get()} ${currentMonth.get()}")
-
         // 년도 spinner update
         var yearUseCase = GetYears(repositoryImpl, Schedulers.io())
         year.value = getCurrentYear()
+        month.set(getCurrentMonth())
 
         yearUseCase(
-                currentYear = year.value ?: getCurrentYear(),
-                success = { list ->
-                    years.value = list
-                },
-                error = { t ->
-                    println(t)
-                })
+            currentYear = year.value ?: getCurrentYear(),
+            success = { list ->
+                years.value = list
+            },
+            error = { t ->
+                println(t)
+            })
 
         getEmotionsList()
     }
@@ -79,47 +73,54 @@ class HomeViewModel(app: Application) : BaseViewModel(app) {
     override fun onCleared() {
         super.onCleared()
 
-        Log.d("DEBUG onCleared()", "${currentYear.get()} ${currentMonth.get()}")
         // years.value = listOf()
         // emotions.value = listOf()
     }
 
     fun getEmotionsList() {
         GetYearEmotions(repositoryImpl, Schedulers.io())(
-                year = year.value ?: getCurrentYear(),
-                success = { list ->
-                    emotions.value = list
+            year = year.value ?: getCurrentYear(),
+            success = { list ->
+                emotions.value = list
 
-                    isFlip.set(false)
-                    isFlipLive.value = false
-                },
-                error = { t ->
-                    println(t)
-                }
+                isFlip.set(false)
+                isFlipLive.value = false
+            },
+            error = { t ->
+                println(t)
+            }
         )
     }
 
-    fun getCurrentMonthData() = currentMonth.get()!! - 1
+    fun getCurrentMonthData() = month.get()!! - 1
     fun getCurrentMonthEmotions() = emotions.value?.get(getCurrentMonthData())
     fun getCalendarDays(targetEmotions: ArrayList<CDayVO>): ArrayList<CalendarDay> =
-            ArrayList<CalendarDay>().apply {
-                targetEmotions.forEach { targetEmotion ->
-                    add(CalendarDay.from(targetEmotion.year.toInt(), targetEmotion.month.toInt(), targetEmotion.day.toInt()))
-                }
+        ArrayList<CalendarDay>().apply {
+            targetEmotions.forEach { targetEmotion ->
+                add(
+                    CalendarDay.from(
+                        targetEmotion.year.toInt(),
+                        targetEmotion.month.toInt(),
+                        targetEmotion.day.toInt()
+                    )
+                )
             }
+        }
 
     fun setEmotions() {
         // 달 계산으로 변경
         GetYearEmotions(repositoryImpl, Schedulers.io())(
-                year = currentYear.get() ?: getCurrentYear(),
-                success = { list ->
-                    emotions.value?.get(currentMonth.get()
-                            ?: getCurrentRefinedMonth())?.dayList = list[currentMonth.get()
-                            ?: getCurrentRefinedMonth()].dayList
-                },
-                error = { t ->
-                    System.out.println(t)
-                }
+            year = year.value ?: getCurrentYear(),
+            success = { list ->
+                emotions.value?.get(
+                    month.get()
+                        ?: getCurrentRefinedMonth()
+                )?.dayList = list[month.get()
+                    ?: getCurrentRefinedMonth()].dayList
+            },
+            error = { t ->
+                System.out.println(t)
+            }
         )
     }
 
@@ -141,7 +142,17 @@ class HomeViewModel(app: Application) : BaseViewModel(app) {
 
     fun getSecondEmotionFilter(month: Int): Int {
         val monthDays = emotions.value!![month].dayList
-        val array = arrayOf(intArrayOf(0, 0), intArrayOf(1, 0), intArrayOf(2, 0), intArrayOf(3, 0), intArrayOf(4, 0), intArrayOf(5, 0), intArrayOf(6, 0), intArrayOf(7, 0), intArrayOf(8, 0))
+        val array = arrayOf(
+            intArrayOf(0, 0),
+            intArrayOf(1, 0),
+            intArrayOf(2, 0),
+            intArrayOf(3, 0),
+            intArrayOf(4, 0),
+            intArrayOf(5, 0),
+            intArrayOf(6, 0),
+            intArrayOf(7, 0),
+            intArrayOf(8, 0)
+        )
         for (i in monthDays.indices) {
             array[monthDays[i].emotionType.toInt()][1]++
         }
@@ -152,7 +163,10 @@ class HomeViewModel(app: Application) : BaseViewModel(app) {
         if (array[1][1] == 0)
             secondIndex = maxIndex
 
-        return adjustAlpha(Color.parseColor(SharedPreferenceUtil.getStringData("EMOTION_$secondIndex")), 0.4f)
+        return adjustAlpha(
+            Color.parseColor(SharedPreferenceUtil.getStringData("EMOTION_$secondIndex")),
+            0.4f
+        )
 //        var array = arrayOf(Pair(0, 0), Pair(1, 0), Pair(2, 0), Pair(3, 0), Pair(4, 0), Pair(5, 0), Pair(6, 0), Pair(7, 0), Pair(8, 0))
 //        emotions.value!![month].dayList.forEach { cDayVO ->
 //            val newPair = array[cDayVO.emotionType.toInt()].apply {
@@ -164,7 +178,6 @@ class HomeViewModel(app: Application) : BaseViewModel(app) {
 //        var newList = array.sortedWith(compareBy { it.second }).reversed()
 //
 //        val maxIndex = if(newList[1].second == 0) 0 else newList[1].first
-//        Log.d("${month + 1}월 : ", "EMOTION_$maxIndex")
 //
 //        return adjustAlpha(Color.parseColor(SharedPreferenceUtil.getStringData("EMOTION_$maxIndex")), 0.4f)
     }
