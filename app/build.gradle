@@ -11,8 +11,8 @@ android {
         applicationId "yapp14th.co.kr.myplant"
         minSdkVersion 21
         targetSdkVersion 31
-        versionCode 5
-        versionName "1.0.3"
+        versionCode 6
+        versionName "1.0.4"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
