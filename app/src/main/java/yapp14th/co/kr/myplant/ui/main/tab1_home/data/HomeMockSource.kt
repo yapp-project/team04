@@ -100,7 +100,7 @@ class HomeMockSource : HomeDataSource {
                         year = getCurrentYear().toShort(),
                         month = getCurrentMonth().toShort(),
                         day = day.toShort(),
-                        emotionType = ((Math.random() * 7) + 1).toShort(),
+                        emotionType = ((Math.random() * 7) + 1).toInt().toShort(),
                         comment = "abcd"
                     )
                 )

@@ -123,7 +123,7 @@ class HomeFragment : BaseFragment(), OnSnapPositionChangeListener {
             this
         )
         rl_calendar.setItemViewCacheSize(12)
-        rl_calendar.addItemDecoration(LinePagerIndicatorDecoration(activity!!, false))
+        rl_calendar.addItemDecoration(LinePagerIndicatorDecoration(requireActivity(), false))
 
         oneSecondAnimation(tv_message)
 
@@ -146,7 +146,7 @@ class HomeFragment : BaseFragment(), OnSnapPositionChangeListener {
 
         homeVM.years.observe(this, Observer { years ->
             val adapter = ArrayAdapter(
-                this@HomeFragment.context,
+                requireContext(),
                 R.layout.support_simple_spinner_dropdown_item,
                 years ?: listOf(getCurrentYear())
             )
@@ -281,7 +281,7 @@ class HomeFragment : BaseFragment(), OnSnapPositionChangeListener {
                             } else {
                                 // 1. 갤러리 해당 경로에 파일 생성
                                 val tempFilePath =
-                                    activity!!.getExternalFilesDir(null).path + "/" + "${year}_${month}_calendar_photo.jpg"
+                                    activity!!.getExternalFilesDir(null)?.path + "/" + "${year}_${month}_calendar_photo.jpg"
                                 val tempFile = File(tempFilePath)
 
                                 // 2. 테마색이 반영된 비트맵 생성

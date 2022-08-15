@@ -18,7 +18,7 @@ class ClosingService : Service() {
         super.onTaskRemoved(rootIntent)
 
         // Handle application closing
-        AlarmUtil.instance.startEightPMAlarm(this)
+        // AlarmUtil.instance.startEightPMAlarm(this)
 
         // Destroy the service
         stopSelf()

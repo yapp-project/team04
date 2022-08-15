@@ -51,7 +51,7 @@ class MainActivity : BaseActivity() {
         mHomeWatcher = HomeWatcher(this).apply {
             setOnHomePressedListener(object : OnHomePressedListener {
                 override fun onHomePressed() {
-                    AlarmUtil.instance.startEightPMAlarm(this@MainActivity)
+                    // AlarmUtil.instance.startEightPMAlarm(this@MainActivity)
                 }
 
                 override fun onHomeLongPressed() {
@@ -65,7 +65,7 @@ class MainActivity : BaseActivity() {
         super.onResume()
 
         mHomeWatcher?.startWatch()
-        AlarmUtil.instance.clearAlarm(this)
+        // AlarmUtil.instance.clearAlarm(this)
     }
 
     override fun onPause() {
@@ -77,6 +77,6 @@ class MainActivity : BaseActivity() {
     override fun onDestroy() {
         super.onDestroy()
 
-        AlarmUtil.instance.startEightPMAlarm(this)
+        // AlarmUtil.instance.startEightPMAlarm(this)
     }
 }

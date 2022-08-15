@@ -11,7 +11,7 @@ class AlarmOneMinuteBroadcastReceiver : AlarmRepeatBroadCastReciever() {
 
         Log.d("", "not repeat 시작")
         // 알람 스타트
-        AlarmUtil.instance.startAlarm(context, 60000)
+        // AlarmUtil.instance.startAlarm(context, 60000)
 
         // if (!SharedPreferenceUtil.getBooleanData(SharedPreferenceUtil.eventDateClicked))
         NotificationManager.sendNotification(context, 3, NotificationManager.Channel.NOTICE, "보라 님", "오늘의 감정을 기록해주세요 :)")

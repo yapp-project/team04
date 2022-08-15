@@ -100,10 +100,10 @@ class StatisticFragment : BaseFragment() {
         statisticDialog
         statisticDialog.setOkButtonListener(View.OnClickListener {})
         statisticDialog.setCancelButtonListener(View.OnClickListener {})
-        val params = statisticDialog.window.attributes;
-        params.width = WindowManager.LayoutParams.WRAP_CONTENT;
-        params.height = WindowManager.LayoutParams.WRAP_CONTENT;
-        statisticDialog.window.attributes = params
+        val params = statisticDialog.window?.attributes;
+        params?.width = WindowManager.LayoutParams.WRAP_CONTENT;
+        params?.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        statisticDialog.window?.attributes = params
 
         statisticDialog.callFunction()
     }
@@ -111,10 +111,10 @@ class StatisticFragment : BaseFragment() {
     override fun subScribeUI() {
         super.subScribeUI()
 
-        statisticDialog = StatisticDialog(this.context!!)
+        statisticDialog = StatisticDialog(requireContext())
         statisticVM.years.observe(this, Observer {
             val adapter = ArrayAdapter(
-                    this.context, R.layout.support_simple_spinner_dropdown_item,
+                requireContext(), R.layout.support_simple_spinner_dropdown_item,
                     statisticVM.years.value ?: listOf(getCurrentYear())
             )
 
@@ -146,10 +146,10 @@ class StatisticFragment : BaseFragment() {
                         array[cday.emotionType.toInt()]++
                     }
 
-                    val max = array.max()
+                    val max = array.maxOrNull() ?: return
                     Log.e("StaticticFragment", array.indexOf(max!!).toString())
 
-                    when (array.indexOf(max!!)) {
+                    when (array.indexOf(max)) {
                         1 -> color = Color.parseColor(SharedPreferenceUtil.getStringData(SharedPreferenceUtil.EMOTION_1))
                         2 -> color = Color.parseColor(SharedPreferenceUtil.getStringData(SharedPreferenceUtil.EMOTION_2))
                         3 -> color = Color.parseColor(SharedPreferenceUtil.getStringData(SharedPreferenceUtil.EMOTION_3))

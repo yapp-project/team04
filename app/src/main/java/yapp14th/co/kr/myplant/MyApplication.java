@@ -33,10 +33,10 @@ public class MyApplication extends Application {
         // 설정을 사용합니다.
         Realm.setDefaultConfiguration(config);
 
-        Intent intent = new Intent(
-                getApplicationContext(),//현재제어권자
-                ClosingService.class); // 이동할 컴포넌트
-        startService(intent); // 서비스 시작
+//        Intent intent = new Intent(
+//                getApplicationContext(),//현재제어권자
+//                ClosingService.class); // 이동할 컴포넌트
+//        startService(intent); // 서비스 시작
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             NotificationManager.INSTANCE.createChannel(this);

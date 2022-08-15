@@ -125,7 +125,7 @@ class StatisticDialog(context: Context) : BaseDialog(context) {
         if(cdays.sum() == 0)
             emotionList.add(PieEntry(100f))
         else{
-            when(cdays.indexOf(cdays.max()!!)){
+            when(cdays.indexOf(cdays.maxOrNull() ?: return)){
                 1 -> chartView.centerText = chartView.centerText.toString() + "\n기쁨"
                 2 -> chartView.centerText = chartView.centerText.toString() + "\n행복"
                 3 -> chartView.centerText = chartView.centerText.toString() + "\n신남"

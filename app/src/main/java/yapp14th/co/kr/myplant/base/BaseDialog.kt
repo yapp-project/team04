@@ -21,7 +21,7 @@ open class BaseDialog(context: Context) : @JvmOverloads Dialog(context) {
     init {
         // 액티비티의 타이틀바를 숨긴다.
         requestWindowFeature(Window.FEATURE_NO_TITLE)
-        window.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
     }
 
     open fun setInit(resId: Int, type: Int) {

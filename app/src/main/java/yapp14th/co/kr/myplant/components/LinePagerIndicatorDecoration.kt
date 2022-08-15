@@ -60,7 +60,7 @@ class LinePagerIndicatorDecoration(context: Context, indicatorEnabled: Boolean) 
 
     override fun onDrawOver(c: Canvas, parent: RecyclerView, state: RecyclerView.State) {
         super.onDrawOver(c, parent, state)
-        val itemCount = parent.adapter!!.itemCount
+        val itemCount = parent.adapter?.itemCount ?: return
 
         // center horizontally, calculate ttWidth and subtract half from center
         val totalLength = mIndicatorItemLength * itemCount

@@ -16,7 +16,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar"
         tools:replace="android:allowBackup">
-        <activity android:name=".ui.intro.PushAgreeActivity">
+        <activity
+            android:name=".ui.intro.PushAgreeActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <action android:name="android.intent.action.VIEW" />
@@ -24,50 +26,66 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".recyclerView.Main5Activity">
+        <activity
+            android:name=".recyclerView.Main5Activity"
+            android:exported="false">
 
         </activity>
-        <activity android:name=".recyclerView.Main4Activity" />
+        <activity
+            android:name=".recyclerView.Main4Activity"
+            android:exported="false" />
         <activity
             android:name=".recyclerView.Main3Activity"
+            android:exported="false"
             android:windowSoftInputMode="adjustPan" />
         <activity android:name=".viewPager.Main2Activity" />
         <activity
             android:name=".base.example.template.view.TemplateActivity"
+            android:exported="false"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".base.example.nouse.view.NouseActivity"
+            android:exported="false"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".base.example.nouse.view.NouseKotlinActivity"
+            android:exported="false"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ui.splash.SplashActivity"
+            android:exported="false"
             android:theme="@style/AppTheme.NoActionBar">
 
         </activity>
         <activity
             android:name=".ui.intro.IntroActivity"
+            android:exported="false"
             android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
             android:name=".ui.comment.CommentActivity"
+            android:exported="false"
             android:theme="@style/AppTheme.NoActionBar"></activity>
 
-        <service android:name=".utils.alarm.ClosingService"
-            android:stopWithTask="false"/>
+        <service
+            android:name=".utils.alarm.ClosingService"
+            android:exported="false"
+            android:stopWithTask="false" />
 
         <activity
             android:name=".ui.main.MainActivity"
+            android:exported="false"
             android:theme="@style/AppTheme.NoActionBar">
 
         </activity>
         <activity
             android:name=".ui.insert.InsertActivity"
+            android:exported="false"
             android:theme="@style/AppTheme.NoActionBar">
 
         </activity>
         <activity
             android:name=".ui.intro.IntroColorPickActivity"
+            android:exported="false"
             android:theme="@style/AppTheme.NoActionBar" />
 
         <receiver

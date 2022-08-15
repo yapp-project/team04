@@ -53,7 +53,7 @@ fun getMockDayEmotions(year: Int, month: Int): List<CDayVO> {
                 year = year.toShort(),
                 month = month.toShort(),
                 day = i.toShort(),
-                emotionType = (Math.random() * 8).toShort(),
+                emotionType = (Math.random() * 8).toInt().toShort(),
                 comment = ""
         ))
     }
